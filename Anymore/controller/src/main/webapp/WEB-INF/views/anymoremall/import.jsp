@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
-	//String product_name = request.getParameter("");
-
-	String buyer_name = request.getParameter("name");
-	String buyer_tel = request.getParameter("phone");
-	String buyer_addr = request.getParameter("address");
-	String postcode = request.getParameter("postcode");
-%>
-
 <html>
 <head>
 <meta charset="UTF-8">
@@ -28,14 +19,14 @@ $(function(){
 	IMP.request_pay({
 	    pg: "kakaopay",
 	    pay_method: "card",
-	    merchant_uid: "test_ldv1q6zk",
-	    name: "둘", //상품이름
-	    amount: 50000, //상품 수량
-	    popup: true, //팝업창 형식으로 보여주기
-	    buyer_name: <%= buyer_name %>, //구매자 이름
-	    buyer_tel: <%= buyer_tel %>, //전화번호
-	    buyer_addr: <%= buyer_addr %>, //주소 
-	    buyer_postcode: <%= postcode %>, //우편번호
+	    merchant_uid: "test_ldv1q6z1",
+	    name: "둘",
+	    amount: 50000,
+	    popup: true,
+	    buyer_name: "김몸모",
+	    buyer_tel: "01026918127",
+	    buyer_addr: "호동로 72",
+	    buyer_postcode: "11631",
 	  
 	}, function(rsp) {
 		console.log(rsp);

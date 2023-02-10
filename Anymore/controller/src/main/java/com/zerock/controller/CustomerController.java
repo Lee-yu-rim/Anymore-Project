@@ -1,23 +1,30 @@
 package com.zerock.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.zerock.domain.Criteria;
+import com.zerock.domain.FAQAttachVO;
+import com.zerock.domain.NoticeAttachVO;
 import com.zerock.domain.PageDTO;
+import com.zerock.domain.QNAFileUploadVO;
 import com.zerock.domain.QNAVO;
-import com.zerock.domain.ReplyVO;
 import com.zerock.service.FAQService;
 import com.zerock.service.NoticeService;
 import com.zerock.service.QNAReplyService;
@@ -117,8 +124,14 @@ public class CustomerController {
 	@PostMapping("/register")
 	public String register(QNAVO vo, RedirectAttributes rttr) {
 		log.info("register..." + vo);
-		qna.register(vo);
 		
+		log.info("============================");
+		if(vo.getQnaAttachList() != null) { 
+			vo.getQnaAttachList().forEach(attach -> log.info(attach));
+		}
+		log.info("============================");
+		
+		qna.register(vo);
 		rttr.addFlashAttribute("result", vo.getBno());
 		
 		return "redirect:/customerService/qna";
@@ -153,9 +166,15 @@ public class CustomerController {
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("remove : " + bno);
+		
+		// 삭제가 되기 전에 파일의 정보를 가져와야 하기 때문에 service.getAttachList를 호출하여 bno에 관련된 파일 정보를 가져올 수 있다.
+		List<QNAFileUploadVO> attachList = qna.qnaGetAttachList(bno);
+		
 		if(qna.remove(bno)) {
+			qnaDeleteFiles(attachList);
 			rttr.addFlashAttribute("result", "success");
 		}
+		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("type", cri.getType());
@@ -164,43 +183,69 @@ public class CustomerController {
 		return "redirect:/customerService/qna";
 	}
 	
-//	@PostMapping("/get")
-//	public String registerReply(ReplyVO reply) {
-//		log.info("Post Get...");
-//		
-//		// 등록 작업
-//		qnaReply.registerReply(reply);
-//		
-//		return "redirect:/customerService/get?bno=" + reply.getBno();
-//	}
+	
+	// ------------------------------------- 파일업로드 ----------------------------------
+	
+	// notice - 특정한 게시물 번호를 이용해서 첨부파일과 관련된 데이터를 JSON으로 반환
+	@GetMapping(value = "/noticeGetAttachList",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<NoticeAttachVO>> noticeGetAttachList(Long bno){
+		log.info("noticeGetAttachList : " + bno);
+		return new ResponseEntity<List<NoticeAttachVO>>(notice.getAttachList(bno), HttpStatus.OK);
+	}		
+	
+	// faq - 특정한 게시물 번호를 이용해서 첨부파일과 관련된 데이터를 JSON으로 반환
+	@GetMapping(value = "/faqGetAttachList",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<FAQAttachVO>> faqGetAttachList(Long bno){
+		log.info("faqGetAttachList : " + bno);
+		return new ResponseEntity<List<FAQAttachVO>>(faq.getAttachList(bno), HttpStatus.OK);
+	}	
+
 	
 	
-//	// 댓글 목록 ajax
-//	@ResponseBody
-//	@GetMapping(value = "/get/replyList")
-//	public List<ReplyVO> getReplyList(@RequestParam("bno") Long bno) throws Exception {
-//		 log.info("get reply list");
-//		   
-//		 List<ReplyVO> reply = qnaReply.getList(bno);
-//		 
-//		 return reply;
-//		} 
-//	
-//	// 댓글 쓰기 ajax
-//	@ResponseBody
-//	@PostMapping(value = "/get/registerReply")
-//	public void registerReply(ReplyVO reply) {
-//		log.info("register Reply...");
-//		
-//		qnaReply.registerReply(reply);
-//	}
-//	
-//	// 댓글 삭제 ajax
-//	@ResponseBody
-//	@PostMapping("/get/deleteReply")
-//	public void deleteReply(ReplyVO reply) {
-//		log.info("delete Reply");
-//		qnaReply.deleteReply(reply);
-//	}
+	// 물리적인 경로에서 해당파일을 삭제(테이블에서 데이터가 정확하게 삭제된 이후에)
+	private void qnaDeleteFiles(List<QNAFileUploadVO> attachList) {
+		
+		if(attachList == null || attachList.size() == 0) {
+			
+			return;
+		}
+		
+		log.info("delete attach files..............");
+		log.info(attachList);
+		
+		attachList.forEach(attach -> {
+			try {
+		        Path file  = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\" + attach.getUuid()+"_"+ attach.getFileName());
+		        
+		        Files.deleteIfExists(file);
+		        
+		        if(Files.probeContentType(file).startsWith("image")) {
+		        
+		          Path thumbNail = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\s_" + attach.getUuid()+"_"+ attach.getFileName());
+		          
+		          Files.delete(thumbNail);
+		        }
+		        
+			} catch(Exception e) {
+				log.error("delete file error" + e.getMessage());
+			}
+		});
+	}	
+	
+	
+	// qna - 특정한 게시물 번호를 이용해서 첨부파일과 관련된 데이터를 JSON으로 반환
+	@GetMapping(value = "/qnaGetAttachList",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<QNAFileUploadVO>> qnaGetAttachList(Long bno){
+		log.info("qnaGetAttachList : " + bno);
+		return new ResponseEntity<List<QNAFileUploadVO>>(qna.qnaGetAttachList(bno), HttpStatus.OK);
+	}	
+	
+	
 
 }

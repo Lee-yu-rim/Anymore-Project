@@ -38,7 +38,7 @@
 									<input type="hidden" class="product_name" id="product_name" value='<c:out value="${product.product_name }" />'>
 									<input type="hidden" class="price" id="price" value='<c:out value="${product.price }" />'>
 									<label class="label" for="name">price</label>
-									<p><fmt:formatNumber value="${product.price }" pattern="###,###"/>원</p>
+									<p><c:out value="${product.price }" />원</p>
 								</div>
 							</div>
 							<div class="col-md-12">

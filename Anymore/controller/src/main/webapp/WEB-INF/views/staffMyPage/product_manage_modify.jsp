@@ -66,7 +66,7 @@
 				</div>
 				<div class = "form-group">
 					<label>재고수량</label>
-					<input class="form-control" name='quantity' value='<c:out value = "${product.quantity }"/>'>
+					<input class="form-control" name='amount' value='<c:out value = "${product.amount }"/>'>
 				</div>
 				
 				<div class="form-group">

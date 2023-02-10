@@ -27,11 +27,11 @@
 	<select id="getListWithPaging" resultType="com.zerock.domain.ProductVO">
 		<![CDATA[
 		select
-			product_num, price, discribe, quantity, product_name, product_regdate, product_content
+			product_num, price, discribe, amount, product_name, product_regdate, product_content
 		from
 			(
 				select
-					rownum rn, product_num, price, discribe, quantity, product_name, product_regdate, product_content
+					rownum rn, product_num, price, discribe, amount, product_name, product_regdate, product_content
 				from 
 					anymore_product
 				where
@@ -88,9 +88,9 @@
 	
 	<!-- 글 등록하기 -->
 	<insert id="insert" parameterType="com.zerock.domain.ProductVO">
-		insert into anymore_product(product_num, product_name, price, product_content, quantity, discribe)
+		insert into anymore_product(product_num, product_name, price, product_content, amount, discribe)
 		values(
-    		seq_product.nextval, #{product_name}, #{price},  #{product_content}, #{quantity}, #{discribe}
+    		seq_product.nextval, #{product_name}, #{price},  #{product_content}, #{amount}, #{discribe}
     		);
 
 	</insert>
@@ -99,14 +99,14 @@
 		<selectKey keyProperty="product_num" order="BEFORE" resultType="int">
 			select seq_product.nextval from dual
 		</selectKey>
-			insert into anymore_product(product_num, product_name, price, quantity, product_content, product_regdate,discribe)
-		values (#{product_num}, #{product_name}, #{price}, #{quantity}, #{product_content}, sysdate, #{discribe})
+			insert into anymore_product(product_num, product_name, price, amount, product_content, product_regdate,discribe)
+		values (#{product_num}, #{product_name}, #{price}, #{amount}, #{product_content}, sysdate, #{discribe})
 	</insert>
 	
 	
 		<update id="update">
 		update anymore_product
-		set product_num = #{product_num}, product_name = #{product_name}, price = #{price}, quantity = #{quantity}, discribe = #{discribe}, product_content = #{product_content}
+		set product_num = #{product_num}, product_name = #{product_name}, price = #{price}, amount = #{amount},discribe = #{discribe},product_content =#{product_content}
 		where product_num = #{product_num}
 	</update>
 	

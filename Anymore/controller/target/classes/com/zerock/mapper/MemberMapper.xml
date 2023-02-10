@@ -83,6 +83,17 @@
 		values (seq_memberNum.nextval, #{id}, #{password}, #{name}, #{phone}, #{birth}, #{email}, #{address}, #{pass_question}, #{pass_answer})
 	</insert>
 	
+	<!-- 카카오 회원가입 -->
+	<insert id="kakao_insert">
+		insert into member (member_num, id, kakao_email, password, name, phone, birth, email, address)
+		values (seq_memberNum.nextval, #{id}, #{kakao_email}, #{password}, #{name}, #{phone}, #{birth}, #{email}, #{address})
+	</insert>
+	
+	<!-- 카카오 회원가입 여부 체크 -->
+	<select id="kakao_check" resultType="com.zerock.domain.MemberVO">
+		select kakao_email from member where kakao_email = #{kakao_email}
+	</select>
+	
 	<!-- 회원 정보 상세보기 -->
 	<select id="read" resultType="com.zerock.domain.MemberVO">
 		select * from member where id = #{id}

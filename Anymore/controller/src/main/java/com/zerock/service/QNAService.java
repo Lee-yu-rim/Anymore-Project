@@ -3,6 +3,7 @@ package com.zerock.service;
 import java.util.List;
 
 import com.zerock.domain.Criteria;
+import com.zerock.domain.QNAFileUploadVO;
 import com.zerock.domain.QNAVO;
 
 
@@ -30,4 +31,9 @@ public interface QNAService {
 	
 	// 조회수 증가
 	public int viewCount(Long bno);
+	
+	// findByBno mapping 작업 - 첨부파일을 화면에 뿌려주는 것
+	public List<QNAFileUploadVO> qnaGetAttachList(Long bno);
+
+
 }

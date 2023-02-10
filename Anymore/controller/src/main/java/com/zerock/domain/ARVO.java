@@ -16,4 +16,6 @@ public class ARVO {
 	private int reply_cnt;
 	private int visit_cnt;
 	private String id;
+	
+	private List<ARAttachVO> attachList;
 }

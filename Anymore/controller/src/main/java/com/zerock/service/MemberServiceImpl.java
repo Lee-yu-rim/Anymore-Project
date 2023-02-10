@@ -40,6 +40,12 @@ public class MemberServiceImpl implements MemberService {
 		log.info("register....." + member);
 		mapper.insert(member);
 	}
+	
+	@Override
+	public void kakao_insert(MemberVO member) {
+		log.info("kakao register....." + member);
+		mapper.kakao_insert(member);
+	}
 
 	@Override
 	public MemberVO get(String id) {
@@ -88,5 +94,13 @@ public class MemberServiceImpl implements MemberService {
 		log.info("get list with criteria: " + cri);
 		return mapper.getListWithPaging(cri);
 	}
+
+	@Override
+	public MemberVO kakao_check(String kakao_email) {
+		log.info("kakao login check");
+		return mapper.kakao_check(kakao_email);
+	}
+
+	
 
 }

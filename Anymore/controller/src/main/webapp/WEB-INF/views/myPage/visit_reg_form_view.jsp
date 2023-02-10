@@ -16,6 +16,14 @@ pageEncoding="UTF-8"%>
 		margin-bottom: 30px;
 		margin-left: 10px;
 	}
+	textarea {
+		border: none;
+		resize: none;
+
+	}
+	textarea.focus {
+		outline: none;
+	}
 </style>
 
 <section class="ftco-section" style="font-family: 'NanumSquareNeo';">
@@ -35,7 +43,7 @@ pageEncoding="UTF-8"%>
       	<h5>내가 작성한 폼</h5>
       	<div class="select_menu">
       		<!-- <span><a href="/myPage/visit_reg_form">방문 신청 폼</a></span> -->
-      		<span style="color:#CDBBA7">방문신청 폼</span><br/>
+      		<span style="color:#CDBBA7">방문 신청 폼</span><br/>
       		<span><a href="/myPage/adopt_reg_form">입양 신청 폼</a></span>
       	</div>
       	<h5>회원 탈퇴</h5>
@@ -49,33 +57,30 @@ pageEncoding="UTF-8"%>
             <table class="table table-bordered">
                 <tr>
                     <th>제목</th>
-                    <td colspan="3">방문예약 신청합니다.</td>
+                    <td colspan="3">${ visitView.title }</td>
                 </tr>
                 <tr>
                     <th>성별</th>
-                    <td>여성</td>
+                    <td>${ visitView.sex }</td>
                     <th>인원 수</th>
-                    <td>3</td>
+                    <td>${ visitView.people_cnt }명</td>
                 </tr>
                 <tr>
                     <th>성함</th>
-                    <td>김수아</td>
+                    <td>${ visitView.visiter_name }</td>
                     <th>연락처</th>
-                    <td>010-8555-4975</td>
+                    <td>${ visitView.phone }</td>
                 </tr>
                 <tr>
                     <th>방문날짜</th>
-                    <td>2023-01-29</td>
+                    <td><fmt:formatDate value="${ visitView.visit_day }" pattern="yyyy-MM-dd"/></td>
                     <th>방문시간</th>
-                    <td>17:00-18:00</td>
+                    <td>${ visitView.reser_time }</td>
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td colspan="3">
-                        <p>
-                            안녕하세요. <br>
-                            2023년 1월 17일에 방문상담 예약을 하고싶습니다.
-                        </p>
+                        <p>${ visitView.visit_reason }</p>
                     </td>
                 </tr>
                 

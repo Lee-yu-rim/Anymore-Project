@@ -17,4 +17,6 @@ public class UIVO {
 	private int visit_cnt;
 	private String field;
 	private String id;
+	
+	private List<UIAttachVO> attachList;
 }

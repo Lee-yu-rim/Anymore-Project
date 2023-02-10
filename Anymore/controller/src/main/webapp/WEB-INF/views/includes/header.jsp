@@ -91,10 +91,10 @@
                 <a href="/about/support" class="dropdown-item">후원</a>
                 <a href="/about/facility" class="dropdown-item">보호소 시설 안내</a>
               </div>
-            <li id="adopt" class="nav-item dropdown"><a href="/adopt/procedure" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">입양하기</a>
+            <li id="adopt" class="nav-item dropdown"><a href="/adopt/protectAnimal" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">입양하기</a>
               <div class="dropdown-menu border-light m-0">
-                <a href="/adopt/procedure" class="dropdown-item">입양절차</a>
                 <a href="/adopt/protectAnimal" class="dropdown-item">입양하기</a>
+                <a href="/adopt/procedure" class="dropdown-item">입양절차</a>
               </div>
             </li>
 <!--             <li class="nav-item dropdown"><a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">실종신고</a>

@@ -58,7 +58,7 @@
                 </tr>
                 <tr>
                     <th>수량</th>
-                    <td><c:out value = "${product.quantity }"/></td>
+                    <td><c:out value = "${product.amount }"/></td>
                 </tr>
                 <tr>
                 	<th colspan="2">상품 설명</th>

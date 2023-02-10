@@ -52,8 +52,8 @@
 								<h5>나이 : <c:out value= "${ details.age }" />살 </h5>
 								<h5>성별 : <c:out value= "${ details.sex }" /> </h5>
 								<h5>품종 : <c:out value= "${ details.variety }" /> </h5>
-								<h5>중성화유무 : <c:out value= "${ details.tnr }" /> </h5>
-								<h5>안락사까지 남은 기간  : <c:out value= "${ details.euthanasia_day }" />일 </h5>
+								<h5>중성화 유무 : <c:out value= "${ details.tnr }" /> </h5>
+								<h5>안락사 날짜  : <c:out value= "${ details.euthanasia_day }" /> </h5>
 								<h5>특징 : <br> <c:out value= "${ details.identity }" /></h5> 
 							</div>
 							<c:choose>

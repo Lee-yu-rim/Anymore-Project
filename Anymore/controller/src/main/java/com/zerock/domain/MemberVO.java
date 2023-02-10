@@ -21,4 +21,6 @@ public class MemberVO {
 	private Date regdate; 
 	private int alert_cnt;
 	private int member_num;
+	
+	private String kakao_email;
 }

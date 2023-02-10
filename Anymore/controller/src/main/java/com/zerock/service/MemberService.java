@@ -18,6 +18,12 @@ public interface MemberService {
 	//회원 가입
 	public void register(MemberVO member);
 	
+	//카카오 회원가입
+	public void kakao_insert(MemberVO member);
+	
+	//카카오 회원가입 여부 체크
+	public MemberVO kakao_check(String kakao_email);
+	
 	//회원 정보 상세보기
 	public MemberVO get(String id);
 	

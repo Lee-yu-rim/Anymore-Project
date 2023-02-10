@@ -4,6 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
 
+
+
+
 <script>
 	document.getElementById("home").setAttribute("class", "nav-item");
 	document.getElementById("community").setAttribute("class", "nav-item dropdown active");
@@ -11,19 +14,19 @@
 
 <style>
 
-#adoptList .heading {
-	color: black transition-property: color;
-	transition-duration: 0.3s;
-}
-
-#adoptList:hover .heading {
-	color: #CDBBA7;
-}
-
-select, input {
-	font-size:15px;
-	height:40px;
-}
+	#adoptList .heading {
+		color: black transition-property: color;
+		transition-duration: 0.3s;
+	}
+	
+	#adoptList:hover .heading {
+		color: #CDBBA7;
+	}
+	
+	select, input {
+		font-size:15px;
+		height:40px;
+	}
 </style>
 
 
@@ -60,14 +63,21 @@ select, input {
 			<div class="col-md-4 d-flex ftco-animate">
 				<a id="adoptList" class='move' href='<c:out value="${adoptionReview.bno}"/>'>
 		        <div class="blog-entry align-self-stretch">
-<!-- 		          <a href="/adopt/getAR" class="block-20 rounded" style="background-image: url('../images/image_1.jpg');">
-		          </a> -->
-		          <img src="../images/image_1.jpg"  class="img-fluid" />
+<!-- 		          <img src="../images/image_1.jpg"  class="img-fluid" /> -->	
+	        
+					<c:forEach items="${image}" var="image">
+	  					<c:if test="${adoptionReview.bno == image.bno }">
+							<img class="img-fluid" src="/display?fileName=${ image.uploadPath }/${ image.uuid }_${ image.fileName }"/>
+						</c:if> 
+					</c:forEach>
+
+
+		          
 		          <div class="text p-4">
 		          	<div class="meta mb-2">
 		              <div><fmt:formatDate pattern="yyyy.MM.dd" value="${adoptionReview.regdate}" /></div>
 		              <div><c:out value="${adoptionReview.id}" /></div>
-		              <div><span class="fa fa-comment"></span><c:out value="${adoptionReview.visit_cnt}"/></div>
+		              <div><span class="fa fa-comment"></span><c:out value="${adoptionReview.reply_cnt}"/></div>
 		            </div>
 		            <h3 class="heading"><c:out value="${adoptionReview.title }" /></h3>
 		          </div>
@@ -88,7 +98,7 @@ select, input {
 					<option value="T"<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
 					<option value="C"<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
 					<option value="I"<c:out value="${pageMaker.cri.type eq 'I'?'selected':''}"/>>작성자</option>
-					<option value="TCI"<c:out value="${pageMaker.cri.type eq 'FTCI'?'selected':''}"/>>모든 항목</option>
+					<option value="TCI"<c:out value="${pageMaker.cri.type eq 'TCI'?'selected':''}"/>>모든 항목</option>
 				</select>
 				<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
 				<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
@@ -169,12 +179,19 @@ select, input {
 			if(parseInt(result) > 0) {
 				$(".modal-body").html("게시글 " + parseInt(result) + "번이 등록되었습니다.");
 			}
-			$("#myModal").modal("show");
+			$("#alertModal").modal("show");
 		}
 		
+		var id = '<c:out value="${member.id}"/>';	
 		
 		$("#regBtn").on("click",function(){
-			self.location = "/community/registerAR";
+			
+			if(id == ""){
+				alert("로그인 후 이용가능합니다.");
+				self.location = "/member/login";
+			}else{
+				self.location = "/community/registerAR";
+			}
 		});
 		
 		
@@ -200,12 +217,14 @@ select, input {
 		
 		$("#searchForm button").on("click",function(e){
 			if(!searchForm.find("option:selected").val()){
-				alert("검색종류를 선택하세요");
+				$(".modal-body").html("검색종류를 선택하세요");
+				$("#alertModal").modal("show");
 				return false;
 			}
 			
 			if(!searchForm.find("input[name='keyword']").val()){
-				alert("키워드를 입력하세요");
+				$(".modal-body").html("키워드를 입력하세요");
+				$("#alertModal").modal("show");
 				return false;
 			}
 			
@@ -218,8 +237,6 @@ select, input {
 		
 	});
 </script>
-
-
 
 
 <%@include file="../includes/footer.jsp"%>

@@ -70,7 +70,7 @@ select, input {
 								<span>성별 : <c:out value= "${ protectList.sex }" /></span><br/>
 								<span>품종 : <c:out value= "${ protectList.variety }" /></span><br/>
 								<span>중성화 유무 : <c:out value= "${ protectList.tnr }" /></span><br/>
-								<span>안락사까지 남은 기간 : <c:out value= "${ protectList.euthanasia_day }" />일</span>
+								<span>안락사 날짜 : <c:out value= "${ protectList.euthanasia_day }" /></span>
 							</div>
 <%-- 							<div id="board_num" class="myfont14">공고번호  : <c:out value= "${ protectList.board_num }" /></div>
 							<br />

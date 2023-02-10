@@ -13,11 +13,11 @@
 	<select id="getListWithPaging" resultType="com.zerock.domain.CurrentPerchaseVO">
 		<![CDATA[
 		select
-			perchase_num, name, perchased_product, all_price, ordered_date, delivery_status, product_num, payment, id, address, phone
+			perchase_num, name, perchased_product, all_price, ordered_date,  delivery_status, product_num, payment, id, address, phone
 		from
 			(
 				select
-					rownum rn, a.PERCHASE_NUM, a.NAME, a.PERCHASED_PRODUCT, a.ALL_PRICE, a.ORDERED_DATE, a.DELIVERY_STATUS,  a.PRODUCT_NUM, a.PAYMENT, a.ID, b.ADDRESS, b.PHONE
+					rownum rn, a.PERCHASE_NUM, a.NAME, a.PERCHASED_PRODUCT, a.ALL_PRICE, a.ORDERED_DATE, a.DELIVERY_STATUS, a.PRODUCT_NUM, a.PAYMENT, a.ID, b.ADDRESS, b.PHONE
 				from 
 					product_perchase a , delivery_info b
 				where

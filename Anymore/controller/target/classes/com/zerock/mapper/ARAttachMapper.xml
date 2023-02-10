@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.ARAttachMapper">
+	<insert id="insert">
+		insert into commu_fileupload(fno, uuid, uploadpath, uploaddate, fileName, fileType, bno)
+		values (seq_commuFile.nextval, #{uuid}, #{uploadPath},sysdate, #{fileName}, #{fileType}, #{bno})
+		
+	</insert>
+	
+	<delete id="delete">
+		delete from commu_fileupload where uuid = #{uuid}
+	</delete>
+	
+	<select id="findByBno" resultType = "com.zerock.domain.ARAttachVO">
+		select bno, uploadpath, uuid, fileName, filetype from commu_fileupload where bno = #{bno}
+	</select>
+	
+	<delete id="deleteAll">
+		delete commu_fileupload where bno = #{bno}
+	</delete>
+	
+	<select id = "getOldFiles" resultType="com.zerock.domain.ARAttachVO">
+		select * from commu_fileupload where uploadpath = to_char(sysdate -1, 'yyyy\\mm\\dd')
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- <select id="read" resultType = "com.zerock.domain.ARAttachVO">
+		select c.bno, c.filename, c.uuid, c.uploadpath
+		from adoption_review a, commu_fileupload c 
+		where a.bno = c.bno
+	</select> -->
+	
+	
+	
+	<!-- 이미지 불러오기 -->
+	<select id="imageList" resultType="com.zerock.domain.ARAttachVO">
+		select a.bno, f.uploadpath, f.uuid, f.filename, f.fno
+		from adoption_review a, commu_fileupload f
+        where a.bno = f.bno
+	</select>
+	
+</mapper>

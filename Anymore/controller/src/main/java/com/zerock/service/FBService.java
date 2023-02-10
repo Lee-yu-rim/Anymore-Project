@@ -3,6 +3,7 @@ package com.zerock.service;
 import java.util.List;
 
 import com.zerock.domain.Criteria;
+import com.zerock.domain.FBAttachVO;
 import com.zerock.domain.FBVO;
 
 public interface FBService {
@@ -21,6 +22,6 @@ public interface FBService {
 	
 	public int updateVisitCnt(Long bno);
 	
-//	public List<BoardAttachVO> getAttachList(Long bno);
+	public List<FBAttachVO> getAttachList(Long bno);
 	
 }

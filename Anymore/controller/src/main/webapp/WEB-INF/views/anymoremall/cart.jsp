@@ -239,7 +239,7 @@ td {
 	                            <p><button type="button" class="btn btn-primary px-2 py-2" onclick='location.href="/anymoremall/cart_delete?c_num=${cartList.c_num}"'>상품삭제</button><p>
 	                        </td>
 	                        <td>
-	                        	<p><c:out value="${ cartList.price }" /></p>
+	                        	<p><fmt:formatNumber value="${ cartList.quantity * cartList.price }" pattern="###,###"/></p>
 	                            <p><button type="button" class="btn btn-primary px-2 py-2">주문하기</button></p>
 	                        </td>
 	                        <td><p>무료</p></td>
@@ -251,14 +251,69 @@ td {
         				</tr>
         			</c:if>
         		</form>
-
+        	<!-- 디자인 -->
+            <!--  <form>
+                <thead>
+                    <tr>
+                        <td colspan="3">상품정보</td>
+                        <td>옵션</td>
+                        <td>상품금액</td>
+                        <td>배송비</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="cart__list__detail">
+                        <td width="20%"><img src="../images/product-4.jpg" alt="magic keyboard"></td>
+                        <td colspan="2">
+                            <p style="text-align: left;">유기동물 후원 산책 리드줄</p>
+                            <p style="text-align: left;">9,000 원</p>
+                        </td>
+                        <td>
+                            <p>1개</p>
+                            <p><button type="button" class="btn btn-primary px-2 py-2">상품빼기</button><p>
+                        </td>
+                        <td>
+                        	<p>9,000 원</p>
+                            <p><button type="button" class="btn btn-primary px-2 py-2">주문하기</button></p>
+                        </td>
+                        <td><p>무료</p></td>
+                    </tr>	
+                    <tr class="cart__list__detail">
+                        <td>
+                            <img src="../images/product-2.jpg" alt="magic mouse">
+                        </td>
+                        <td colspan="2">
+                            <p style="text-align: left;">유기동물 후원 인형</p>
+                            <p style="text-align: left;">30,000원</p>
+                        </td>
+                        <td>
+                            <p>1개</p>
+                            <p><button type="button" class="btn btn-primary px-2 py-2">상품빼기</button></p>
+                        </td>
+                        <td>
+                        	<p>30,000원</p>
+                            <p><button type="button" class="btn btn-primary px-2 py-2">주문하기</button></p>
+                        </td>
+                        <td><p>무료</p></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="12" class="">
+                        	<div class="col-md-12 d-flex justify-content-end">
+                        		<button type="button" class="btn btn-primary ml-3">전체상품 삭제</button>
+                        	</div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </form> -->
         </table>
         <div class="col-md-12 align-items-center d-flex justify-content-center"
         	style="margin-top: 50px">
             <!-- <button class="cart__bigorderbtn left">쇼핑 계속하기</button> -->
-            <button type="button" class="btn btn-primary mr-2">쇼핑 계속하기</button>
+            <button id="listBtn" type="button" class="btn btn-primary mr-2">쇼핑 계속하기</button>
             <!-- <button class="cart__bigorderbtn right">주문하기</button> -->
-            <a href="/anymoremall/import2"><button type="button" class="btn btn-primary">전체 주문하기</button></a>
+            <button id="allOrderBtn" type="button" class="btn btn-primary">전체 주문하기</button>
             <!-- 로그인 상태일 때 활성화 -->
             <c:choose>
             	<%-- <c:when test="${member.id != null}">
@@ -272,5 +327,15 @@ td {
             </c:choose>
         </div>
     </section>
+    
+<script type="text/javascript">
+	// 쇼핑 계속하기 버튼
+	$('#listBtn').on('click', function(){
+		location.href = "/anymoremall/product_list";
+	});
+	
+	// 주문 페이지로 이동
+	
+</script>
 
 <%@include file="../includes/footer.jsp"%>

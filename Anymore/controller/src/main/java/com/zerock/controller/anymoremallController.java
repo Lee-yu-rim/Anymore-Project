@@ -119,32 +119,8 @@ public class anymoremallController {
 		return "redirect:/anymoremall/cart";
 	}
 	
-//	@GetMapping("/import")
-//	public String import_reading() {
-//		return "/anymoremall/import";
-//	}
-	
-	@GetMapping("/import2")
-	public String import_reading1() {
-		return "/anymoremall/import2";
-	}
-	
-	
-	@ResponseBody
-	@RequestMapping(value = "/import", method = RequestMethod.POST)
-	public int call_import(CartVO cart, HttpSession session) {
-		
-		int result = 0;
-		
-		MemberVO member = (MemberVO)session.getAttribute("member");
-		
-		if(member != null) {
-			cart.setId(member.getId());
-			service.addCart(cart);
-			result = 1;
-		}
-		
-		return result;
-		
+	@GetMapping("/import")
+	public String import_reading() {
+		return "/anymoremall/import";
 	}
 }

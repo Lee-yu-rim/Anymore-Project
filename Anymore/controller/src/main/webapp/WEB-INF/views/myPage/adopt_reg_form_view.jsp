@@ -50,23 +50,23 @@
             <table class="table table-bordered">
                 <tr>
                     <th>입양신청할 유기동물의 이름 또는 공고번호</th>
-                    <td>55588</td>
+                    <td>${ adoptView.adoptnum }</td>
                 </tr>
                 <tr>
                     <th>신청자 이름</th>
-                    <td>김유라</td>
+                    <td>${ adoptView.name }</td>
                 </tr>
                 <tr>
                     <th>연락처</th>
-                    <td>010-8555-4975</td>
+                    <td>${ adoptView.phone }</td>
                 </tr>
                 <tr>
                     <th>생년월일</th>
-                    <td>1997.08.17</td>
+                    <td>${ adoptView.birthday_Date }</td>
                 </tr>
                 <tr>
                     <th>거주지</th>
-                    <td>서울특별시 구로구 시흥대로 163길 33</td>
+                    <td>${ adoptView.address }</td>
                 </tr>
             </table>
             <br>
@@ -78,27 +78,32 @@
                     </th>
                 </thead>
                 <tr>
-                    <td>설문조사 내용입니다.</td>
+                    <td>${ adoptView.servey1 }</td>
                 </tr>
                 <tr>
-                    <td>설문조사 내용입니다.</td>
+                    <td>${ adoptView.servey2 }</td>
                 </tr>
                 <tr>
-                    <td>설문조사 내용입니다.</td>
+                    <td>${ adoptView.servey3 }</td>
                 </tr>
                 <tr>
-                    <td>설문조사 내용입니다.</td>
+                    <td>${ adoptView.servey4 }</td>
                 </tr>
                 <tr>
-                    <td>설문조사 내용입니다.</td>
+                    <td>${ adoptView.servey5 }</td>
                 </tr>
                 <tr>
-                    <td>설문조사 내용입니다.</td>
+                    <td>${ adoptView.servey6 }</td>
                 </tr>
-
+				<tr>
+                    <td>${ adoptView.servey7 }</td>
+                </tr>
+                <tr>
+                    <td>${ adoptView.servey8 }</td>
+                </tr>
             </table>
 
-            <button type="button" class="btn btn-primary" style="float: right;"><a href="adopt_reg_form">확인</a></button>
+            <button type="button" class="btn btn-primary" style="float: right;" onclick='location.href="/myPage/adopt_reg_form"'>확인</button>
         </div> <!-- end col-md-10 -->
       </div>	<!-- end row -->
     </div>	<!-- end container -->

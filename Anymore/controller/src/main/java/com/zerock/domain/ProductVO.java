@@ -12,7 +12,7 @@ public class ProductVO {
 	private String price;
 	private String identity;
 	private String discribe;
-	private int quantity;
+	private int amount;
 	private String product_name;
 	private Date product_regdate;
 	private String product_content;
