@@ -1,0 +1,29 @@
+package com.zerock.domain;
+
+import lombok.Data;
+
+@Data
+public class ProtectAnimalVO {
+	private Long board_num;
+	private String aniaml_name;
+	private Date enter_day;
+	private Date protect_day;
+	private String variety;
+	private String age;
+	private String sex;
+	private String tnr;
+	private String identity;
+	private String id;
+	private Long visit_identify;
+	
+	BOARD_NUM
+	ANIMAL_NAME
+	ENTER_DAY
+	PROTECT_DAY
+	VARIETY
+	AGE
+	SEX
+	TNR
+	IDENTITY
+	EUTHANASIA_DAY
+}

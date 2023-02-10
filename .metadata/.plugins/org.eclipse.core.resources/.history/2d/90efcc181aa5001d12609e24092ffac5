@@ -1,0 +1,16 @@
+package com.zerock.domain;
+
+import lombok.Data;
+
+@Data
+public class CurrentPerchaseVO {
+	private Long PERCHASE_NUM;
+	private String NAME; 
+	private String PERCHASED_PRODUCT;
+	private String ALL_PRICE;
+	private date ORDERED_DATE;
+	private String ORDERED_TIME;
+	private String DELIVERY_STATUS;
+	private Long DELIVERY_FEE, PRODUCT_NUM, PAYMENT, ID, ADDRESS
+
+}

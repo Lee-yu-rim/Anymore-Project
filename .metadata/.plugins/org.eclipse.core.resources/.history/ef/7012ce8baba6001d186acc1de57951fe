@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.ProductAttachMapper">
+	<insert id="insert">
+		insert into NOTICE_FILEUPLOAD(fno, change_file_name, uploadpath, uploaddate, origin_file_name, filetype, bno)
+		values (seq_NoticeFile.nextval, #{uuid}, #{uploadPath},sysdate, #{fileName}, #{fileType}, #{bno})
+		
+	</insert>
+	
+	<delete id="delete">
+		delete from NOTICE_FILEUPLOAD where change_file_name = #{uuid}
+	</delete>
+	
+	<select id="findByBno" resultType = "com.zerock.domain.ProductVO">
+		select * from NOTICE_FILEUPLOAD where bno = #{bno}
+	</select>
+	
+	<delete id="deleteAll">
+		delete NOTICE_FILEUPLOAD where bno = #{bno}
+	</delete>
+	
+	<select id = "getOldFiles" resultType="com.zerock.domain.ProductVO">
+		select * from NOTICE_FILEUPLOAD where uploadpath = to_char(sysdate -1, 'yyyy\\mm\\dd')
+	</select>
+</mapper>

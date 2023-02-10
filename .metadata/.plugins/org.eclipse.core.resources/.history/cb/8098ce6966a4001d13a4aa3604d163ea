@@ -1,0 +1,50 @@
+package com.zerock.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.zerock.domain.VisitReservationVO;
+import com.zerock.domain.Visit_Criteria;
+import com.zerock.mapper.AdoptReservationMapper;
+import com.zerock.mapper.VisitReservationMapper;
+
+import lombok.AllArgsConstructor;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+
+@Log4j
+@Service
+@AllArgsConstructor
+public class VisitreservationServiceImpl implements VisitreservationService {
+
+	@Setter(onMethod_ = @Autowired)
+	private VisitReservationMapper mapper;
+
+	@Override
+	public List<VisitReservationVO> getList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public VisitReservationVO get(Long adoptnum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getTotal(Visit_Criteria cri) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<VisitReservationVO> getList(Visit_Criteria cri) {
+		log.info("get list with criteria: " + cri);
+		return mapper.getListWithPaging(cri);
+	}
+	
+
+}

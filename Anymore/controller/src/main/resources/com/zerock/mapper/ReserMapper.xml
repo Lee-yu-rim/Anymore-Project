@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.ReserMapper">
+	
+	<insert id="insert">
+	<selectKey keyProperty="num" order="BEFORE" resultType="Long">
+      select seq_reservation2.nextval from dual
+   	</selectKey>
+		insert into reservation (num, title, sex, people_cnt, visiter_name, phone, visit_day, reser_time, visit_reason, id, visit_identify)
+		values (#{num}, #{title}, #{sex}, #{people_cnt}, #{visiter_name}, #{phone}, #{visit_day}, #{reser_time}, #{visit_reason}, #{id}, #{visit_identify})
+	
+	</insert>
+
+	<select id="read" resultType="com.zerock.domain.ReserVO">
+		select * from reservation where num = #{num}
+	</select>
+	
+
+	
+
+	
+</mapper>
+
+
+<!-- CREATE TABLE reservation ( -->
+<!-- 	num	number(10,0)		NOT NULL, -->
+<!-- 	title	varchar2(50)		NOT NULL, -->
+<!-- 	sex	varchar2(10)		NULL, -->
+<!-- 	people_cnt	number(10,0)		NOT NULL, -->
+<!-- 	visiter_name	varchar2(20)		NOT NULL, -->
+<!-- 	phone	varchar2(30)		NOT NULL, -->
+<!-- 	visit_day	date		NOT NULL, -->
+<!-- 	reser_time	date		NOT NULL, -->
+<!-- 	visit_reason	varchar2(2000)		NULL, -->
+<!-- 	id	varchar2(20)		NOT NULL, -->
+<!-- 	visit_identify	number(10,0)		NOT NULL -->
+<!-- ); -->

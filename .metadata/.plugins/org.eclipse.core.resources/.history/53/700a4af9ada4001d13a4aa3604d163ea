@@ -1,0 +1,53 @@
+package com.zerock.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.zerock.domain.Criteria;
+import com.zerock.domain.ProtectAnimalVO;
+import com.zerock.domain.VisitReservationVO;
+import com.zerock.domain.Visit_Criteria;
+import com.zerock.mapper.AdoptReservationMapper;
+import com.zerock.mapper.ProtectAnimalMapper;
+import com.zerock.mapper.VisitReservationMapper;
+
+import lombok.AllArgsConstructor;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+
+@Log4j
+@Service
+@AllArgsConstructor
+public class CurrentPerchaseServiceImpl implements ProtectAnimalService {
+
+	@Setter(onMethod_ = @Autowired)
+	private ProtectAnimalMapper mapper;
+
+	@Override
+	public List<ProtectAnimalVO> getList() {
+		log.info("get List.........");
+		return mapper.getList();
+	}
+
+	@Override
+	public ProtectAnimalVO get(Long board_num) {
+		log.info("get............." + board_num);
+		return mapper.read(board_num);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount(cri);
+	}
+
+	@Override
+	public List<ProtectAnimalVO> getList(Criteria cri) {
+		log.info("get list with criteria: " + cri);
+		return mapper.getListWithPaging(cri);
+	}
+	
+
+}

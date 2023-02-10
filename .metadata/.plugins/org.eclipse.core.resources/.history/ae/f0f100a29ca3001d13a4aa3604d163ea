@@ -1,0 +1,11 @@
+package com.zerock.domain;
+
+public class NoticeAttachVO {
+	private String uuid;
+	private String uploadPath;
+	private String fileName;
+	private boolean fileType;
+	
+	private Long bno;
+
+}

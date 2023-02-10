@@ -1,0 +1,13 @@
+package com.zerock.mapper;
+
+import com.zerock.domain.AdoptReservationVO;
+
+public interface AdoptReservationMapper {
+	
+	// 입양신청서 폼 값 insert
+	public int formSubmit(AdoptReservationVO vo);
+	
+	// 입양신청서 폼 값 select
+	public AdoptReservationVO formSelect(int adoptNum);
+	
+}

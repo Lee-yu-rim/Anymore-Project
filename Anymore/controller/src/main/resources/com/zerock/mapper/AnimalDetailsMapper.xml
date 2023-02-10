@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.AnimalDetailsMapper">
+
+<!-- 상세보기 -->
+<select id="viewDetails" resultType="com.zerock.domain.ProtectAnimalVO">
+	<!-- 	공고번호,이름,품종,나이,성별,중성화유무,특징,안락사기간 -->
+	select board_num, animal_name, variety, age, sex, tnr, identity, euthanasia_day
+	from animal_info where board_num = #{board_num}
+</select>
+
+</mapper>

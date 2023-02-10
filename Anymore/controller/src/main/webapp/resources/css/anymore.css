@@ -1,0 +1,26 @@
+   p {
+   font-family: 'NanumSquareNeo';
+}
+
+.title{
+      font-family:NanumSquareNeo;
+      text-align:center;
+      margin-top:75px;
+      margin-bottom:-30px;
+}
+
+.breadcrumbs span{
+      padding-right:10px;
+}
+.myfont14 span {
+   font-size: 14px;
+   line-height: 30px;
+}
+.select_menu {
+   margin-bottom: 30px;
+   margin-left: 10px;
+}
+
+/* #CDBBA7 */
+/* #AD8B73 */
+/* #997B66 */

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.CurrentPerchaseMapper">
+
+	<!-- 회원 목록 가져오기 -->
+	<select id="getList" resultType="com.zerock.domain.CurrentPerchaseVO">
+		select * from product_perchase
+	</select>
+	
+	
+	<select id="getListWithPaging" resultType="com.zerock.domain.CurrentPerchaseVO">
+		<![CDATA[
+		select
+			PERCHASE_NUM, NAME, PERCHASED_PRODUCT, ALL_PRICE, ORDERED_DATE, ORDERED_TIME, DELIVERY_STATUS, DELIVERY_FEE, PRODUCT_NUM, PAYMENT, ID, ADDRESS, phone
+		from
+			(
+				select
+					rownum rn, a.PERCHASE_NUM, a.NAME, a.PERCHASED_PRODUCT, a.ALL_PRICE, a.ORDERED_DATE, a.ORDERED_TIME, a.DELIVERY_STATUS, a.DELIVERY_FEE, a.PRODUCT_NUM, a.PAYMENT, a.ID, b.ADDRESS, b.phone
+				from 
+					product_perchase a , delivery_info b
+				where
+		]]>
+
+	
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'N'.toString()">
+							name like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'P'.toString()">
+							perchased_product like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'D'.toString()">
+							delivery_status like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+					
+		<![CDATA[				
+					a.perchase_num = b.perchase_num and	rownum <= #{pageNum} * #{amount}
+				)
+			where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getTotalCount" resultType ="int">
+		<![CDATA[
+			select count(*) from product_perchase where 
+		]]>
+		
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'N'.toString()">
+							name like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'P'.toString()">
+							perchased_product like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'D'.toString()">
+							delivery_status like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+
+		<![CDATA[
+			PERCHASE_NUM > 0
+		]]>
+		
+	</select>
+	
+	
+	
+	
+	
+</mapper>

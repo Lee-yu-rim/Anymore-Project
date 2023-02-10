@@ -1,0 +1,11 @@
+package com.zerock.domain;
+
+public class VisitReservationVO {
+	private Long num;
+	private String title;
+	private String sex;
+	private String people_cnt;
+	private String visiter_name;
+	private String phone;
+	
+}

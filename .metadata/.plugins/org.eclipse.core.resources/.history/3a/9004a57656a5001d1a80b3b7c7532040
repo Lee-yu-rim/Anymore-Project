@@ -1,0 +1,83 @@
+package com.zerock.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.zerock.domain.MemberVO;
+import com.zerock.service.MemberService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+
+@Controller
+@Log4j
+@RequestMapping("/myPage/*")
+@AllArgsConstructor
+public class MypageController {
+	
+	private MemberService service;
+	
+	//마이페이지 : 방문신청 폼
+	@GetMapping("/visit_reg_form")
+	public String visit_reg_form() {
+  
+		return "/myPage/visit_reg_form";
+	}
+	//마이페이지 : 방문예약확인 상세페이지
+	@GetMapping("/visit_reg_form_view")
+	public String visit_reg_form_view() {
+  
+		return "/myPage/visit_reg_form_view";
+	}
+	//마이페이지 : 입양신청 폼
+	@GetMapping("/adopt_reg_form")
+	public String adopt_reg_form() {
+  
+		return "/myPage/adopt_reg_form";
+	}
+	//마이페이지 :  입양신청확인 상세페이지
+	@GetMapping("/adopt_reg_form_view")
+	public String adopt_reg_form_view() {
+  
+		return "/myPage/adopt_reg_form_view";
+	}
+	
+	//마이페이지 - 구매내역
+	@GetMapping("/order_list")
+    public String order_list() {
+       log.info("go order_list");
+      
+       return "/myPage/order_list";
+   
+    }
+	
+	// 마이페이지 - 개인정보 수정 페이지
+	@RequestMapping("/edit")
+	public String userUpdate() {
+		return "/myPage/edit";
+	}
+	
+ 
+	// 마이페이지 - 개인정보 수정
+	@RequestMapping("/updateMembers")
+	public String updateMembers(MemberVO member) {
+		log.info("updateMembers....");
+		service.update(member);
+		return "redirect:/myPage/edit";
+	}
+	
+   // 마이페이지 - 찜
+   @GetMapping("/myZzim")
+   public void myZzim() {
+      
+   }
+	
+}

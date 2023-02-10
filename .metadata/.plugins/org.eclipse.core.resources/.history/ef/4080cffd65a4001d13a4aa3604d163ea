@@ -1,0 +1,31 @@
+package com.zerock.service;
+
+import java.util.List;
+
+import com.zerock.domain.PassFindVO;
+import com.zerock.domain.VisitReservationVO;
+import com.zerock.domain.Visit_Criteria;
+
+public interface VisitreservationService {
+
+	public List<VisitReservationVO> getList();
+			
+	//등록
+	public void register(VisitReservationVO adopt);
+			
+	public VisitReservationVO get(Long adoptnum);
+			
+	//수정
+	public boolean modify(VisitReservationVO adopt);
+			
+	//삭제
+	public boolean remove(String id);
+			
+	//비밀번호 찾기
+	public PassFindVO pass_find(PassFindVO vo);
+
+	//페이지
+	public int getTotal(Visit_Criteria cri);
+			
+	public List<VisitReservationVO> getList(Visit_Criteria cri);
+}

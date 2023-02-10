@@ -1,0 +1,28 @@
+package com.zerock.service;
+
+import java.util.List;
+
+import com.zerock.domain.Criteria;
+import com.zerock.domain.CriteriaAR;
+import com.zerock.domain.ProtectAnimalVO;
+import com.zerock.domain.QNAVO;
+
+public interface ProtectAnimalService {
+
+	public List<ProtectAnimalVO> getList();
+			
+	public ProtectAnimalVO get(Long board_num);
+			
+	//페이지
+	public int getTotal(Criteria cri);
+			
+	public List<ProtectAnimalVO> getList(Criteria cri);
+	
+	public List<ProtectAnimalVO> animalList();
+	
+	// ProtectAnimal 목록 전체 불러오기 + 페이징
+	public List<QNAVO> getList(CriteriaAR cri);
+	
+	// ProtectAnimal 게시글 전체 데이터 불러오기
+	public int getTotal(CriteriaAR cri);
+}

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.ProtectAnimalMapper">
+
+	<!-- ProtectAnimal 전체 목록 -->
+	<select id="animalList" resultType="com.zerock.domain.ProtectAnimalVO">
+		<![CDATA[
+		select board_num, animal_name, variety, age, sex, tnr, euthanasia_day, identity
+		from animal_info
+		]]>
+	</select>
+	<!-- ProtectAnimal 전체 목록 -->
+<select id="animalList" resultType="com.zerock.domain.ProtectAnimalVO">
+	<![CDATA[
+	select board_num, animal_name, variety, age, sex, tnr, euthanasia_day, identity
+	from animal_info
+	]]>
+</select>
+
+<!-- ProtectAnimal 전체 목록 + 페이지네이션 -->
+<select id="getListPaging" resultType="com.zerock.domain.ProtectAnimalVO">
+	<![CDATA[
+	select * from 
+			(
+				select /*+INDEX_DESC(animal_info pk_animal_info) */
+				rownum rn, board_num, animal_name, enter_day, protect_day, variety, age, sex, tnr, euthanasia_day, identity
+				from animal_info
+				where
+	]]>
+
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<foreach item='type' collection="typeArr">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'N'.toString()">
+						animal_name like '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'V'.toString()">
+						variety like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+				
+	<![CDATA[				
+				rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum}-1) * #{amount}
+	]]>
+</select>
+	
+	
+	<select id="getListWithPaging" resultType="com.zerock.domain.ProtectAnimalVO">
+		<![CDATA[
+		select
+			BOARD_NUM, ANIMAL_NAME, VARIETY, AGE, SEX, TNR, IDENTITY, EUTHANASIA_DAY
+		from
+			(
+				select
+					rownum rn, BOARD_NUM, ANIMAL_NAME, VARIETY, AGE, SEX, TNR, IDENTITY, EUTHANASIA_DAY
+				from 
+					ANIMAL_INFO
+				where
+		]]>
+
+	
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'N'.toString()">
+							animal_name like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'V'.toString()">
+							variety like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+					
+		<![CDATA[				
+					rownum <= #{pageNum} * #{amount}
+				)
+			where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getTotalCount" resultType ="int">
+		<![CDATA[
+			select count(*) from ANIMAL_INFO where 
+		]]>
+		
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'N'.toString()">
+							animal_name like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'V'.toString()">
+							variety like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+
+		<![CDATA[
+			board_num > 0
+		]]>
+		
+	</select>
+	
+	
+	
+	
+	
+</mapper>

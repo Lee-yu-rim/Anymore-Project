@@ -1,0 +1,167 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@include file="../includes/header.jsp"%>
+
+<script>
+	document.getElementById("home").setAttribute("class", "nav-item");
+</script>
+
+<style>
+	select, input {
+		font-size:15px;
+		height:40px;
+	}
+	a{
+		color:#808080;
+	}
+	table {
+		text-align:center;
+	}
+</style>
+
+<!-- <section>
+      <div class="overlay"></div>
+      <br>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end">
+          <div class="col-md-12 ftco-animate pb-5">
+            <h1 class="mb-0 bread">관리자 마이페이지 - 보호동물 글 등록</h1>
+
+          	<p class="breadcrumbs mb-2" >
+               <div style="text-align: center;">
+                  <button type="button" class="btn btn-default btn-lg">
+                     <a href="/staffMyPage/member_list">회원목록</a>
+                     <i class="ion-ios-arrow-forward"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-lg">
+                     <a href="/staffMyPage/visit_reservation_form">방문신청 폼 확인</a>
+                     <i class="ion-ios-arrow-forward"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-lg">
+                     <a href="/staffMyPage/adopt_reservation_form">입양신청 폼 확인</a>
+                     <i class="ion-ios-arrow-forward"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-lg">
+                     <a href="/staffMyPage/protect_animal_write">보호동물 등록</a>
+                     <i class="ion-ios-arrow-forward"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-lg">
+                     <a href="/staffMyPage/protect_animal">보호동물 리스트</a>
+                     <i class="ion-ios-arrow-forward"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-lg">
+                     <a href="/staffMyPage/current_perchase">배송정보 관리</a>
+                     <i class="ion-ios-arrow-forward"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-lg">
+                     <a href="/staffMyPage/current_perchase">구매내역 관리</a>
+                     <i class="ion-ios-arrow-forward"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-lg">
+                     <a href="/staffMyPage/current_animal">보호중인 동물 확인</a>
+                     <i class="ion-ios-arrow-forward"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-lg">
+                     <a href="/staffMyPage/profit">매출액</a>
+                     <i class="ion-ios-arrow-forward"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-lg">
+                     <a href="/staffMyPage/product_manage">상품관리</a>
+                     <i class="ion-ios-arrow-forward"></i>
+                  </button>
+               </div>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+<section class="ftco-section" style="font-family: 'NanumSquareNeo';">
+   <div class="container">
+      <div class="row justify-content-center">
+      		
+      		<div class="col-md-2">
+				<h5>관리자 메뉴</h5>
+				<div class="select_menu">
+			      	<!-- <span style="color:#CDBBA7">회원목록</span><br/> -->
+			      	<span><a href="/staffMyPage/member_list">회원목록</a></span><br/>
+			      	<span><a href="/staffMyPage/visit_reservation_form">방문신청 폼 확인</a></span><br/>
+			      	<!-- <span style="color:#CDBBA7">입양신청 폼 확인</span><br/> -->
+			      	<span><a href="/staffMyPage/adopt_reservation_form">입양신청 폼 확인</a></span><br/>
+			      	<!-- <span><a href="/staffMyPage/protect_animal_write">보호동물 등록</a></span><br/> -->
+			      	<span style="color:#CDBBA7">보호동물 등록</span><br/>
+			      	<span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
+			      	<span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
+			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+		      		<span><a href="/staffMyPage/product_manage">상품관리</a></span>
+			    </div>
+			</div>
+				
+		    <div class="col-md-10">
+		    
+		    	<h3 style="margin-bottom: 30px"><b>보호동물 등록</b></h3>
+			    <!-- <div class="col-md-12">
+			     <p>공고 번호</p><input type="text" placeholder="번호" />
+			    </div>
+			    
+			    <div class="col-md-12">
+			         <div class="col-md-4"><p>이름</p>&nbsp; <input type="text" placeholder="이름" /></div>
+			         <div class="col-md-2"><p>품종</p>&nbsp; <input type="text" placeholder="품종" /></div>
+			         <div class="col-md-2"><p>나이</p>&nbsp; <input type="text" placeholder="나이" /></div>
+			         <div class="col-md-2"><p>성별</p>&nbsp; <input type="text" placeholder="성별" /></div>
+			         <div class="col-md-2"><p>중성화 유무</p>&nbsp; <input type="text" placeholder="중성화 유무" /></div>
+		      	</div><hr> -->
+		      	
+		      	<form>
+			         <div class="form-group">
+			            <label>이름</label> 
+			            <input type="text" class="form-control" placeholder="이름을 입력해주세요.">
+			         </div>
+			         
+			         <div class="form-group">
+			            <label>품종</label> 
+			            <input class="form-control" placeholder="품종을 입력해주세요.">
+			         </div>
+			         
+			         <div class="form-group">
+			            <label>나이</label> 
+			            <input class="form-control" placeholder="나이를 입력해주세요.">
+			         </div>
+			         
+			         <div class="form-group">
+			            <label>성별</label> 
+			            <input class="form-control" placeholder="성별을 입력해주세요.">
+			         </div>
+			         
+			         <div class="form-group">
+			            <label for="field">중성화 유무</label><br>
+			            <select class="form-control" name="field" >
+							 <option value="" selected>중성화 여부를 선택해주세요.</option>
+							 <option value="0">유</option>
+							 <option value="1">무</option>
+						</select>
+			         </div>
+			         
+			         <div class="form-group">
+			            <label for="content">내용</label>
+			            <textarea class="form-control" name="content" rows="14"
+			               placeholder="특이사항/예방접종 여부 등 작성"></textarea>
+			         </div>
+			
+			         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;">목록</button></a>
+			         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;">등록</button></a>
+			         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;">취소</button></a>  
+			         
+			      </form>
+			      
+				  <form method="post" enctype="multipart/form-data">
+					  <span style="margin: 10px">이미지 업로드</span><input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+				  </form>
+				</div>
+		    </div>
+		</div>	
+     </div><hr>
+</section>
+
+
+<%@include file="../includes/footer.jsp"%>

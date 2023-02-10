@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.QNAMapper">
+
+<!-- qna 전체 목록 -->
+<select id="getList" resultType="com.zerock.domain.QNAVO">
+	<![CDATA[
+	select * from qna where bno > 0 
+	]]>
+</select>
+
+<!-- qna 전체 목록 + 페이지네이션 -->
+<select id="getListPaging" resultType="com.zerock.domain.QNAVO">
+	<![CDATA[
+	select
+		bno, title, content, id, regdate, updatedate, count, replycnt from
+			(
+				select /*+INDEX_DESC(qna pk_qna) */
+				rownum rn, bno, title, content, id, regdate, updatedate, count, replycnt
+				from qna
+				where
+	]]>
+
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<foreach item='type' collection="typeArr">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						title like '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'C'.toString()">
+						content like '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'I'.toString()">
+						id like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+				
+	<![CDATA[				
+				rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum}-1) * #{amount}
+	]]>
+</select>
+
+<!-- qna 전체 데이터 갯수 처리 -->
+<select id="getTotalCount" resultType="int">
+	<![CDATA[
+	select count(*) from qna where 
+	]]>
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<foreach item='type' collection="typeArr">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						title like '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'C'.toString()">
+						content like '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'I'.toString()">
+						id like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>	
+	<![CDATA[
+	bno > 0
+	]]>
+</select>
+
+<!-- qna 쓰기 -->
+<insert id="insertSelectKey">
+   <selectKey keyProperty="bno" order="BEFORE" resultType="long">
+      select seq_qna.nextval from dual
+   </selectKey>
+   insert into qna (bno, title, content, id, count)
+   values (#{bno}, #{title}, #{content}, #{id},  #{count})
+</insert>
+
+
+<!-- qna 특정글 조회 -->
+<select id="read" resultType="com.zerock.domain.QNAVO">
+	select * from qna where bno = #{bno}
+</select>
+
+<!-- qna 삭제 -->
+<delete id="delete">
+	delete from qna where bno = #{bno}
+</delete>
+
+<!-- qna 수정 -->
+<update id="update">
+	update qna
+	set
+	title = #{title},
+	content = #{content},
+	updatedate = sysdate
+	where bno = #{bno}
+</update>
+
+<!-- 조회수 추가 -->
+<update id="viewCount">
+	update qna
+	set
+	count = count + 1
+	where bno = #{bno}
+</update>
+
+<!-- 댓글 -->
+<update id="updateReplyCnt">
+   update qna set replycnt = replycnt + #{amount} where bno = #{bno}
+</update>
+
+
+</mapper>

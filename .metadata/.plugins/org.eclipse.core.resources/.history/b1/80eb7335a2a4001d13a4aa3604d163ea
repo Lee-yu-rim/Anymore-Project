@@ -1,0 +1,18 @@
+package com.zerock.service;
+
+import java.util.List;
+
+import com.zerock.domain.VisitReservationVO;
+import com.zerock.domain.Visit_Criteria;
+
+public interface ProtectAnimalService {
+
+	public List<ProtectAnimalVO> getList();
+			
+	public ProtectAnimalVO get(Long num);
+			
+	//페이지
+	public int getTotal(Protect_Criteria cri);
+			
+	public List<VisitReservationVO> getList(Protect_Criteria cri);
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.UIReplyMapper">
+	
+	<insert id="insert">
+		insert into used_items_reply(rno, bno, reply, id)
+		values (seq_replyUI.nextval, #{bno}, #{reply}, #{id})
+	</insert>
+	
+	<select id="read" resultType="com.zerock.domain.UIReplyVO">
+		select * from used_items_reply where rno = #{rno}
+	</select>
+	
+	<delete id="delete">
+		delete from used_items_reply where rno = #{rno}
+	</delete>
+	
+	<update id="update">
+		update used_items_reply set reply = #{reply}, updatedate = sysdate where rno = #{rno}
+	</update>
+	
+	<select id="getListWithPaging" resultType = "com.zerock.domain.UIReplyVO">
+		select rno, bno, reply, id, replydate, updatedate
+		from used_items_reply
+		where bno = #{bno}
+		order by rno asc
+	</select>
+	
+</mapper>
+
+

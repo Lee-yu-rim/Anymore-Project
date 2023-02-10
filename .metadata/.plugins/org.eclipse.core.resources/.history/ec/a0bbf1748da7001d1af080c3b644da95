@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.ProductMapper">
+
+	<!-- 상품 목록 가져오기 -->
+	<select id="getList" resultType="com.zerock.domain.ProductVO">
+		<![CDATA[
+		select * from anymore_product where product_num > 0 
+		]]>
+	</select>
+	
+	<!-- 상품 상세 보기 -->
+	<select id="read" resultType="com.zerock.domain.ProductVO">
+		select * from anymore_product where product_num = #{product_num}
+	</select>
+	
+	<!-- 상품 장바구니 담기 -->
+	<insert id="addCart">
+		insert into cart(c_num, id, product_num, quantity)
+		values (seq_cart.nextval, #{id}, #{product_num}, #{quantity})
+	</insert>
+	
+	
+	<!-- 관리자 마이페이지 페이징 -->
+	<select id="getListWithPaging" resultType="com.zerock.domain.ProductVO">
+		<![CDATA[
+		select
+			product_num, price, discribe, amounts, product_name, product_regdate, product_content
+		from
+			(
+				select
+					rownum rn, product_num, price, discribe, amount, product_name, product_regdate, product_content
+				from 
+					anymore_product
+				where
+		]]>
+
+	
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'P'.toString()">
+							product_num like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							product_name like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+					
+		<![CDATA[				
+					rownum <= #{pageNum} * #{amount}
+				)
+			where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getTotalCount" resultType ="int">
+		<![CDATA[
+			select count(*) from anymore_product where 
+		]]>
+		
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'P'.toString()">
+							product_num like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							product_name like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+
+		<![CDATA[
+			product_num > 0
+		]]>
+		
+	</select>
+	
+	<!-- 글 등록하기 -->
+	<insert id="insert" parameterType="com.zerock.domain.ProductVO">
+		insert into anymore_product(product_num, product_name, price, product_content, amounts, discribe)
+		values(
+    		seq_product.nextval, #{product_name}, #{price},  #{product_content}, #{amounts}, #{discribe}
+    		);
+
+	</insert>
+	
+	<insert id = "insertSelectKey">
+		<selectKey keyProperty="product_num" order="BEFORE" resultType="int">
+			select seq_product.nextval from dual
+		</selectKey>
+			insert into anymore_product(product_num, product_name, price, amount, product_content, product_regdate,discribe)
+		values (#{product_num}, #{product_name}, #{price}, #{amount}, #{product_content}, sysdate, #{discribe})
+	</insert>
+	
+	
+		<update id="update">
+		update anymore_product
+		set product_num = #{product_num}, product_name = #{product_name}, price = #{price}, amount = #{amounts}, discribe = #{discribe}, product_content = #{product_content}
+		where product_num = #{product_num}
+	</update>
+	
+	<delete id="delete">
+		delete from anymore_product where product_num = #{product_num}
+	</delete>
+	
+</mapper>

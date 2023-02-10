@@ -1,0 +1,60 @@
+package com.zerock.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.zerock.domain.VisitReservationVO;
+import com.zerock.domain.Visit_Criteria;
+import com.zerock.mapper.VisitReservationMapper;
+
+import lombok.Setter;
+
+public class VisitreservationServiceImpl implements VisitreservationService {
+
+	@Setter(onMethod_ = @Autowired)
+	private VisitReservationMapper mapper;
+	
+	@Override
+	public List<VisitReservationVO> getList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void register(VisitReservationVO adopt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public VisitReservationVO get(Long adoptnum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean modify(VisitReservationVO adopt) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean remove(String id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getTotal(Visit_Criteria cri) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<VisitReservationVO> getList(Visit_Criteria cri) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

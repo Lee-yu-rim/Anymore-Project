@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.FAQMapper">
+	<!-- faq 글 등록하기 -->
+	<insert id="insert" parameterType="com.zerock.domain.FAQVO">
+		insert into faq
+		values (seq_faq.nextval, #{title}, #{content}, #{id}, sysdate, sysdate, '0');
+	</insert>
+	
+	<insert id = "insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			select seq_FAQ.nextval from dual
+		</selectKey>
+			insert into FAQ
+			values(#{bno}, #{title}, #{content}, #{id}, sysdate, sysdate,'0')
+	</insert>
+
+
+
+	<!-- FAQ 글 목록 보여주기 -->
+	<select id="faqGetList" resultType="com.zerock.domain.FAQVO">
+		<![CDATA[
+			select * from faq where bno > 0 
+		]]>
+	</select>
+	
+	<!-- FAQ 전체 목록 + 페이지네이션 -->
+	<select id="getListPaging" resultType="com.zerock.domain.FAQVO">
+		<![CDATA[
+		select
+			bno, title, content, id, regdate, updatedate, count from
+				(
+					select /*+INDEX_DESC(faq pk_faq) */
+					rownum rn, bno, title, content, id, regdate, updatedate, count
+					from faq
+					where
+		]]>
+	
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'I'.toString()">
+							id like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+					
+		<![CDATA[				
+					rownum <= #{pageNum} * #{amount}
+				)
+			where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- FAQ 전체 데이터 갯수 처리 -->
+	<select id="getTotalCount" resultType="int">
+		<![CDATA[
+		select count(*) from faq where 
+		]]>
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'I'.toString()">
+							id like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>	
+		<![CDATA[
+		bno > 0
+		]]>
+	</select>
+	
+	<!-- FAQ 특정글 조회 -->
+	<select id="read" resultType="com.zerock.domain.FAQVO">
+		select * from faq where bno = #{bno}
+	</select>
+	
+	<!-- 조회수 추가 -->
+	<update id="viewCount">
+		update faq
+		set
+		count = count + 1
+		where bno = #{bno}
+	</update>
+	
+
+</mapper>
