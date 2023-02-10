@@ -82,7 +82,7 @@
 					<td><c:out value="${product.product_num }"></c:out></td>
 					<td><a class='move' href='<c:out value="${product.product_num }" />'><c:out value="${product.product_name }"></c:out></a></td>
 					<td><c:out value="${product.price }"></c:out></td>
-					<td><c:out value="${product.quantity }"></c:out></td>
+					<td><c:out value="${product.amount }"></c:out></td>
 					<td><a class='move' href='<c:out value="${product.product_num }" />'><button type="button" class="btn btn-primary px-2 py-1">수정</button></a></td>
 				</tr>
 			</c:forEach>

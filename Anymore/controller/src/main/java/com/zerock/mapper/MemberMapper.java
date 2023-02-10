@@ -17,6 +17,12 @@ public interface MemberMapper {
 	//회원 가입(회원 정보 등록)
 	public void insert(MemberVO member);
 	
+	//카카오 회원가입
+	public void kakao_insert(MemberVO member);
+	
+	//카카오 회원가입 여부 체크
+	public MemberVO kakao_check(String kakao_email);
+	
 	//회원 정보 상세보기
 	public MemberVO read(String id);
 	
@@ -34,7 +40,6 @@ public interface MemberMapper {
 	
 	//비밀번호 찾기
 	public PassFindVO pass_find(PassFindVO vo);
-	
 	
 	
 	//페이지

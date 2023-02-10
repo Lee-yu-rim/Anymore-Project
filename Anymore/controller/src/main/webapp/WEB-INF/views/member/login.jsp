@@ -5,8 +5,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
-
 
 <head>
     <title>애니모어 유기동물 보호센터</title>
@@ -152,10 +150,6 @@ body{
 		margin-top:20px;
 	}
 	
-	.social_login img{
-		cursor:pointer;
-	}
-	
 </style>
 
 <!-- login header -->
@@ -200,19 +194,86 @@ body{
 				<hr>
 			</div>
 			<div class="col-md-12 text-center pb-3">
-				<div class="social_login">
-					<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=5fb5ee137d8919744f68ce7cdc5354c9&redirect_uri=http://localhost:8081/member/kakao_login&response_type=code">
-						<img src="../images/kakao_login_medium_wide.png">
+				<div class="social_login" id="kakaologin">
+	    			<a id="btn-kakao-login" href="kakao/login">
+	  					<img src="../images/kakao_login_medium_wide.png"/>
 					</a>
 				</div>
+				<form id="form-kakao-login" method="post" action="/member/kakao_login">
+					<input type="hidden" name="id" id="id"/>
+					<input type="hidden" name="password" id="password" value="0"/>
+	    			<input type="hidden" name="kakao_email" id="kakao_email"/>
+	    			<input type="hidden" name="name" id="name"/>
+	    			<input type="hidden" name="email" id="email" />
+	    			<input type="hidden" name="phone" id="phone" value="0"/>
+	    			<input type="hidden" name="birth" id="birth" value="0"/>
+	    			<input type="hidden" name="address" id="address" value="0"/>
+		    	</form>
 			</div>
 		</div>
 	</div>
 </div><!-- container -->
 
+<!-- 모달창 -->
+<div class="modal fade" id="alertModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true" style="font-family: 'NanumSquareNeo';">
+	<div class="modal-dialog modal-dialog-centered text-center">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="alertModal">알림</h5>
+			</div>
+			<div class="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
-<script>	
+<!-- 카카오 로그인 -->              
+<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+
+//카카오 로그인 서비스 실행하기 및 사용자 정보 가져오기.
+$(function(){
+	$("#btn-kakao-login").click(function(event){
+		// a태그 기능 실행멈춤.
+		event.preventDefault();
+		// 사용자 키를 전달, 카카오 로그인 서비스 초기화.
+		Kakao.init('56efd6c06fb480c58b736f058c3d17a4');
+		
+		Kakao.Auth.login({
+	      success: function (response) {
+	        Kakao.API.request({
+	          url: '/v2/user/me',
+	          success: function (response) {
+	        	  console.log(response)
+	        	  
+	        	  var account = response.kakao_account;
+					
+				  $('#form-kakao-login input[name=id]').val(account.email);
+				  $('#form-kakao-login input[name=name]').val(account.profile.nickname);
+				  $('#form-kakao-login input[name=kakao_email]').val(account.email);
+				  $('#form-kakao-login input[name=email]').val(account.email);
+				  
+				  // 사용자 정보가 포함된 폼을 서버로 제출한다.
+				  document.querySelector('#form-kakao-login').submit();
+				  
+	          },
+	          fail: function (error) {
+	            console.log(error)
+	          },
+	        })
+	      },
+	      fail: function (error) {
+	        console.log(error)
+	      },
+	    })
+	}) // 클릭이벤트
+})// 카카오로그인 끝.
 
 </script>
+
     
 <%@include file="../includes/footer.jsp"%>

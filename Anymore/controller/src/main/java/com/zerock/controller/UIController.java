@@ -1,5 +1,13 @@
 package com.zerock.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,10 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.zerock.domain.Criteria;
 import com.zerock.domain.PageDTO;
+import com.zerock.domain.UIAttachVO;
 import com.zerock.domain.UIVO;
 import com.zerock.service.UIService;
 
@@ -49,6 +59,11 @@ private UIService service;
 	public String register(UIVO usedItems, RedirectAttributes rttr) {
 		
 		log.info("register : " + usedItems);
+		
+		if(usedItems.getAttachList() != null){
+			
+			usedItems.getAttachList().forEach(attach -> log.info(attach));
+		}
 		
 		service.register(usedItems);
 		
@@ -101,11 +116,11 @@ private UIService service;
 		
 		log.info("removeUI..." + bno);
 		
-		//List<BoardAttachVO> attachList = service.getAttachList(bno);	
+		List<UIAttachVO> attachList = service.getAttachList(bno);	
 		
 		if(service.remove(bno)) {
 			
-			//deleteFiles(attachList);	// 여기에서 호출해야 삭제처리 오류시 롤백이 가능하다.
+			deleteFiles(attachList);	
 			
 			rttr.addFlashAttribute("result", "success");
 		}
@@ -116,6 +131,46 @@ private UIService service;
 		rttr.addAttribute("keyword", cri.getKeyword());
 		
 		return "redirect:/community/usedItems";
+	}
+	
+	// 중고거래 첨부파일
+	@GetMapping(value = "/getAttachListUI", produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<UIAttachVO>> getAttachList(Long bno){
+		log.info("getAttachList " + bno);
+		
+		return new ResponseEntity<>(service.getAttachList(bno), HttpStatus.OK);
+	}
+	
+	// 중고거래 첨부파일 삭제
+	private void deleteFiles(List<UIAttachVO> attachList) {	// 물리적인 경로에서 해당파일을 삭제하는 역할
+			
+		if(attachList == null || attachList.size() == 0) {
+			return;
+		}
+		
+		log.info("delete attach files..............");
+		log.info(attachList);
+		
+		attachList.forEach(attach -> {
+			try {
+				Path file = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\" + attach.getUuid() + "_" + attach.getFileName());
+				// Paths.get : 특정 경로의 파일 정보를 가져온다.
+				Files.deleteIfExists(file);
+				// 파일이 존재하는 경우 삭제하고, 파일이 존재하지 않으면 false를 리턴한다.
+				
+				if(Files.probeContentType(file).startsWith("image")) {	// mime 타입이 image로 시작한다면 썸네일을 지워준다.
+					Path thumbNail = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\s_" + attach.getUuid() + "_" + attach.getFileName());
+					
+					Files.delete(thumbNail);
+					// 메소드를 사용하여 파일 또는 디렉토리 삭제. 대상이 없으면 NoSuchFileException 에러 발생
+				}
+				
+			}catch(Exception e) {
+				log.error("delete file error" + e.getMessage());
+			}
+		});
+		
 	}
 	
 }

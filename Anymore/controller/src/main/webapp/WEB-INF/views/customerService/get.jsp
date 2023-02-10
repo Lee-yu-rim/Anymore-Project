@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
@@ -9,123 +9,207 @@
 </script>
 
 <style>
-ul{
-   list-style:none;
-   padding: 0px;
-   }
+ul {
+	list-style: none;
+	padding: 0px;
+}
+
+.uploadResult {
+	width: 100%;
+	background-color: white;
+}
+
+
+.uploadResult ul li img {
+	width: 80%;
+}
+
+.uploadResult2 {
+	width: 100%;
+	background-color: white;
+}
+
+
+.uploadResult2 ul li img {
+	width: 100px;
+}
+
+#myimg {
+	width: 60px;
+}
+
 </style>
 
 <section class="ftco-section ftco-degree-bg"
-   style="color: black; font-family: 'NanumSquareNeo';">
-   <div class="container">
-      <div class="row justify-content-center pb-5 mb-3">
-         <div class="col-md-7 heading-section text-center ftco-animate">
-            <h2>상세보기</h2>
-         </div>
-      </div>
-      <div class="row">
-         <div class="col-md-12"><b>제목</b>&nbsp; <c:out value="${board.title}"></c:out></div>
-      </div><hr>
-      <div class="row">
-         <div class="col-md-7"><b>작성자</b>&nbsp; <c:out value="${board.id}"></c:out></div>
-         <div class="col-md-3"><b>작성일자</b>&nbsp; <fmt:formatDate pattern="yyyy/MM/dd" value="${board.regdate}"></fmt:formatDate></div>
-         <div class="col-md-2"><b>조회수</b>&nbsp; <c:out value="${board.count}"></c:out></div>
-      </div><hr>
+	style="color: black; font-family: 'NanumSquareNeo';">
+	<div class="container">
+		<div class="row justify-content-center pb-5 mb-3">
+			<div class="col-md-7 heading-section text-center ftco-animate">
+				<h2>상세보기</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<b>제목</b>&nbsp;
+				<c:out value="${board.title}"></c:out>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-7">
+				<b>작성자</b>&nbsp;
+				<c:out value="${board.id}"></c:out>
+			</div>
+			<div class="col-md-3">
+				<b>작성일자</b>&nbsp;
+				<fmt:formatDate pattern="yyyy/MM/dd" value="${board.regdate}"></fmt:formatDate>
+			</div>
+			<div class="col-md-2">
+				<b>조회수</b>&nbsp;
+				<c:out value="${board.count}"></c:out>
+			</div>
+		</div>
+		<hr>
 
-      <div class="form-group">
-         <div class="row">
-            <div class="col-md-12"><b>내용</b></div>
-         </div><hr>
-         <div class="col-lg-12 ftco-animate" align="center">
-            <p>
-               <img src="../images/image_1.jpg" alt="" class="img-fluid">
-            </p>
-            <p><c:out value="${board.content}"></c:out></p>
-         </div>
-      </div>
-      <hr />
-      <div class="text-center" style="margin-bottom:100px">
-          <c:set var="arId" value="${board.id}" />
-          <c:choose>
-              <c:when test="${member.id eq arId}">
-                 <button data-oper="modify" class="btn btn-primary ">수정</button>
-                 <button data-oper="list" class="btn btn-primary">목록</button>
-              </c:when>
-              <c:otherwise>
-                 <button data-oper="list" class="btn btn-primary">목록</button>
-              </c:otherwise>
-         </c:choose>
-      </div>
-      
-      <form id="operForm" action="/customerService/modify" method="get">
-         <input type="hidden" id="bno" name="bno" value='<c:out value="${ board.bno }" />'>
-         <input type="hidden" name="pageNum" value='<c:out value="${ cri.pageNum }" />'>
-         <input type="hidden" name="amount" value='<c:out value="${ cri.amount }" />'>
-         <input type="hidden" name="type" value='<c:out value="${ cri.type }" />'>
-         <input type="hidden" name="keyword" value='<c:out value="${ cri.keyword }" />'>
-      </form>
-      
-    <!-- 댓글창 -->
-   <section class="card bg-light col-lg-12" style="color: black; font-family: 'NanumSquareNeo';">
-   <!-- <div class='row'> -->
-      <div class="col-lg-12">
-         <!-- <div class="panel panel-default"> -->
-            <div class="panel-heading" style="padding-top: 25px;">
-               <i class="fa fa-comments fa-fw"></i> 댓글
-               <button id='addReplyBtn' class='btn btn-primary float-right'>작성</button>
-            </div>
-            <br>
-            <!-- js로 댓글이 들어가는 곳 -->         
-            <div class="card-body">
-               <ul class="chat">
-               
-               </ul>
-            </div>
-         <!-- </div> --><!-- panel end -->
-      </div>
-   <!-- </div> --><!-- row end -->
-   </section> 
-      
-      
-      
-   </div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-md-12">
+					<b>내용</b>
+				</div>
+			</div>
+			<hr>
+			<div class="col-lg-12 ftco-animate" align="center">
+
+
+				<!-- 파일업로드 -->
+				<div class='uploadResult'>
+					<ul>
+					</ul>
+				</div>
+				<br>
+
+
+				<!-- <img src="../images/image_1.jpg" alt="" class="img-fluid"> -->
+				<p>
+					<c:out value="${board.content}"></c:out>
+				</p>
+			</div>
+		</div>
+		<hr />
+
+
+		<!-- 파일업로드 -->
+ 		<div class='row'>
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading"><b>첨부파일</b></div><hr />
+					<div class="panel-body">
+						<div class='uploadResult2'>
+							<ul>
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> 
+
+<!--  		<div class='bigPictureWrapper'>
+			<div class='bigPicture'></div>
+		</div> -->
+
+
+		<!-- 댓글창 -->
+		<section class="card bg-light col-lg-12"
+			style="color: black; font-family: 'NanumSquareNeo';">
+			<!-- <div class='row'> -->
+			<div class="col-lg-12">
+				<!-- <div class="panel panel-default"> -->
+				<div class="panel-heading" style="padding-top: 25px;">
+					<i class="fa fa-comments fa-fw"></i> 댓글
+					<button id='addReplyBtn' class='btn btn-primary float-right'>작성</button>
+				</div>
+				<br>
+				<!-- js로 댓글이 들어가는 곳 -->
+				<div class="card-body">
+					<ul class="chat">
+
+					</ul>
+				</div>
+				<!-- </div> -->
+				<!-- panel end -->
+			</div>
+			<!-- </div> -->
+			<!-- row end -->
+		</section>
+
+
+		<br>
+		<div class="text-center" style="margin-bottom: 100px">
+			<c:set var="arId" value="${board.id}" />
+			<c:choose>
+				<c:when test="${member.id eq arId}">
+					<button data-oper="modify" class="btn btn-primary ">수정</button>
+					<button data-oper="list" class="btn btn-primary">목록</button>
+				</c:when>
+				<c:otherwise>
+					<button data-oper="list" class="btn btn-primary">목록</button>
+				</c:otherwise>
+			</c:choose>
+		</div>
+
+		<form id="operForm" action="/customerService/modify" method="get">
+			<input type="hidden" id="bno" name="bno"
+				value='<c:out value="${ board.bno }" />'> <input
+				type="hidden" name="pageNum"
+				value='<c:out value="${ cri.pageNum }" />'> <input
+				type="hidden" name="amount"
+				value='<c:out value="${ cri.amount }" />'> <input
+				type="hidden" name="type" value='<c:out value="${ cri.type }" />'>
+			<input type="hidden" name="keyword"
+				value='<c:out value="${ cri.keyword }" />'>
+		</form>
+
+
+	</div>
 </section>
 
 
 
 <!-- 댓글 추가 모달창 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-   aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"
-            aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel"></h4>
-         </div>
-         <div class="modal-body">
-            <div class="form-group">
-               <label>작성자</label>
-               <input class="form-control"   name='id' placeholder="${ member.id }" value="${ member.id }">
-            </div>
-            <div class="form-group">
-               <label>내용</label>
-               <textarea style="resize: none;" spellcheck="false" rows="8" class="form-control" name='reply'></textarea>
-            </div>
-            <div class="form-group">
-               <label>작성일자</label>
-               <input class="form-control"   name='replydate' value=''>
-            </div>
-         </div>
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>작성자</label> <input class="form-control" name='id'
+						placeholder="${ member.id }" value="${ member.id }">
+				</div>
+				<div class="form-group">
+					<label>내용</label>
+					<textarea style="resize: none;" spellcheck="false" rows="8"
+						class="form-control" name='reply'></textarea>
+				</div>
+				<div class="form-group">
+					<label>작성일자</label> <input class="form-control" name='replydate'
+						value=''>
+				</div>
+			</div>
 
-         <div class="modal-footer" style="font-family: 'NanumSquareNeo';">
-              <button id='modalModBtn' type="button" class="btn btn-primary">수정</button>
-            <button id='modalRemoveBtn' type="button" class="btn btn-primary">삭제</button>
-            <button id='modalRegisterBtn' type="button" class="btn btn-primary">등록</button>
-            <button id='modalCloseBtn' type='button' class='btn btn-primary'>닫기</button> 
-          </div>
-      </div>
-   </div>
+			<div class="modal-footer" style="font-family: 'NanumSquareNeo';">
+				<button id='modalModBtn' type="button" class="btn btn-primary">수정</button>
+				<button id='modalRemoveBtn' type="button" class="btn btn-primary">삭제</button>
+				<button id='modalRegisterBtn' type="button" class="btn btn-primary">등록</button>
+				<button id='modalCloseBtn' type='button' class='btn btn-primary'>닫기</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript" src="../js/reply.js"></script>
@@ -265,7 +349,7 @@ ul{
           });
           
    });
-</script>   
+</script>
 
 <script>
 $(document).ready(function(){
@@ -280,6 +364,100 @@ $(document).ready(function(){
       operForm.submit();
    });
 });
+</script>
+
+<!-- 파일관련 -->
+<script>
+$(document).ready(function(){
+	(function(){
+		
+		var bno = '<c:out value="${board.bno}"/>'; 
+		
+		console.log("bno:" + bno);
+
+ 		$.getJSON("/customerService/qnaGetAttachList", {bno:bno}, function(arr){
+			
+			console.log(arr);
+			var str = "";
+			$(arr).each(function(i, attach){
+				if(attach.fileType){
+		        var fileCallPath =  encodeURIComponent( attach.uploadPath+ "/"+attach.uuid +"_"+attach.fileName);
+		           
+                str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><div>";
+                str += "<img src='/qnaDisplay?fileName="+fileCallPath+"'>";
+                str += "</div>";
+                str += "</li><br>";
+		      }
+			console.log(str);
+				
+				
+		      $(".uploadResult ul").html(str);
+		      
+		      
+		      
+			});
+		}); 
+		
+		
+		// 밑에 첨부파일
+		$.getJSON("/customerService/qnaGetAttachList", {bno:bno}, function(arr){
+			
+			console.log(arr);
+			var str = "";
+			$(arr).each(function(i, attach){
+				if(attach.fileType.value == 1){
+		        var fileCallPath =  encodeURIComponent( attach.uploadPath+ "/s_"+attach.uuid +"_"+attach.fileName);
+		           
+                str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><div>";
+                str += "<img src='/qnaDisplay?fileName="+fileCallPath+"'>";
+                str += "</div>";
+                str += "</li><br>";
+		      }else {
+		    	  
+		    	str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>";
+		    	str += "<span> "+ attach.fileName+"</span><br/>";
+		    	str += "</div>";
+		    	str +"</li><br>";
+		      }
+				
+			console.log(str);
+				
+				
+		      $(".uploadResult2 ul").html(str);
+		      
+		      
+		      
+			});
+		});
+		
+		
+	})();
+	
+	
+	  $(".uploadResult").on("click","li", function(e){
+	      
+		    var liObj = $(this);
+		    
+		    var path = encodeURIComponent(liObj.data("path")+"/" + liObj.data("uuid")+"_" + liObj.data("filename"));
+		    
+		    if(liObj.data("type")){ 
+		      console.log("image file")
+		    }
+		    
+		  });
+	  
+	  
+	  $(".uploadResult2").on("click","li", function(e){
+	      
+		    var liObj = $(this);
+		    
+		    var path = encodeURIComponent(liObj.data("path")+"/" + liObj.data("uuid")+"_" + liObj.data("filename"));
+		    
+		    self.location ="/qnaDownload?fileName="+path
+		    
+		  });	  
+		  
+});	
 </script>
 
 

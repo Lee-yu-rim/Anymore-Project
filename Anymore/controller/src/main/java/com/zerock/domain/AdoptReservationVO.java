@@ -1,5 +1,7 @@
 package com.zerock.domain;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -19,4 +21,6 @@ public class AdoptReservationVO {
 	private String servey6;
 	private String servey7;
 	private String servey8;
+	private Date reg_date;
+	private String id;
 }

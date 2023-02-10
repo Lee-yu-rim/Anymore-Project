@@ -59,7 +59,7 @@
 			         
 			         <div class="form-group">
 			            <label>수량</label> 
-			            <input class="form-control" placeholder="수량을 입력해주세요." name='quantity'>
+			            <input class="form-control" placeholder="수량을 입력해주세요." name='amount'>
 			         </div>
 			        
 			         <div class="form-group">

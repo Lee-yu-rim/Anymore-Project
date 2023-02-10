@@ -3,6 +3,7 @@ package com.zerock.service;
 import java.util.List;
 
 import com.zerock.domain.Criteria;
+import com.zerock.domain.UIAttachVO;
 import com.zerock.domain.UIVO;
 
 
@@ -24,6 +25,6 @@ public interface UIService {
 	
 	public int updateVisitCnt(Long bno);
 	
-//	public List<BoardAttachVO> getAttachList(Long bno);
+	public List<UIAttachVO> getAttachList(Long bno);
 	
 }

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
 	.join_main{
@@ -86,7 +89,19 @@
 					        </a>
 				        </div>
 						<div class="col-md-12">
-				        	<input type="button" id="kbtn" class="btn btn-default btn-block" name="name" value="카카오 계정으로 회원가입하기" />
+							<a id="btn-kakao-login" href="kakao/login">
+				        		<input type="button" id="kbtn" class="btn btn-default btn-block" name="name" value="카카오 계정으로 회원가입하기" />
+				        	</a>
+				        	<form id="form-kakao-login" method="post" action="/member/kakao_login">
+								<input type="hidden" name="id" id="id"/>
+								<input type="hidden" name="password" id="password" value="0"/>
+				    			<input type="hidden" name="kakao_email" id="kakao_email"/>
+				    			<input type="hidden" name="name" id="name"/>
+				    			<input type="hidden" name="email" id="email" />
+				    			<input type="hidden" name="phone" id="phone" value="0"/>
+				    			<input type="hidden" name="birth" id="birth" value="0"/>
+				    			<input type="hidden" name="address" id="address" value="0"/>
+					    	</form>
 				        </div>
 				        <hr style="margin-bottom:20px;">
 				        <div class="col-md-12">
@@ -104,6 +119,51 @@
 		</div>
 	</div>
 </section>
+
+<!-- 카카오 로그인 -->              
+<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+
+//카카오 로그인 서비스 실행하기 및 사용자 정보 가져오기.
+$(function(){
+	$("#btn-kakao-login").click(function(event){
+		// a태그 기능 실행멈춤.
+		event.preventDefault();
+		// 사용자 키를 전달, 카카오 로그인 서비스 초기화.
+		Kakao.init('56efd6c06fb480c58b736f058c3d17a4');
+		
+		Kakao.Auth.login({
+	      success: function (response) {
+	        Kakao.API.request({
+	          url: '/v2/user/me',
+	          success: function (response) {
+	        	  console.log(response)
+	        	  
+	        	  var account = response.kakao_account;
+					
+				  $('#form-kakao-login input[name=id]').val(account.email);
+				  $('#form-kakao-login input[name=name]').val(account.profile.nickname);
+				  $('#form-kakao-login input[name=kakao_email]').val(account.email);
+				  $('#form-kakao-login input[name=email]').val(account.email);
+				  
+				  // 사용자 정보가 포함된 폼을 서버로 제출한다.
+				  document.querySelector('#form-kakao-login').submit();
+				  
+	          },
+	          fail: function (error) {
+	            console.log(error)
+	          },
+	        })
+	      },
+	      fail: function (error) {
+	        console.log(error)
+	      },
+	    })
+	}) // 클릭이벤트
+})// 카카오로그인 끝.
+
+</script>
 
     
     

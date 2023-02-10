@@ -129,7 +129,7 @@
 			</div>
 			<div class="modal-body"></div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" id="modalCloseBtn" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
@@ -152,6 +152,12 @@ $(document).ready(function() {
 $(function(){
 
 	var form = $("#form");
+	
+	// 모달창 Close 눌러서 닫아 지게 하는 기능
+	$("#modalCloseBtn").on("click", function(e){
+ 	
+	 	modal.modal('hide');
+	});
 	
 	$(".btn").on("click", function(e){
 		
@@ -213,8 +219,7 @@ $(function(){
 		    return false;
 		}
 		
-		$(".modal-body").html("예약이 완료되었습니다.");
-		$("#alertModal").modal("show");
+		alert("예약이 완료되었습니다.");
 
 		form.submit();
 

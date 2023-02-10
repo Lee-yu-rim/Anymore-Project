@@ -57,7 +57,7 @@
 		          	<div class="img" style="background-image: url(../images/product-1.jpg);"></div>
 		          	<div class="text-center p-4">
 		            	<span class="excerpt d-block"><c:out value="${product.product_name }" /></span>
-		            	<span class="price"><c:out value="${product.price }"/></span>
+		            	<span class="price"><span class="number"><c:out value="${product.price }" /></span></span>
 			            <ul class="pricing-text mb-5">
 			              <li><span class="fa fa-check mr-2"></span><c:out value="${product.discribe }" /></li>
 			            </ul>

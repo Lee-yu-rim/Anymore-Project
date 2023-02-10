@@ -55,7 +55,7 @@ textarea {
 			         
 			         <div class="form-group">
 			            <label>작성자</label> 
-			            <input type="text" class="form-control" placeholder="제목을 입력해주세요." name='id' value="<c:out value='${member.id}'/>">
+			            <input type="text" class="form-control" placeholder="제목을 입력해주세요." name='id'>
 			         </div>
 			         
 			         <div class="form-group">

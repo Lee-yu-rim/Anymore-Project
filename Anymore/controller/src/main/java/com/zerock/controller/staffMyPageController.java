@@ -137,7 +137,7 @@ public class staffMyPageController {
 			rttr.addAttribute("type",cri.getType());
 			rttr.addAttribute("keyword",cri.getKeyword());
 							
-			return "redirect:/staffMyPage/product_manage";
+			return "redirect:/staffMyPage/protect_animal";
 		}
 		
 		private void product_deleteFiles(List<ProductAttachVO> attachList) {

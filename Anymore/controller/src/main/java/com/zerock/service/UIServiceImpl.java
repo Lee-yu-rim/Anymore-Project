@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zerock.domain.Criteria;
+import com.zerock.domain.UIAttachVO;
 import com.zerock.domain.UIVO;
-
+import com.zerock.mapper.UIAttachMapper;
 import com.zerock.mapper.UIMapper;
 
 import lombok.AllArgsConstructor;
@@ -21,12 +23,25 @@ public class UIServiceImpl implements UIService {
 	
 	@Setter(onMethod_ = @Autowired)
 	private UIMapper mapper;
-
+	
+	@Setter(onMethod_ = @Autowired)
+	private UIAttachMapper attachMapper;
+	
+	@Transactional
 	@Override
 	public void register(UIVO usedItems) {
 		
 		log.info("register..." + usedItems);
 		mapper.insertSelectKey(usedItems);
+		
+		if(usedItems.getAttachList() == null || usedItems.getAttachList().size() <= 0) {
+			return;
+		}
+		
+		usedItems.getAttachList().forEach(attach ->{
+			attach.setBno(usedItems.getBno());
+			attachMapper.insert(attach);
+		});
 	}
 	
 	@Override
@@ -43,17 +58,36 @@ public class UIServiceImpl implements UIService {
 		return mapper.read(bno);
 	}
 
+	@Transactional
 	@Override
 	public boolean modify(UIVO usedItems) {
 		
 		log.info("modify........" + usedItems);
-		return mapper.update(usedItems) == 1;
+		
+		attachMapper.deleteAll(usedItems.getBno());
+		
+		boolean modifyResult = mapper.update(usedItems) == 1;
+		
+		if(modifyResult && usedItems.getAttachList() != null && usedItems.getAttachList().size() > 0) {
+			
+			usedItems.getAttachList().forEach(attach -> {
+				
+				attach.setBno(usedItems.getBno());
+				attachMapper.insert(attach);
+			});
+		}
+		
+		return modifyResult;
 	}
 
+	@Transactional
 	@Override
 	public boolean remove(Long bno) {
 		
 		log.info("remove........" + bno);
+		
+		attachMapper.deleteAll(bno);
+		
 		return mapper.delete(bno) == 1;
 	}
 
@@ -68,6 +102,12 @@ public class UIServiceImpl implements UIService {
 	public int updateVisitCnt(Long bno) {
 		
 		return mapper.updateVisitCnt(bno);
+	}
+	
+	@Override
+	public List<UIAttachVO> getAttachList(Long bno) {
+		log.info("get Attach list by bno" + bno);
+		return attachMapper.findByBno(bno);
 	}
 	
 	

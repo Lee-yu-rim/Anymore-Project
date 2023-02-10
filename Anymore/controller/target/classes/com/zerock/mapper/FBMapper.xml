@@ -71,14 +71,17 @@
 				<foreach item='type' collection="typeArr">
 					<trim prefix="or">
 						<choose>
+							<when test="type == 'F'.toString()">
+								field like '%'||#{keyword}||'%'
+							</when>
 							<when test="type == 'T'.toString()">
 								title like '%'||#{keyword}||'%'
 							</when>
 							<when test="type == 'C'.toString()">
 								content like '%'||#{keyword}||'%'
 							</when>
-							<when test="type == 'W'.toString()">
-								writer like '%'||#{keyword}||'%'
+							<when test="type == 'I'.toString()">
+								id like '%'||#{keyword}||'%'
 							</when>
 						</choose>
 					</trim>

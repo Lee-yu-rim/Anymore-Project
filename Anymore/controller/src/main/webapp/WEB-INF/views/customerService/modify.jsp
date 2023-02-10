@@ -8,6 +8,33 @@
 	document.getElementById("home").setAttribute("class", "nav-item");
 </script>
 
+<style>
+.uploadResult {
+   width: 100%;
+   background-color: white;
+}
+
+.uploadResult ul {
+   display: flex;
+   flex-flow: row;
+   justify-content: center;
+   align-items: center;
+}
+
+.uploadResult ul li {
+   list-style: none;
+   padding: 10px;
+}
+
+.uploadResult ul li img {
+   width: 100px;
+}
+
+#myimg {
+  width: 60px;
+}
+</style>
+
 <section class="ftco-section" style="font-family: 'NanumSquareNeo';">
 	<div class="overlay"></div>
 	<div class="container">
@@ -63,14 +90,24 @@
 			</div>
 			
        	
-			<div class="form-group">
-				<label class="form-label">파일첨부</label>
-				<input class="form-control" name="fileupload" type="file">
-			</div>
-        	
-			<div class="form-group">
-				<label>비밀번호</label> <input class="form-control" name="password" placeholder="게시글에 사용할 비밀번호를 입력하세요."/>
-			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">파일첨부</div>
+						<div class="panel-body">
+							<div class="form-group uploadDiv">
+								<input type="file" name='uploadFile' multiple>
+							</div>
+							
+							<div class='uploadResult'>
+								<ul>
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
 
 			<div class="form-group">
 				<label>비밀글</label> <input name="passwordCheck" type="checkbox" />
@@ -113,6 +150,153 @@ $(document).ready(function(){
 		formObj.submit();
 	});
 });
+</script>
+
+
+<!-- 파일첨부 관련 -->
+<script>
+	$(function(){
+		(function(){	
+			
+			var bno = '<c:out value="${board.bno}"/>'; 
+			
+			$.getJSON("/customerService/qnaGetAttachList", {bno: bno}, function(arr){
+				
+				console.log(arr);
+				
+				var str = "";
+				
+				$(arr).each(function(i, attach){
+					
+					if(attach.fileType){
+			            var fileCallPath =  encodeURIComponent( attach.uploadPath+ "/s_"+attach.uuid +"_"+attach.fileName);
+			            
+			            str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' "
+			            str +=" data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>";
+			            str += "<span> "+ attach.fileName+"</span>";
+			            str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' "
+			            str += "class='btn btn-primary btn-circle'><i class='fa fa-times'></i></button><br>";
+			            str += "<img src='/qnaDisplay?fileName="+fileCallPath+"'>";
+			            str += "</div>";
+			            str +"</li>";
+			          }else{
+			              
+			            str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' "
+			            str += "data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>";
+			            str += "<span> "+ attach.fileName+"</span><br/>";
+			            str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' "
+			            str += " class='btn btn-primary btn-circle'><i class='fa fa-times'></i></button><br>";
+			            str += "<img id='myimg' src='../images/folder.png'>";
+			            str += "</div>";
+			            str +"</li>";
+			          }
+		       		});
+			       
+					$(".uploadResult ul").html(str);
+				
+			});	// end getjson
+			
+		})();	// end function
+		
+		
+		$(".uploadResult").on("click", "button", function(e){
+			
+			console.log("delete file");
+			
+			if(confirm("파일을 삭제하시겠습니까?")){
+				
+				var targetLi = $(this).closest("li");
+				targetLi.remove();
+			}
+		});
+		
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		var maxSize = 5242880;
+		
+		function checkExtension(fileName, fileSize){
+			
+			if(fileSize >= maxSize){
+				alert("파일 사이즈 초과");
+				return false;
+			}
+			
+			if(regex.test(fileName)){
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+		
+		$("input[type='file']").change(function(e){
+			
+			var formData = new FormData();
+			
+			var inputFile = $("input[name='uploadFile']");
+			
+			var files = inputFile[0].files;
+			
+			for(var i=0 ; i<files.length ; i++){
+				
+				if(!checkExtension(files[i].name, files[i].size)){
+					return false;
+				}
+				formData.append("uploadFile", files[i]);
+			}
+		
+			$.ajax({
+				url: '/uploadAjaxAction',
+				processData: false,
+				contentType: false,
+				data: formData,
+				type: 'POST',
+				dataType: 'json',
+					success: function(result){
+						console.log(result);
+						showUploadResult(result);	// 업로드 결과 처리 함수
+					}
+			});	//.ajax
+		
+		});
+	
+		
+		function showUploadResult(uploadResultArr){
+			
+			if(!uploadResultArr || uploadResultArr.length == 0){reuturn;}
+			
+			var uploadUL = $(".uploadResult ul");
+			
+			var str ="";
+			
+			$(uploadResultArr).each(function(i, obj){
+			
+				if(obj.image){
+		          var fileCallPath =  encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName);
+		          str += "<li data-path='"+obj.uploadPath+"'";
+		          str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'"
+		          str += " ><div>";
+		          str += "<span> "+ obj.fileName+"</span>";
+		          str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-primary btn-circle'><i class='fa fa-times'></i></button><br>";
+		          str += "<img src='/qnaDisplay?fileName="+fileCallPath+"'>";
+		          str += "</div>";
+		          str +"</li>";
+		        }else{
+		          var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);            
+		          var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+		              
+		          str += "<li "
+	        	  str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' ><div>";
+		          str += "<span> "+ obj.fileName+"</span>";
+		          str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn btn-primary btn-circle'><i class='fa fa-times'></i></button><br>";
+		          str += "<img src='../image/folder.png'></a>";
+		          str += "</div>";
+		          str +"</li>";
+		        }
+			});
+			uploadUL.append(str);
+		}
+		
+		
+	});
 </script>
 
 <%@include file="../includes/footer.jsp"%>
