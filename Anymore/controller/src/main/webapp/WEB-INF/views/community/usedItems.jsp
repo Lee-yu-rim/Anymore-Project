@@ -175,10 +175,7 @@
 			if (result === '' || history.state) {
 				return;
 			}
-			
-			if(parseInt(result) > 0) {
-				$(".modal-body").html("게시글 " + parseInt(result) + "번이 등록되었습니다.");
-			}
+			$(".modal-body").html("게시글이 처리되었습니다.");
 			$("#alertModal").modal("show");
 		}
 		
@@ -188,8 +185,8 @@
 		$("#regBtn").on("click",function(){
 			
 			if(id == ""){
-				alert("로그인 후 이용가능합니다.");
-				self.location = "/member/login";
+				$(".modal-body").html("로그인 후 이용가능합니다.");
+				$("#alertModal").modal("show");
 			}else{
 				self.location = "/community/registerUI";
 			}

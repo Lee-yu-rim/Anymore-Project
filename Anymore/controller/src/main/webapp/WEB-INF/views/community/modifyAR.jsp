@@ -106,9 +106,6 @@ $(function(){
 		
 		e.preventDefault();
 		
-		$(".modal-body").html("삭제가 완료되었습니다.");
-		$("#alertModal").modal("show");
-		
 		formObj.attr("action", "/community/removeAR");
 
 		formObj.submit();

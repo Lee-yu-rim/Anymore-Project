@@ -131,7 +131,7 @@ pageEncoding="UTF-8"%>
 		$('.move').on('click', function(e){
 				e.preventDefault();
 				actionForm.append("<input type='hidden' name='num' value='"+$(this).attr("href")+"'>");
-				actionForm.attr("action", "/myPage/adopt_reg_form_view");
+				actionForm.attr("action", "/myPage/visit_reg_form_view");
 				actionForm.submit();
 		});
 		

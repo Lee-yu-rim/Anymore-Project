@@ -123,7 +123,7 @@
 	<div class="text-center" style="margin-bottom:100px">
 		<c:set var="uiId" value="${usedItems.id}" />
  		<c:choose>
-		     <c:when test="${member.id eq uiId}">
+		     <c:when test="${member.id eq uiId || member.id eq 'admin'}">
 		     	<button data-oper="modify" class="btn btn-primary">수정</button>
 				<button data-oper="list" class="btn btn-primary">목록</button>
 		     </c:when>
@@ -143,38 +143,39 @@
 
 <!-- 댓글 추가 모달창 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel"></h4>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label>작성자</label> <input class="form-control" name='id'
-						 value="${ member.id }" readonly>
-				</div>
-				<div class="form-group">
-					<label>내용</label>
-					<textarea style="resize: none;" spellcheck="false" rows="8"
-						class="form-control" name='reply'></textarea>
-				</div>
-				<div class="form-group">
-					<label>작성일자</label> <input class="form-control" name='replydate'
-						value=''>
-				</div>
-			</div>
+   aria-labelledby="myModalLabel" aria-hidden="true" style="font-family: 'NanumSquareNeo';">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+         <h5 class="modal-title" id="alertModal">알림</h5>
+            <button type="button" class="close" data-dismiss="modal"
+               aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
+         </div>
+         <div class="modal-body text-center">
+            <div class="form-group">
+               <label>작성자</label> <input class="form-control" name='id'
+                   value="${ member.id }" readonly>
+            </div>
+            <div class="form-group">
+               <label>내용</label>
+               <textarea style="resize: none;" spellcheck="false" rows="8"
+                  class="form-control" name='reply'></textarea>
+            </div>
+            <div class="form-group">
+               <label>작성일자</label> <input class="form-control" name='replydate'
+                  value=''>
+            </div>
+         </div>
 
-			<div class="modal-footer" style="font-family: 'NanumSquareNeo';">
-				<button id='modalModBtn' type="button" class="btn btn-primary">수정</button>
-				<button id='modalRemoveBtn' type="button" class="btn btn-primary">삭제</button>
-				<button id='modalRegisterBtn' type="button" class="btn btn-primary">등록</button>
-				<button id='modalCloseBtn' type='button' class='btn btn-primary'>닫기</button>
-			</div>
-		</div>
-	</div>
+         <div class="modal-footer" style="font-family: 'NanumSquareNeo';">
+            <button id='modalModBtn' type="button" class="btn btn-primary">수정</button>
+            <button id='modalRemoveBtn' type="button" class="btn btn-primary">삭제</button>
+            <button id='modalRegisterBtn' type="button" class="btn btn-primary modalRegisterBtn">등록</button>
+            <button id='modalCloseBtn' type='button' class='btn btn-primary'>닫기</button>
+         </div>
+      </div>
+   </div>
 </div>
 
 

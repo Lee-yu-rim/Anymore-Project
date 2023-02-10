@@ -226,7 +226,7 @@
             <div class="item">
               <div class="d-flex ftco-animate">
                 <div class="blog-entry align-self-stretch">
-                  <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/any-dog1.jpg');">
+                  <a href="#" class="block-20 rounded" style="background-image: url('images/any-dog1.jpg');">
                   </a>
                   <div class="text p-4">
                     <div class="meta mb-2">
@@ -245,7 +245,7 @@
             <div class="item">
               <div class="d-flex ftco-animate">
                 <div class="blog-entry align-self-stretch">
-                  <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/any-dog2.jpg');">
+                  <a href="#" class="block-20 rounded" style="background-image: url('images/any-dog2.jpg');">
                   </a>
                   <div class="text p-4">
                     <div class="meta mb-2">
@@ -264,7 +264,7 @@
             <div class="item">
               <div class="d-flex ftco-animate">
                 <div class="blog-entry align-self-stretch">
-                  <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/any-dog3.jpg');">
+                  <a href="#" class="block-20 rounded" style="background-image: url('images/any-dog3.jpg');">
                   </a>
                   <div class="text p-4">
                     <div class="meta mb-2">
@@ -284,7 +284,7 @@
             <div class="item">
               <div class="d-flex ftco-animate">
                 <div class="blog-entry align-self-stretch">
-                  <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/any-cat1.jpg');">
+                  <a href="#" class="block-20 rounded" style="background-image: url('images/any-cat1.jpg');">
                   </a>
                   <div class="text p-4">
                     <div class="meta mb-2">
@@ -302,7 +302,7 @@
             <div class="item">
               <div class="d-flex ftco-animate">
                 <div class="blog-entry align-self-stretch">
-                  <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images//any-cat2.jpg');">
+                  <a href="#" class="block-20 rounded" style="background-image: url('images//any-cat2.jpg');">
                   </a>
                   <div class="text p-4">
                     <div class="meta mb-2">
@@ -319,7 +319,7 @@
             <div class="item">
               <div class="d-flex ftco-animate">
                 <div class="blog-entry align-self-stretch">
-                  <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/any-cat3.jpg');">
+                  <a href="#" class="block-20 rounded" style="background-image: url('images/any-cat3.jpg');">
                   </a>
                   <div class="text p-4">
                     <div class="meta mb-2">

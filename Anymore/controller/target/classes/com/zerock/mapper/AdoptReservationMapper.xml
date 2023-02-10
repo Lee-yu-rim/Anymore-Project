@@ -81,7 +81,7 @@
 		values (#{adoptnum},#{name},#{phone},#{birthday_Date},
 				#{address},#{boardNum},
 				#{servey1},#{servey2},#{servey3},#{servey4},#{servey5},#{servey6},
-				#{servey7},#{servey8})
+				#{servey7},#{servey8}, #{id})
 	</insert>
 	
 	<select id="formSelect" resultType="com.zerock.domain.AdoptReservationVO">
