@@ -116,7 +116,7 @@
  	<div class="text-center" style="margin-bottom:100px">
  		<c:set var="arId" value="${adoptionReview.id}" />
  		<c:choose>
-		     <c:when test="${member.id eq arId}">
+		     <c:when test="${member.id eq arId || member.id eq 'admin'}">
 		     	<button data-oper="modify" class="btn btn-primary ">수정</button>
 		     	<button data-oper="list" class="btn btn-primary">목록</button>
 		     </c:when>
@@ -135,38 +135,39 @@
 
 <!-- 댓글 추가 모달창 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel"></h4>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label>작성자</label> <input class="form-control" name='id'
-						 value="${ member.id }" readonly>
-				</div>
-				<div class="form-group">
-					<label>내용</label>
-					<textarea style="resize: none;" spellcheck="false" rows="8"
-						class="form-control" name='reply'></textarea>
-				</div>
-				<div class="form-group">
-					<label>작성일자</label> <input class="form-control" name='replydate'
-						value=''>
-				</div>
-			</div>
+   aria-labelledby="myModalLabel" aria-hidden="true" style="font-family: 'NanumSquareNeo';">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+         <h5 class="modal-title" id="alertModal">알림</h5>
+            <button type="button" class="close" data-dismiss="modal"
+               aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
+         </div>
+         <div class="modal-body text-center">
+            <div class="form-group">
+               <label>작성자</label> <input class="form-control" name='id'
+                   value="${ member.id }" readonly>
+            </div>
+            <div class="form-group">
+               <label>내용</label>
+               <textarea style="resize: none;" spellcheck="false" rows="8"
+                  class="form-control" name='reply'></textarea>
+            </div>
+            <div class="form-group">
+               <label>작성일자</label> <input class="form-control" name='replydate'
+                  value=''>
+            </div>
+         </div>
 
-			<div class="modal-footer" style="font-family: 'NanumSquareNeo';">
-				<button id='modalModBtn' type="button" class="btn btn-primary">수정</button>
-				<button id='modalRemoveBtn' type="button" class="btn btn-primary">삭제</button>
-				<button id='modalRegisterBtn' type="button" class="btn btn-primary">등록</button>
-				<button id='modalCloseBtn' type='button' class='btn btn-primary'>닫기</button>
-			</div>
-		</div>
-	</div>
+         <div class="modal-footer" style="font-family: 'NanumSquareNeo';">
+            <button id='modalModBtn' type="button" class="btn btn-primary">수정</button>
+            <button id='modalRemoveBtn' type="button" class="btn btn-primary">삭제</button>
+            <button id='modalRegisterBtn' type="button" class="btn btn-primary modalRegisterBtn">등록</button>
+            <button id='modalCloseBtn' type='button' class='btn btn-primary'>닫기</button>
+         </div>
+      </div>
+   </div>
 </div>
 
 
@@ -237,8 +238,6 @@
        		 
        		 var id = "<c:out value='${ member.id }'/>";
                 if(id == ""){
-               	 	
-                	
 
 					modal.find("button[id !='modalCloseBtn']").hide();
 					$(".modal-body").html("로그인 후 이용 가능합니다.");
@@ -249,19 +248,6 @@
        			 $(".modal").modal("show");
        		 } 
       });
-
-
-//                 // 모달의 button 중, id가 modalCloseBtn이 아닌 것들은 모두 숨긴다.
-//                 modal.find("button[id !='modalCloseBtn']").hide();
-//                 // 모달의 modify 버튼 보여주기
-//                 modalModBtn.show();
-//                 // 모달의 remove 버튼 보여주기
-//                 modalRemoveBtn.show();
-
-
-
-
-
 
          
        // 처음 새 댓글을 등록할 때, 날짜, 수정, 삭제 기능은 가려지게 하는 기능
