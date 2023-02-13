@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.zerock.domain.ARReplyVO;
 import com.zerock.domain.Criteria;
 
+
 public interface ARReplyMapper {
 	
 	public int insert(ARReplyVO reply);
@@ -20,4 +21,6 @@ public interface ARReplyMapper {
 	public List<ARReplyVO> getListWithPaging(
 			@Param("cri") Criteria cri,
 			@Param("bno") Long bno);
+	
+	
 }

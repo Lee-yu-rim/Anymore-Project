@@ -16,4 +16,6 @@ public interface ARReplyService {
 	public int remove(Long rno);
 	
 	public List<ARReplyVO> getList(Criteria cri, Long bno);
+
+	
 }

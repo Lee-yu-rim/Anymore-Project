@@ -240,6 +240,22 @@
          $(".modal").modal("show");
       });
          
+		$("#addReplyBtn").on("click", function(e){
+    		 
+    		 var id = "<c:out value='${ member.id }'/>";
+             if(id == ""){
+
+					modal.find("button[id !='modalCloseBtn']").hide();
+					$(".modal-body").html("로그인 후 이용 가능합니다.");
+
+					$(".modal").modal("show");
+ 				return false;
+             }else{
+    			 $(".modal").modal("show");
+    		 } 
+   		});
+         
+         
        // 처음 새 댓글을 등록할 때, 날짜, 수정, 삭제 기능은 가려지게 하는 기능
        $("#addReplyBtn").on("click", function(e){
              

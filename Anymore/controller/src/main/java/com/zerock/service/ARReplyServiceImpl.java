@@ -71,6 +71,9 @@ public class ARReplyServiceImpl implements ARReplyService {
 
 	    return mapper.getListWithPaging(cri, bno);
 	}
+	
+	
+
 
 	
 }
