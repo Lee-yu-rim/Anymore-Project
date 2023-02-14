@@ -2,8 +2,6 @@ package com.zerock.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zerock.domain.ARReplyVO;
 import com.zerock.domain.Criteria;
-import com.zerock.domain.MemberVO;
 import com.zerock.service.ARReplyService;
 
 import lombok.AllArgsConstructor;
@@ -82,15 +78,5 @@ public class ARReplyController {
 		return service.modify(reply) == 1 ? new ResponseEntity<String>("success", HttpStatus.OK) :
 			  							 new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
 
 }

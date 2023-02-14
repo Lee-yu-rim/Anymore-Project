@@ -1,12 +1,23 @@
 package com.zerock.controller;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +28,9 @@ import com.zerock.domain.AdoptReservationVO;
 import com.zerock.domain.Criteria;
 import com.zerock.domain.CriteriaAR;
 import com.zerock.domain.MemberVO;
+import com.zerock.domain.ProtectAnimalAttachVO;
 import com.zerock.domain.ProtectAnimalVO;
+import com.zerock.domain.QNAFileUploadVO;
 import com.zerock.service.AdoptreservationService;
 import com.zerock.service.AnimalDetailsService;
 import com.zerock.service.ProtectAnimalService;
@@ -48,7 +61,13 @@ public class adoptController {
 	public void protectAnimal(CriteriaAR cri, Model model) {
 		log.info("protectAnimal List : " + cri);
 		
+		
 		model.addAttribute("list", protectService.getList(cri));
+		
+		// 보호중인 아이들 이미지 파일
+		model.addAttribute("image", protectService.imageAnimalList());
+		log.info("board_num  : " + protectService.imageAnimalList().get(0).getBoard_num());
+		log.info("이미지 파일 : " + protectService.imageAnimalList());
 		
 		int total = protectService.getTotal(cri);
 		log.info("protectAnimal total : " + total);
@@ -63,7 +82,10 @@ public class adoptController {
 	
 	// 동물 상세보기 페이지 + 공고번호와 이어져서 전체 데이터 가져오기
 	@GetMapping("/animalDetails")
-	public void animalDetails(@RequestParam("board_num") int board_num, Model model, HttpSession session) {
+	public void animalDetails(@RequestParam("board_num") int board_num, Model model, HttpSession session, @ModelAttribute("cri") CriteriaAR cri) {
+		
+		// 이미지 가져오기
+		model.addAttribute("image", protectService.imageAnimalList());
 
 		
 		ProtectAnimalVO boardNum = animalDetailsService.viewDetails(board_num);
@@ -116,5 +138,34 @@ public class adoptController {
 		log.info("form...:" + vo);
 		int adoptNum = adoptReservationService.formSubmit(vo);
 		model.addAttribute("formSubmit", adoptReservationService.formSelect(adoptNum));
+	}
+	
+	
+	
+	// 특정한 게시물 번호를 이용해서 첨부파일과 관련된 데이터를 JSON으로 반환
+	@GetMapping(value = "/protectAnimalGetAttachList",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<ProtectAnimalAttachVO>> qnaGetAttachList(){
+		log.info("qnaGetAttachList : " );
+		return new ResponseEntity<List<ProtectAnimalAttachVO>>(protectService.imageAnimalList(), HttpStatus.OK);
+	}	
+	
+	// 섬네일 데이터 전송하기
+	@GetMapping("/protectAnimalDisplay")
+	@ResponseBody
+	public ResponseEntity<byte[]> qnaGetFile(String fileName){
+		log.info("fileName :" + fileName);
+		File file = new File("c:\\upload\\" + fileName);
+		log.info("file: " + file);
+		ResponseEntity<byte[]> result = null;
+		try {
+			HttpHeaders header = new HttpHeaders();
+			header.add("Content-Type", Files.probeContentType(file.toPath()));
+			result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

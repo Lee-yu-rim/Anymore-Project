@@ -73,6 +73,24 @@ public class CustomerController {
 		model.addAttribute("noticeget", notice.get(bno));		
 	}
 	
+	
+	//공지사항 삭제
+	@PostMapping("/noticeRemove")
+	public String noticeRemove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+		log.info("remove : " + bno);
+		
+		notice.remove(bno);
+		rttr.addFlashAttribute("result", "success");
+
+		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		
+		return "redirect:/customerService/notice";
+	}
+	
 ////////////////////////////////////////////////////////////////////////////////////////
 	
 	// FAQ 전체 목록 보여주기
@@ -94,6 +112,24 @@ public class CustomerController {
 		// 조회수 카운트
 		faq.viewCount(bno);
 		model.addAttribute("faqget", faq.get(bno));		
+	}
+	
+	
+	//FAQ 삭제
+	@PostMapping("/faqRemove")
+	public String faqRemove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+		log.info("remove : " + bno);
+		
+		faq.remove(bno);
+		rttr.addFlashAttribute("result", "success");
+
+		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		
+		return "redirect:/customerService/faq";
 	}
 	
 	
@@ -126,8 +162,8 @@ public class CustomerController {
 		log.info("register..." + vo);
 		
 		log.info("============================");
-		if(vo.getQnaAttachList() != null) { 
-			vo.getQnaAttachList().forEach(attach -> log.info(attach));
+		if(vo.getAttachList() != null) { 
+			vo.getAttachList().forEach(attach -> log.info(attach));
 		}
 		log.info("============================");
 		
@@ -168,7 +204,7 @@ public class CustomerController {
 		log.info("remove : " + bno);
 		
 		// 삭제가 되기 전에 파일의 정보를 가져와야 하기 때문에 service.getAttachList를 호출하여 bno에 관련된 파일 정보를 가져올 수 있다.
-		List<QNAFileUploadVO> attachList = qna.qnaGetAttachList(bno);
+		List<QNAFileUploadVO> attachList = qna.getAttachList(bno);
 		
 		if(qna.remove(bno)) {
 			qnaDeleteFiles(attachList);
@@ -243,7 +279,7 @@ public class CustomerController {
 	@ResponseBody
 	public ResponseEntity<List<QNAFileUploadVO>> qnaGetAttachList(Long bno){
 		log.info("qnaGetAttachList : " + bno);
-		return new ResponseEntity<List<QNAFileUploadVO>>(qna.qnaGetAttachList(bno), HttpStatus.OK);
+		return new ResponseEntity<List<QNAFileUploadVO>>(qna.getAttachList(bno), HttpStatus.OK);
 	}	
 	
 	

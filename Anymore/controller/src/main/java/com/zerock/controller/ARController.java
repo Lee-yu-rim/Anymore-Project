@@ -84,7 +84,7 @@ private ARService service;
 	
 	// 입양후기 조회
 	@GetMapping("/getAR")		
-	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
+	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") CriteriaAR cri, Model model) {
 		log.info("/getAR");
 		
 		service.updateVisitCnt(bno);
@@ -94,7 +94,7 @@ private ARService service;
 	
 	// 입양후기 수정 처리
 	@GetMapping("/modifyAR")		
-	public void modify(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
+	public void modify(@RequestParam("bno") Long bno, @ModelAttribute("cri") CriteriaAR cri, Model model) {
 		log.info("/modifyAR");
 		
 		model.addAttribute("adoptionReview", service.get(bno));

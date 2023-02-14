@@ -97,6 +97,7 @@ public class staffMyPageController {
 		public void product_manage_watch(@RequestParam("product_num") int product_num, @ModelAttribute("cri") Criteria cri, Model model) {
 			log.info("/Product_manage_get or product_manage_modify");
 			model.addAttribute("product", ProductService.get(product_num));
+			model.addAttribute("image", ProductService.productImgList());
 		}
 		
 		//관리자 마이페이지 : 보호동물 글 수정
@@ -219,6 +220,7 @@ public class staffMyPageController {
 		public void protect_animal_watch(@RequestParam("board_num") int board_num, @ModelAttribute("cri") Criteria cri, Model model) {
 			log.info("/protect_animal_watch or protect_animal_modify");
 			model.addAttribute("animal", ProtectAnimalService.get(board_num));
+			model.addAttribute("image", ProtectAnimalService.imageAnimalList());
 		}
 		
 		//관리자 마이페이지 : 보호동물 글 수정
@@ -381,10 +383,10 @@ public class staffMyPageController {
 		
 		//관리자 마이페이지 : 배송정보/구매내역관리 상세보기
 		@GetMapping("/current_perchase_watch")
-		public String current_perchase_watch() {
-		  
-			return "/staffMyPage/current_perchase_watch";
-		}
+		public void current_perchase_watch(@RequestParam("perchase_num") Long perchase_num, @ModelAttribute("cri") Criteria cri, Model model) {
+	         log.info("/Current_perchase_get or current_perchase_modify");
+	         model.addAttribute("perchase", CurrentPerchaseService.get(perchase_num));
+	      }
 		
 		
 		
@@ -395,12 +397,12 @@ public class staffMyPageController {
 //			return "/staffMyPage/product_manage_modify";
 //		}
 		
-		//관리자 마이페이지 : 배송정보/구매내역관리 상세보기 수정
-		@GetMapping("/current_perchase_modify")
-		public String current_perchase_modify() {
-		  
-			return "/staffMyPage/current_perchase_modify";
-		}
+//		//관리자 마이페이지 : 배송정보/구매내역관리 상세보기 수정
+//		@GetMapping("/current_perchase_modify")
+//		public String current_perchase_modify() {
+//		  
+//			return "/staffMyPage/current_perchase_modify";
+//		}
 		
 		//관리자 마이페이지 : 상품등록
 		@GetMapping("/product_manage_write")
@@ -445,6 +447,20 @@ public class staffMyPageController {
 			
 			model.addAttribute("pageMaker", new PageDTO(cri,total));
 		}
+		
+		// 관리자가 회원탈퇴 시키는 기능
+		@GetMapping("/account_delete")
+	      public String member_delete(MemberVO vo) {
+	         MemberService.remove(vo);
+	         
+	         return "redirect:/staffMyPage/member_list";
+	      }
+
+		
+		
+		
+		
+		
 //		
 //		@GetMapping({"/get","modify"})
 //		public void member_get(@RequestParam("bno") String id, @ModelAttribute("cri") Criteria cri, Model model) {

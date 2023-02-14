@@ -88,13 +88,13 @@ public class joinController {
 	}
 	
 	//회원 정보 삭제
-	@RequestMapping(value = "/join/member_remove", method = RequestMethod.POST)
-	public String remove(@RequestParam("id") String id) {
-		log.info("remove......" + id);
-		service.remove(id);
-		//나중에 메인페이지로 바꾸기
-		return "/join/member_remove";
-	}
+//	@RequestMapping(value = "/join/member_remove", method = RequestMethod.POST)
+//	public String remove(@RequestParam("id") String id, MemberVO member) {
+//		log.info("remove......" + member);
+//		service.remove(member);
+//		//나중에 메인페이지로 바꾸기
+//		return "/join/member_remove";
+//	}
 	
 	//회원가입 - 아이디 중복 체크
 	@ResponseBody
