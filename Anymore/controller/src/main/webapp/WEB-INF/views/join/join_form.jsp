@@ -129,7 +129,7 @@
 												<input type="password" class="form-control" name="pass_check" id="pass_check" maxlength="20" placeholder="비밀번호를 한번 더 입력해주세요.">
 											</div>
 										</div>
-										<div class="col-md-12">
+<!-- 										<div class="col-md-12">
 											<div class="form-group">
 												<label class="label" for="pass_question">비밀번호 찾기 질문</label>
 												<select name="pass_question" id="pass_question" style="width:100%; height:30px; font-family:NanumSquareNeo;" >
@@ -147,7 +147,7 @@
 												<label class="label" for="pass_answer">비밀번호 찾기 답</label>
 												<input type="text" class="form-control" name="pass_answer" id="pass_answer" maxlength="100" placeholder="비밀번호 찾기 질문에 대한 답을 입력해주세요.">
 											</div>
-										</div>
+										</div> -->
 										<div class="col-md-12">
 											<div class="form-group">
 												<label class="label" for="phone">휴대폰 번호</label>

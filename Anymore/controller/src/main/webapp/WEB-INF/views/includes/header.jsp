@@ -57,13 +57,13 @@
 					                <c:if test="${member.staffs == 'y'}"> <!-- 관리자 로그인 -->
 			                          <c:out value="${member.id}"></c:out> 관리자님 께서 로그인 중입니다.&nbsp;
 			                          <a href="/logout" class="mr-2"><span class="fa fa-user-o mr-1"> Logout</span></a>
-						               <a href="/staffMyPage/member_list" class="mr-2"><span class="fa fa-plus-square-o"> mypage</span></a>
+						               <a href="/staffMyPage/member_list" class="mr-2"><span class="fa fa-plus-square-o"> Mypage</span></a>
 						               <a href="/customerService/notice" class="mr-2"><span class="fa fa-child"> Customer service</span></a>
 			                        </c:if>
 			                        <c:if test="${member.staffs == 'n'}"> <!-- 사용자 로그인 -->
 			                        	<c:out value="${member.id}"></c:out> 님께서 로그인 중입니다.&nbsp;
 						              	<a href="/logout" class="mr-2"><span class="fa fa-user-o mr-1"> Logout</span></a>
-						                <a href="/myPage/edit" class="mr-2"><span class="fa fa-plus-square-o"> mypage</span></a>
+						                <a href="/myPage/edit" class="mr-2"><span class="fa fa-plus-square-o"> Mypage</span></a>
 						                <a href="/customerService/notice" class="mr-2"><span class="fa fa-child"> Customer service</span></a>
 					                </c:if>
 					              </c:if>
@@ -91,7 +91,7 @@
                 <a href="/about/support" class="dropdown-item">후원</a>
                 <a href="/about/facility" class="dropdown-item">보호소 시설 안내</a>
               </div>
-            <li id="adopt" class="nav-item dropdown"><a href="/adopt/protectAnimal" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">입양하기</a>
+            <li id="adopt" class="nav-item dropdown"><a href="/adopt/procedure" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">입양하기</a>
               <div class="dropdown-menu border-light m-0">
                 <a href="/adopt/procedure" class="dropdown-item">입양절차</a>
                 <a href="/adopt/protectAnimal" class="dropdown-item">입양하기</a>

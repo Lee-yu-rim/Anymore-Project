@@ -36,21 +36,25 @@
 				  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
 				</svg></span>탈퇴하시려면 비밀번호를 입력해주세요.
 			</p>
-			
+			 <c:if test="${ msg == false }">
+				<p style="font-size: 18px;">
+					비밀번호가 다릅니다.
+				</p>
+			</c:if>
     	</div>
     </section>
-    
+			
 	<section style="padding: 100px">
 		<div class="password_input">
-	    	<form>
-		    	<input id="passowrd" name="password" type="password"/>
-		    	<button id="deleteBtn"
-		    	style="
+	    	<form method="post">
+	    		<input id="id" name="id" type="hidden" value="${ member.id }"/>
+		    	<input id="passowrd" name="password" type="password" />
+		    	<button style="
 		    		display: block;
 					padding: 0 auto;
 					margin: 0 auto;
 					font-family: 'NanumSquareNeo';" 
-		    		type="button" class="btn btn-primary">확인</button>
+		    		type="submit" class="btn btn-primary">확인</button>
 		    </form>
 	    </div>
 	    
@@ -71,19 +75,7 @@
 			</div>
 		</div>
 	</div>
-	</section>
-	
-<script>
-	$(function(){
-		var password = $("#password");
-		
-		$("#deleteBtn").on("click", function(e){
-			alert("정상 처리되었습니다.");
-			self.location = "/index";
-		});
-		
-	});
-</script>
+</section>
 	
 
 

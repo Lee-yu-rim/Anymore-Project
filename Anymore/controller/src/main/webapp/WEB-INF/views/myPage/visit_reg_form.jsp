@@ -64,17 +64,24 @@ pageEncoding="UTF-8"%>
          
             <table class="table table-bordered table-hover text-center">
                 <thead>
-                    <th width="20%">예약번호</th>
-                    <th width="50%">제목</th>
+                    <th width="10%">예약번호</th>
+                    <th width="40%">제목</th>
+                    <th width="20%">방문목적</th>
                     <th width="30%">방문일자</th>
                 </thead>
             	<c:forEach items="${ visitFormList }" var="visitForm">
             		<tr>
 	            		<td>${ visitForm.num }</td>
 	            		<td><a class='move' href='<c:out value="${ visitForm.num }" />'>${ visitForm.title }</a></td>
+	            		<td>
+                           <c:choose>
+                              <c:when test="${visitForm.visit_identify eq 1}">단순방문</c:when>
+                              <c:when test="${visitForm.visit_identify eq 2}">봉사방문</c:when>
+                           </c:choose>
+                        </td>
 	            		<td><fmt:formatDate value="${ visitForm.visit_day }" pattern="yyyy-MM-dd"/></td>
             		</tr>
-            	</c:forEach>
+            	</c:forEach>         	
             </table>
             
 	        <div class="row mt-5">

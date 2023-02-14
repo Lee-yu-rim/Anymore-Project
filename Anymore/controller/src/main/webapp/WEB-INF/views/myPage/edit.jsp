@@ -5,6 +5,9 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+   document.getElementById("home").setAttribute("class", "nav-item");
+</script>
 
 <style>
 	
@@ -104,7 +107,7 @@
          		<td style="text-align: center;">비밀번호 확인</td>
          		<td><input type="password" name="pwdCheck" id="pwdCheck" style="width:100%" placeholder="비밀번호를 다시 입력하세요"></td>
          	</tr>
-         	<tr>
+<!--          	<tr>
          		<td style="text-align: center;">비밀번호 찾기 질문</td>
          		<td>
 					<select name="pass_question" id="pass_question" style="width:100%" >
@@ -120,7 +123,7 @@
          	<tr>
          		<td style="text-align: center;">비밀번호 찾기 답</td>
          		<td><input type="text" name="pass_answer" id="pass_answer" style="width:100%" placeholder="비밀번호 찾기 질문에 대한 답을 입력하세요"></td>	
-         	</tr>
+         	</tr> -->
          	<tr>
          		<td style="text-align: center;">휴대폰 번호</td>
          		<td><input type="text" name="phone" id="phone" style="width:100%" placeholder="'-'을 제외하고 입력하세요"></td>
@@ -194,8 +197,8 @@
 		var email = document.getElementById("email");
 		var password = document.getElementById("password");
 		var pwdCheck = document.getElementById("pwdCheck");
-		var pass_question = document.getElementById("pass_question");
-		var pass_answer = document.getElementById("pass_answer");
+/* 		var pass_question = document.getElementById("pass_question");
+		var pass_answer = document.getElementById("pass_answer"); */
 		var phone = document.getElementById("phone");
 		var address_1 = document.getElementById("address_1");
 		var address_2 = document.getElementById("address_2");
@@ -250,7 +253,7 @@
 		    return false;
 		};
 		
-		if(pass_question.value == ""){
+/* 		if(pass_question.value == ""){
 			$(".modal-body").html("비밀번호 찾기 질문을 선택해주세요.");
 			$("#alertModal").modal("show");
 			pass_question.focus();
@@ -262,7 +265,7 @@
 			$("#alertModal").modal("show");
 			pass_answer.focus();
 			return false;
-		}
+		} */
 		
 		if(phone.value == ""){
 			$(".modal-body").html("휴대폰 번호를 입력해주세요.");
@@ -293,7 +296,7 @@
 			return false;
 		}
 		
-		alert("수정이 완료되었습니다.");
+		alert("수정이 완료되었습니다. 다시 로그인 해주세요.");
 		
 	}
 	

@@ -3,20 +3,12 @@
 <%@include file="../includes/header.jsp"%>
 
 <style>
-
-/*    .hos_map img{ */
-/*       position:relative; */
-/*       right:30px; */
-/*       width: 1200px; */
-/*       text-align:center; */
-/*       padding:50px; */
-/*    } */
    
-/*    .hos_list{ */
-/*       font-family:NanumSquareNeo; */
-/*       text-align:center; */
-/*       padding:20px; */
-/*    } */
+   .title{
+      font-family:NanumSquareNeo;
+      text-align:center;
+      margin-top:50px;
+   }
    
    .map_wrap, .map_wrap * {margin:0;padding:0;font-size:12px;font-family:NanumSquareNeo;color:black;font-weight:500;}
    .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
@@ -57,7 +49,6 @@
    
 </style>
 
-
 <section class="hero-wrap hero-wrap-2"
    style="background-image: url('../images/cat-bg.jpg');"
    data-stellar-background-ratio="0.5">
@@ -73,43 +64,12 @@
       </div>
    </div>
 </section>
- 
+
+
 <div class="title">
    <h1>동물병원 검색</h1><br />
-   가까운 동물병원을 찾아보세요.
+   집 근처 동물병원을 찾아보세요.
 </div>
-
-
-<!-- hospital map -->
-<!-- <div class="container"> -->
-<!--    <div class="row"> -->
-<!--       <div class="map" id="map"> -->
-      
-<!--       </div> -->
-<!--    </div> -->
-   
-<!--    <div class="hos_list"> -->
-<!--         <table class="table table-hover"> -->
-<!--             <tr class="index table-active"> -->
-<!--                 <td>병원명</td> -->
-<!--                 <td>위 치</td> -->
-<!--             </tr> -->
-
-<!--             <tr> -->
-<!--                 <td>이든 동물의료센터</td> -->
-<!--                 <td>서울 영등포구 양평로 5 성원빌딩</td> -->
-<!--             </tr> -->
-<!--             <tr> -->
-<!--                 <td>미소로 동물병원</td> -->
-<!--                 <td>서울 영등포구 영신로 238 미소로</td> -->
-<!--             </tr> -->
-<!--             <tr> -->
-<!--                 <td>영등포 아크로 동물병원</td> -->
-<!--                 <td>서울 영등포구 국회대로54길 10 아크로타워스퀘어 근린생활시설 6동 2호</td> -->
-<!--             </tr> -->
-<!--         </table> -->
-<!--    </div> -->
-<!-- </div> -->
 
 <section class="ftco-section">
    <div class="map_wrap container" style="margin-bottom: 200px">
@@ -131,7 +91,21 @@
 </div>
 </section>
 
-
+<!-- 모달창 -->
+<div class="modal fade" id="alertModal" tabindex="-1"
+   aria-labelledby="exampleModalLabel" aria-hidden="true" style="font-family: 'NanumSquareNeo';">
+   <div class="modal-dialog modal-dialog-centered text-center">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="alertModal">알림</h5>
+         </div>
+         <div class="modal-body"></div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         </div>
+      </div>
+   </div>
+</div>
 
 
 
@@ -166,7 +140,8 @@ function searchPlaces() {
     var keyword = document.getElementById('keyword').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
+       $(".modal-body").html("검색어를 입력해주세요.");
+      $("#alertModal").modal("show");
         return false;
     }
 
@@ -187,12 +162,14 @@ function placesSearchCB(data, status, pagination) {
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
-        alert('검색 결과가 존재하지 않습니다.');
+       $(".modal-body").html("검색 결과가 존재하지 않습니다.");
+      $("#alertModal").modal("show");
         return;
 
     } else if (status === kakao.maps.services.Status.ERROR) {
 
-        alert('검색 결과 중 오류가 발생했습니다.');
+       $(".modal-body").html("검색 중 에러가 발생하였습니다.");
+      $("#alertModal").modal("show");
         return;
 
     }

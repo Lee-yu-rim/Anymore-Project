@@ -61,14 +61,25 @@
 	
 			<div class="col-lg-10">
 				<h3 style="margin-bottom: 30px"><b>나의 찜 목록</b></h3>		
-         
+         <c:if test="${empty list}">
+               <tr>
+               <hr>
+                  <td colspan="6"><p style="margin-top: 16px; font-size: 15px; text-align:center;">찜 목록이 존재하지 않습니다.</p></td>
+               <hr>
+               </tr>
+            </c:if>
          <div class="row d-flex">
          <c:forEach items="${list}" var="protectList">
             <div class="col-md-4 d-flex ftco-animate">
 						<div class="blog-entry align-self-stretch"
 						onclick="location.href='/adopt/animalDetails?board_num='+
 						<c:out value="${ protectList.board_num }" />">
-                  <img src="../images/any-dog2.jpg" class="img-fluid rounded" />
+<!--                   <img src="../images/any-dog2.jpg" class="img-fluid rounded" /> -->
+  					<c:forEach items="${image}" var="protectImage">
+	  					<c:if test="${ protectList.board_num == protectImage.board_num }">
+							<img class="img-fluid rounded" src="/adopt/protectAnimalDisplay?fileName=${ protectImage.uploadPath }/${ protectImage.uuid }_${ protectImage.fileName }"/>
+						</c:if> 
+					</c:forEach>
                   <div class="text p-4">
                      <div class="meta mb-2" style="color: black">
 						<div id="board_num" class="myfont14">공고번호  : <c:out value="${ protectList.board_num }" /></div>

@@ -66,12 +66,12 @@
 									</p>
 								</div>
 							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="label" for="#" style="font-size:15px;">이름</label><br />
-									<input type="text" class="name input" name="name" id="name" maxlength="10" placeholder="이름을 입력하세요.">
-								</div>
-							</div>
+<!-- 							<div class="col-md-12"> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<label class="label" for="#" style="font-size:15px;">이름</label><br /> -->
+<!-- 									<input type="text" class="name input" name="name" id="name" maxlength="10" placeholder="이름을 입력하세요."> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 							<div class="col-md-12">
 								<div class="form-group">
 									<label class="label" for="#" style="font-size:15px;">아이디</label><br />
@@ -80,27 +80,33 @@
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<label class="label" for="#" style="font-size:15px;">비밀번호 찾기 질문</label><br />
-									<select name="pass_question" id="pass_question" style="width:500px; height:30px; text-align:center; font-family:NanumSquareNeo;" >
-										 <option value="" selected>질문을 선택해주세요.</option>
-										 <option value="1">가장 좋아했던 동화책의 제목은 무엇입니까?</option>
-										 <option value="2">부모님이 처음 만난 도시는 어디입니까?</option>
-										 <option value="3">처음으로 가보았던 해변의 이름은 무엇입니까?</option>
-										 <option value="4">어렸을 적 가장 친했던 친구의 이름은 무엇입니까?</option>
-										 <option value="5">첫 반려동물의 이름은 무엇입니까?</option>
-									</select>
+									<label class="label" for="#" style="font-size:15px;">이메일</label><br />
+									<input type="text" class="email input" name="email" id="email" placeholder="이메일을 입력하세요.">
 								</div>
 							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="label" for="#" style="font-size:15px;">비밀번호 찾기 답</label><br />
-									<input type="text" class="pass_answer input" name="pass_answer" id="pass_answer" maxlength="100" placeholder="답을 입력하세요.">
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="pass_show">
-								</div>
-							</div>
+<!-- 							<div class="col-md-12"> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<label class="label" for="#" style="font-size:15px;">비밀번호 찾기 질문</label><br /> -->
+<!-- 									<select name="pass_question" id="pass_question" style="width:500px; height:30px; text-align:center; font-family:NanumSquareNeo;" > -->
+<!-- 										 <option value="" selected>질문을 선택해주세요.</option> -->
+<!-- 										 <option value="1">가장 좋아했던 동화책의 제목은 무엇입니까?</option> -->
+<!-- 										 <option value="2">부모님이 처음 만난 도시는 어디입니까?</option> -->
+<!-- 										 <option value="3">처음으로 가보았던 해변의 이름은 무엇입니까?</option> -->
+<!-- 										 <option value="4">어렸을 적 가장 친했던 친구의 이름은 무엇입니까?</option> -->
+<!-- 										 <option value="5">첫 반려동물의 이름은 무엇입니까?</option> -->
+<!-- 									</select> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							<div class="col-md-12"> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<label class="label" for="#" style="font-size:15px;">비밀번호 찾기 답</label><br /> -->
+<!-- 									<input type="text" class="pass_answer input" name="pass_answer" id="pass_answer" maxlength="100" placeholder="답을 입력하세요."> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							<div class="col-md-12"> -->
+<!-- 								<div class="pass_show"> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 							<div class="col-md-12">
 								<div class="form-group pass_find_btn">
 									<a href="/member/login"><input type="button" value="돌아가기" class="btn btn-primary"></a>
@@ -143,12 +149,12 @@
 		var pass_question = document.getElementById("pass_question");
 		var pass_answer = document.getElementById("pass_answer");
 		
-		if(name.value == ""){
-			$(".modal-body").html("이름을 입력해주세요.");
-			$("#alertModal").modal("show");
-			name.focus();
-			return false;
-		}
+// 		if(name.value == ""){
+// 			$(".modal-body").html("이름을 입력해주세요.");
+// 			$("#alertModal").modal("show");
+// 			name.focus();
+// 			return false;
+// 		}
 		
 		if(id.value == ""){
 			$(".modal-body").html("아이디를 입력해주세요.");
@@ -157,34 +163,53 @@
 			return false;
 		}
 		
-		if(pass_question.value == ""){
-			$(".modal-body").html("비밀번호 찾기 질문을 선택하세요.");
+		if(email.value == ""){
+			$(".modal-body").html("이메일을 입력해주세요.");
 			$("#alertModal").modal("show");
-			pass_question.focus();
+			email.focus();
 			return false;
 		}
 		
-		if(pass_answer.value == ""){
-			$(".modal-body").html("비밀번호 찾기 답을 입력해주세요.");
-			$("#alertModal").modal("show");
-			pass_answer.focus();
-			return false;
-		}
+// 		if(pass_question.value == ""){
+// 			$(".modal-body").html("비밀번호 찾기 질문을 선택하세요.");
+// 			$("#alertModal").modal("show");
+// 			pass_question.focus();
+// 			return false;
+// 		}
 		
-		var query = {name:$("#name").val(), id:$("#id").val(), pass_question:$("#pass_question").val(), pass_answer:$("#pass_answer").val()};
+// 		if(pass_answer.value == ""){
+// 			$(".modal-body").html("비밀번호 찾기 답을 입력해주세요.");
+// 			$("#alertModal").modal("show");
+// 			pass_answer.focus();
+// 			return false;
+// 		}
 		
+// 		var query = {name:$("#name").val(), id:$("#id").val(), pass_question:$("#pass_question").val(), pass_answer:$("#pass_answer").val()};
+		
+// 		$.ajax({
+// 			url:"/pass_find_result",
+// 			type:"POST",
+// 			data: query,
+// 			success:function(result){
+// 				$(".pass_show").append("비밀번호는 " + result + " 입니다.");
+// 			},
+// 			 error:function(){
+// 				 $(".modal-body").html("회원 정보를 확인해주세요.");
+// 				$("#alertModal").modal("show");
+//             }
+// 		});
+
 		$.ajax({
-			url:"/pass_find_result",
-			type:"POST",
-			data: query,
-			success:function(result){
-				$(".pass_show").append("비밀번호는 " + result + " 입니다.");
-			},
-			 error:function(){
-				 $(".modal-body").html("회원 정보를 확인해주세요.");
-				$("#alertModal").modal("show");
-            }
-		});
+				url : "/member/findpw",
+				type : "POST",
+				data : {
+					id : $("#id").val(),
+					email : $("#email").val()
+				},
+				success : function(result) {
+					alert(result);
+				},
+			});
 	});
 		
 
