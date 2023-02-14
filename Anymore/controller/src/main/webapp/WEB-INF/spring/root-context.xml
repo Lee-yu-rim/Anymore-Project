@@ -32,7 +32,7 @@
    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
       <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
       <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl"></property>
-      <property name="username" value="anymore"></property>
+      <property name="username" value="test"></property>
       <property name="password" value="1234"></property>
    </bean>   
    
@@ -50,6 +50,44 @@
    		<property name="dataSource" ref ="dataSource"></property>
    </bean>
    
+   <!-- 메일 보내기  -->
+
+	   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+
+	      <property name="host" value="smtp.gmail.com" />
+
+	      <property name="port" value="587" />
+
+	      <property name="defaultEncoding" value="utf-8"/>
+
+	      <property name="username" value="ghdbdlfla@naver.com" />
+
+	      <property name="password" value="your4699rim" />
+
+	    
+
+	
+
+	      <!-- email 요청시는 SMTP -->
+
+	      <property name="javaMailProperties">
+
+	         <props>
+
+	            <prop key="mail.transport.protocol">smtp</prop>
+
+	            <prop key="mail.smtp.auth">true</prop>
+
+	            <prop key="mail.smtp.starttls.enable">true</prop>
+
+	            <prop key="mail.debug">true</prop>
+
+	         </props>
+
+	      </property>
+	 </bean>
+
+
    <tx:annotation-driven/>
    <task:annotation-driven/>
 	
