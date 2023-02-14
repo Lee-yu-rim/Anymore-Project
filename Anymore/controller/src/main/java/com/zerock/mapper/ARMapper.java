@@ -9,7 +9,8 @@ import com.zerock.domain.CriteriaAR;
 
 public interface ARMapper {
 
-	public List<ARVO> getList();
+	// 유진 수정 - 메인 값 불러오기 용도
+	public List<ARVO> getARList();
 	
 	public List<ARVO> getListWithPaging(CriteriaAR cri);
 	

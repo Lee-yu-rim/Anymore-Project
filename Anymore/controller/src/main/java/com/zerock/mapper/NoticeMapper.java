@@ -12,11 +12,14 @@ public interface NoticeMapper {
 		
 	public void insertSelectKey(NoticeVO board);
 	
+	// 공지사항 삭제
+	public int delete(Long bno);
+	
 	
 	// 공지사항 목록 전체 + 페이지 처리
 	public List<NoticeVO> getListPaging(Criteria cri);
 	
-	// qna 전체 데이터 개수 처리
+	// 공지사항 전체 데이터 개수 처리
 	public int getTotalCount(Criteria cri);
 	
 	// 공지사항 특정글 조회
@@ -24,6 +27,8 @@ public interface NoticeMapper {
 	
 	// 공지사항 조회수 증가
 	public int viewCount(Long bno);
+	
+	
 
 	
 	

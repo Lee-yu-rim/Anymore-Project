@@ -6,12 +6,14 @@ import com.zerock.domain.QNAFileUploadVO;
 
 public interface QNAFileUploadMapper {
 
-	public void qnaInsert(QNAFileUploadVO vo);
+	public void insert(QNAFileUploadVO vo);
 	
-	public void qnaDelete(String uuid);
+	public void delete(String uuid);
 	
-	public List<QNAFileUploadVO> qnaFindByBno(Long bno);
+	public List<QNAFileUploadVO> findByBno(Long bno);
 	
-	public void qnaDeleteAll(Long bno);
+	public void deleteAll(Long bno);
+	
+	public List<QNAFileUploadVO> getOldFiles();
 	
 }

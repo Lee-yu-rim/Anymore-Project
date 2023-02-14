@@ -14,6 +14,9 @@ public interface FAQMapper {
 	public void insert(FAQVO board);
 	
 	public void insertSelectKey(FAQVO board);
+	
+	// faq 삭제
+	public int delete(Long bno);
 
 	
 	// faq 목록 전체 + 페이지 처리

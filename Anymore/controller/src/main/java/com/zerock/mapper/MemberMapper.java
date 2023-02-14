@@ -2,6 +2,8 @@ package com.zerock.mapper;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.zerock.domain.Criteria;
 import com.zerock.domain.MemberVO;
 import com.zerock.domain.PassFindVO;
@@ -30,7 +32,7 @@ public interface MemberMapper {
 	public int update(MemberVO member);
 	
 	//회원 정보 삭제(탈퇴)
-	public int delete(String id);
+	public int delete(MemberVO member);
 	
 	//아이디 중복 체크
 	public MemberVO idCheck(String id);
@@ -39,7 +41,14 @@ public interface MemberMapper {
 	public MemberVO login(MemberVO member) throws Exception;
 	
 	//비밀번호 찾기
-	public PassFindVO pass_find(PassFindVO vo);
+//	public PassFindVO pass_find(PassFindVO vo);
+	public void findPw(HttpServletResponse resp, MemberVO vo) throws Exception;
+	
+	//이메일발송
+	public void sendEmail(MemberVO vo, String div) throws Exception;
+	
+	// 비밀번호 변경
+	public int updatePw(MemberVO vo) throws Exception;
 	
 	
 	//페이지

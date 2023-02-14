@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zerock.domain.CartVO;
 import com.zerock.domain.Criteria;
+import com.zerock.domain.ProductAttachVO;
 import com.zerock.domain.ProductVO;
 import com.zerock.domain.ProtectAnimalVO;
 
@@ -17,7 +18,9 @@ public interface ProductMapper {
 	
 	//상품 장바구니 담기
 	public void addCart(CartVO cart);
-
+	
+	//이미지 불러오기
+	public List<ProductAttachVO> productImgList();
 	
 	
 	public int getTotalCount(Criteria cri);

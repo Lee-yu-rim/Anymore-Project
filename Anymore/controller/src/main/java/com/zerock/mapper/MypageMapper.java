@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zerock.domain.AdoptReservationVO;
 import com.zerock.domain.CriteriaMypage;
+import com.zerock.domain.MemberVO;
 import com.zerock.domain.PerchaseVO;
 import com.zerock.domain.ReserVO;
 
@@ -35,4 +36,6 @@ public interface MypageMapper {
 	public List<PerchaseVO> getListWithPaging_perchase(CriteriaMypage cri);
 	
 	public int getTotalCount_perchase(CriteriaMypage cri);
+	
+	public void account_delete(MemberVO vo);
 }
