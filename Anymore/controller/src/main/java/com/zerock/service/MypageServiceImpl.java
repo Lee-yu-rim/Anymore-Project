@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.zerock.domain.AdoptReservationVO;
 import com.zerock.domain.CriteriaMypage;
+import com.zerock.domain.MemberVO;
 import com.zerock.domain.PerchaseVO;
 import com.zerock.domain.ReserVO;
 import com.zerock.mapper.MypageMapper;
@@ -70,6 +71,9 @@ public class MypageServiceImpl implements MypageService {
 		// TODO Auto-generated method stub
 		return mapper.getTotalCount_perchase(cri);
 	}
-	
-	
+
+	@Override
+	public void accountDelete(MemberVO vo) {
+		mapper.account_delete(vo);
+	}
 }

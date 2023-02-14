@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zerock.domain.Criteria;
+import com.zerock.domain.FBAttachVO;
 import com.zerock.domain.QNAFileUploadVO;
 import com.zerock.domain.QNAVO;
 import com.zerock.mapper.QNAFileUploadMapper;
@@ -55,12 +56,12 @@ public class QNAServiceImpl implements QNAService {
 		log.info("QNA register.... : " + vo);
 		mapper.insertSelectKey(vo);
 
-		if(vo.getQnaAttachList() == null || vo.getQnaAttachList().size() <= 0) {
+		if(vo.getAttachList() == null || vo.getAttachList().size() <= 0) {
 			return;
 		}
-		vo.getQnaAttachList().forEach(attach -> {
+		vo.getAttachList().forEach(attach -> {
 			attach.setBno(vo.getBno());
-			uploadMapper.qnaInsert(attach);
+			uploadMapper.insert(attach);
 		});		
 		
 	}
@@ -77,15 +78,30 @@ public class QNAServiceImpl implements QNAService {
 	@Override
 	public boolean remove(Long bno) {
 		log.info("QNA delete.... : " + bno);
-		uploadMapper.qnaDeleteAll(bno);
+		uploadMapper.deleteAll(bno);
 		return mapper.delete(bno) == 1;
 	}
 	
 	// QNA 수정
+	@Transactional
 	@Override
 	public boolean modify(QNAVO vo) {
 		log.info("QNA modify : " + vo);
-		return mapper.update(vo) == 1;
+		
+		uploadMapper.deleteAll(vo.getBno());
+		
+		boolean modifyResult = mapper.update(vo) == 1;
+		
+		if(modifyResult && vo.getAttachList() != null && vo.getAttachList().size() > 0) {
+			
+			vo.getAttachList().forEach(attach -> {
+				
+				attach.setBno(vo.getBno());
+				uploadMapper.insert(attach);
+			});
+		}
+		
+		return modifyResult;
 	}
 
 	// 조회수 증가
@@ -96,12 +112,18 @@ public class QNAServiceImpl implements QNAService {
 	}
 
 	// findByBno mapping 작업 - 첨부파일을 화면에 뿌려주는 것	
+//	@Override
+//	public List<QNAFileUploadVO> qnaGetAttachList(Long bno) {
+//		
+//		System.out.println("qnaGetAttachList....");
+//
+//		return uploadMapper.qnaFindByBno(bno);
+//	}
+	
 	@Override
-	public List<QNAFileUploadVO> qnaGetAttachList(Long bno) {
-		
-		System.out.println("qnaGetAttachList....");
-
-		return uploadMapper.qnaFindByBno(bno);
+	public List<QNAFileUploadVO> getAttachList(Long bno) {
+		log.info("get Attach list by bno" + bno);
+		return uploadMapper.findByBno(bno);
 	}
 
 	

@@ -131,6 +131,15 @@ public class ProtectAnimalServiceImpl implements ProtectAnimalService {
 		return mapper.delete(board_num) == 1;
 	}
 	
+	// 업로드된 보호중인 아이 파일 이미지 불러오기
+	@Override
+	public List<ProtectAnimalAttachVO> imageAnimalList() {
+		
+		System.out.println("myBatis에 담긴 값 : " + mapper.imageAnimalList());
+		
+		return mapper.imageAnimalList();
+	}
+	
 
 
 }

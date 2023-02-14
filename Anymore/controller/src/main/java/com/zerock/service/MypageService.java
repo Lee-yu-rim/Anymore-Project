@@ -5,6 +5,7 @@ import java.util.List;
 import com.zerock.domain.AdoptReservationVO;
 import com.zerock.domain.Criteria;
 import com.zerock.domain.CriteriaMypage;
+import com.zerock.domain.MemberVO;
 import com.zerock.domain.PerchaseVO;
 import com.zerock.domain.ReserVO;
 
@@ -20,4 +21,7 @@ public interface MypageService {
 	//마이페이지 구매내역 불러오기 + 페이징
 	public List<PerchaseVO> getList_perchase(CriteriaMypage cri);
 	public int getTotal_perchase(CriteriaMypage cri);
+	
+	//회원탈퇴
+	public void accountDelete(MemberVO vo);
 }

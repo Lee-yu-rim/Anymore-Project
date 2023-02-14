@@ -14,7 +14,8 @@ public interface FAQService {
 	//파일올리기
 	public List<FAQAttachVO> getAttachList(Long bno);
 	
-	
+	// FAQ 삭제
+	public boolean remove(Long bno);
 	
 	
 	//public List<FAQVO> faqGetList();

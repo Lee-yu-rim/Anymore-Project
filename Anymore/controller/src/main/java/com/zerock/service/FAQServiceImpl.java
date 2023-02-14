@@ -45,6 +45,13 @@ public class FAQServiceImpl implements FAQService {
 		
 	}
 	
+	// FAQ 삭제
+	@Override
+	public boolean remove(Long bno) {
+		log.info("FAQ delete.... : " + bno);
+		return mapper.delete(bno) == 1;
+	}	
+	
 	//파일 업로드
 	@Override
 	public List<FAQAttachVO> getAttachList(Long bno) {
@@ -79,6 +86,8 @@ public class FAQServiceImpl implements FAQService {
 	public int viewCount(Long bno) {
 		log.info("FAQViewCount...");
 		return mapper.viewCount(bno);
-	}	
+	}
+
+
 
 }

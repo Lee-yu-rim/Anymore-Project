@@ -8,6 +8,9 @@ import com.zerock.domain.CriteriaAR;
 
 public interface ARService {
 	
+	// 유진 수정 - 메인 값 불러오기 용도
+	public List<ARVO> getARList();
+	
 	public void register(ARVO adoptionReview);
 	
 	public ARVO get(Long bno);
@@ -26,7 +29,7 @@ public interface ARService {
 	
 //	public List<ARAttachVO> getAttachImg(Long bno);
 	
-	// 업로드된 보호중인 아이 파일 이미지 불러오기
+	// 업로드된 이미지 불러오기
 	public List<ARAttachVO> imageList();
 	
 }

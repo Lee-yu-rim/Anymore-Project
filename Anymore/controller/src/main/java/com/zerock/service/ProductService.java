@@ -20,6 +20,9 @@ public interface ProductService {
 	//상품 장바구니 담기
 	public void addCart(CartVO cart);
 	
+	//이미지 불러오기
+	public List<ProductAttachVO> productImgList();
+	
 	
 	//스태프에서 불러오기용
 	public int staffgetTotal(Criteria cri);

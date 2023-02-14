@@ -52,6 +52,13 @@ public class NoticeServiceImpl implements NoticeService {
 		
 	}
 	
+	//공지사항 삭제
+	@Override
+	public boolean remove(Long bno) {
+		log.info("NOTICE delete.... : " + bno);
+		return mapper.delete(bno) == 1;
+	}
+	
 	// 공지사항 목록 전체 불러오기
 	@Override
 	public List<NoticeVO> getList(Criteria cri) {
@@ -86,9 +93,5 @@ public class NoticeServiceImpl implements NoticeService {
 		return attachMapper.findByBno(bno);
 	}
 
-
 	
-	
-	
-
 }

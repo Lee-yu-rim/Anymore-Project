@@ -39,4 +39,7 @@ public interface ProtectAnimalService {
 	public boolean modify(ProtectAnimalVO board);
 	
 	public boolean remove(Long board_num);
+
+		// 업로드된 보호중인 아이 파일 이미지 불러오기
+	public List<ProtectAnimalAttachVO> imageAnimalList();
 }

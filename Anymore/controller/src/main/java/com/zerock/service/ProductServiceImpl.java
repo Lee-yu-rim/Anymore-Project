@@ -41,6 +41,12 @@ public class ProductServiceImpl implements ProductService {
 		log.info("get......");
 		return mapper.read(product_num);
 	}
+	
+	@Override
+	public List<ProductAttachVO> productImgList() {
+		log.info("image");
+		return mapper.productImgList();
+	}
 
 	@Override
 	public void addCart(CartVO cart) {
@@ -114,4 +120,7 @@ public class ProductServiceImpl implements ProductService {
 		log.info("get Attach list by product_num" + product_num);
 		return attachMapper.findByBno(product_num);
 	}
+
+	
+
 }

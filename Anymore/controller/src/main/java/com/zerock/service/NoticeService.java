@@ -16,6 +16,9 @@ public interface NoticeService {
 	
 	public List<NoticeAttachVO> getAttachList(Long bno);
 	
+	// 공지사항 삭제
+	public boolean remove(Long bno);
+	
 	// 공지사항 목록 전체 불러오기
 	//public List<NoticeVO> getList();
 	
