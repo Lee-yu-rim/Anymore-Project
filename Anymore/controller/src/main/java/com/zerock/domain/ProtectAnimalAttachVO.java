@@ -9,7 +9,7 @@ public class ProtectAnimalAttachVO {
 	private String uploadPath;
 	private String fileName;
 	private boolean fileType;
-	
+	private Long fno;
 	
 	private Long board_num;
 

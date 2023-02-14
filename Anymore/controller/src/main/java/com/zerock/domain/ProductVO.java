@@ -12,10 +12,11 @@ public class ProductVO {
 	private String price;
 	private String identity;
 	private String discribe;
-	private int amount;
+	private int p_amount;
 	private String product_name;
 	private Date product_regdate;
 	private String product_content;
+	private String quantity_num;
 	
 	
 	private List<ProductAttachVO> attachList;

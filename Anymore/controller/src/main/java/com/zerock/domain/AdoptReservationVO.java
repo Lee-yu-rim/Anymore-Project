@@ -21,6 +21,8 @@ public class AdoptReservationVO {
 	private String servey6;
 	private String servey7;
 	private String servey8;
-	private Date reg_date;
-	private String id;
+	
+	private Date reg_date; // 날짜
+	private String id; // 유저아이디
+	
 }

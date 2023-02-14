@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class QNAVO {
+	
 	private Long bno;
 	private String title;
 	private String content;
@@ -16,9 +17,6 @@ public class QNAVO {
 	private int count;
 	private int replycnt;
 	
-	
-	private String secret; // 비밀글
-	
 	// 파일
-	private List<QNAFileUploadVO> qnaAttachList;
+	private List<QNAFileUploadVO> attachList;
 }

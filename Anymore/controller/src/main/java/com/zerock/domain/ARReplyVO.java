@@ -12,6 +12,4 @@ public class ARReplyVO {
 	private String reply; // 댓글
 	private Date replydate; // 댓글 작성일
 	private Date updatedate; // 댓글 수정일
-	
-
 }

@@ -11,13 +11,20 @@ public class CurrentPerchaseVO {
 	private String perchased_product;
 	private String all_price;
 	private Date ordered_date;
-	private String ordered_time;
 	private String delivery_status;
-	private Long delivery_fee;
 	private Long product_num;
 	private String payment;
 	private String id;
+
+	//perchase_info(상품구매정보)
+	private String perchased_pname;
+	private String amount;
+	private String product_price;
 	
+	//delivery_info(배송정보)
 	private String address;
 	private String phone;
+	private String requests;
+	
+	
 }
