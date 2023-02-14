@@ -30,7 +30,7 @@
 			      	<span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
 			      	<!-- <span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/> -->
 			      	<span style="color:#CDBBA7">구매관리</span><br/>
-			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      		<span><a href="/staffMyPage/product_manage">상품관리</a></span><br/>
 		      		<span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
 		      		<span><a href="/staffMyPage/faq_write">자주 묻는 질문 작성 폼</a></span>
@@ -49,7 +49,7 @@
 			                <select name='type'>
 								<option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
 								<option value="N" <c:out value="${pageMaker.cri.type eq 'N' ? 'selected':''}"/>>이름</option>
-			                    <option value="V" <c:out value="${pageMaker.cri.type eq 'P' ? 'selected':''}"/>>구매상품</option>
+			                    <option value="P" <c:out value="${pageMaker.cri.type eq 'P' ? 'selected':''}"/>>구매상품</option>
 			                    <option value="D" <c:out value="${pageMaker.cri.type eq 'D' ? 'selected':''}"/>>배송현황</option>
 							</select>
 							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
@@ -72,7 +72,6 @@
 			       <th>이름</th>
 			       <th>구매상품</th>
 			       <th>상품가격</th>
-			       <th>주소</th>
 			       <th>전화번호</th>
 			       <th>구매일자</th>
 			       <th>배송현황</th>
@@ -81,16 +80,20 @@
 			    <c:forEach items="${perchase_list}" var="perchase">
 					<tr>
 						<td><c:out value="${perchase.perchase_num }"></c:out></td>
-						<td><a href="protect_animal_watch"><c:out value="${perchase.name }"></c:out></a></td>
+						<td><c:out value="${perchase.name }"></c:out></td>
 						<td><c:out value="${perchase.perchased_product }"></c:out></td>
 						<td><c:out value="${perchase.all_price }"></c:out></td>
-						<td><c:out value="${perchase.address}"></c:out></td>
 						<td><c:out value="${perchase.phone}"></c:out></td>
 						<td><c:out value="${perchase.ordered_date }"></c:out></td>
 						<td><c:out value="${perchase.delivery_status }"></c:out></td>
-						<td><a href="current_perchase_watch">상세보기</a></td>
+						<td><a class='move' href='<c:out value="${perchase.perchase_num }" />'>상세보기</a></td>
 					</tr>
 				</c:forEach>
+				<c:if test="${empty perchase_list}">
+					<tr>
+						<td colspan="12"><p style="margin-top: 16px; font-size: 15px; text-align:center;">검색 결과가 존재하지 않습니다.</p></td>
+					</tr>
+				</c:if>
 			 </table>
 			</div>
 				<form id='actionForm' action="/staffMyPage/current_perchase" method='get'>
@@ -144,7 +147,7 @@
 			e.preventDefault();
 			
 			actionForm.append("<input type ='hidden' name='perchase_num' value='"+$(this).attr("href")+"'>");
-			actionForm.attr("action","/staffMyPage/Current_perchase_get");
+			actionForm.attr("action","/staffMyPage/current_perchase_watch");
 			actionForm.submit();
 		});
 		

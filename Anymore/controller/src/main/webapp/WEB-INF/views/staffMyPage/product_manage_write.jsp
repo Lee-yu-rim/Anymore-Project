@@ -37,7 +37,7 @@
 			      	<!-- <span style="color:#CDBBA7">보호동물 등록</span><br/> -->
 			      	<span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
 			      	<span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      		<!-- <span><a href="/staffMyPage/product_manage">상품관리</a></span> -->
 		      		<span style="color:#CDBBA7">상품관리</span><br/>
 		      		<span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
@@ -49,27 +49,27 @@
 			<form role="form" action="/staffMyPage/product_manage_write" method="post">
 					<div class="form-group">
 			            <label>상품이름</label> 
-			            <input type="text" class="form-control" placeholder="상품이름을 입력해주세요." name='product_name'>
+			            <input type="text" id="product_name" class="form-control" placeholder="상품이름을 입력해주세요." name='product_name'>
 			         </div>
 			         
 			         <div class="form-group">
 			            <label>가격</label> 
-			            <input class="form-control" placeholder="가격을 입력해주세요." name='price'>
+			            <input class="form-control" id='price' placeholder="가격을 입력해주세요." name='price'>
 			         </div>
 			         
 			         <div class="form-group">
 			            <label>수량</label> 
-			            <input class="form-control" placeholder="수량을 입력해주세요." name='amount'>
+			            <input class="form-control" id='p_amount' placeholder="수량을 입력해주세요." name='p_amount'>
 			         </div>
 			        
 			         <div class="form-group">
 			            <label for="content">상품설명</label>
-			            <textarea class="form-control" name="discribe" rows="14"
+			            <textarea class="form-control" id="discribe" name="discribe" rows="14"
 			               placeholder="상품의 캐치프레이즈"></textarea>
 			         </div>
 			         <div class="form-group">
 			            <label for="content">상품내용</label>
-			            <textarea class="form-control" name="product_content" rows="14"
+			            <textarea class="form-control" id="product_content" name="product_content" rows="14"
 			               placeholder="상품의 특징 설명"></textarea>
 			         </div>
 			         
@@ -81,7 +81,7 @@
 								<!-- /.panel-heading -->
 								<div class="panel-body">
 									<div class="form-group uploadDiv">
-										<input type="file" name='uploadFile' multiple>
+										<input type="file" id='uploadFile' name='uploadFile' multiple>
 									</div>
 									
 									<div class='uploadResult'>
@@ -103,8 +103,25 @@
 					
 			</form>
     	</div>
-	</div>   
+	</div>
+</div>   
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true" style="font-family: 'NanumSquareNeo';">
+	<div class="modal-dialog modal-dialog-centered text-center">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="alertModal">알림</h5>
+			</div>
+			<div class="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 	$(function(){
@@ -115,6 +132,48 @@
 		$("button[type='submit']").on("click",function(e){
 			e.preventDefault();
 			console.log("submit clicked");
+			
+			if($("#product_name").val() == ""){
+				$(".modal-body").html("상품 이름을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#product_name").focus();
+			    return false;
+			}
+
+			if($("#price").val() == ""){
+				$(".modal-body").html("가격을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#price").focus();
+			    return false;
+			}
+			
+			if($("#p_amount").val() == ""){
+				$(".modal-body").html("수량을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#p_amount").focus();
+			    return false;
+			}
+
+			if($("#discribe").val() == ""){
+				$(".modal-body").html("상품 설명을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#discribe").focus();
+			    return false;
+			}
+			
+			if($("#product_content").val() == ""){
+				$(".modal-body").html("상품 내용을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#product_content").focus();
+			    return false;
+			}
+			
+			if($("#uploadFile").val() == ""){
+				$(".modal-body").html("파일을 첨부해주세요.");
+				$("#alertModal").modal("show");
+			    $("#uploadFile").focus();
+			    return false;
+			}
 			
 			var str = "";
 			$(".uploadResult ul li").each(function(i, obj){

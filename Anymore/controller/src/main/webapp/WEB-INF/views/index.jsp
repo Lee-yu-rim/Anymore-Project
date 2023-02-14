@@ -1,5 +1,7 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="./includes/header.jsp"%>
 <%@include file="./popup/popup.jsp" %> 
 <style>
@@ -71,7 +73,7 @@
           <div class="col-md-6 col-lg-4 d-flex justify-content-center counter-wrap ftco-animate">
             <div class="block-18 text-center">
               <div class="text">
-                <strong class="number" data-number="171">0</strong>
+                <strong class="number" data-number="15">0</strong>
               </div>
               <div class="text">
               	<span>오늘 구조된 동물 수</span>
@@ -81,7 +83,7 @@
           <div class="col-md-6 col-lg-4 d-flex justify-content-center counter-wrap ftco-animate">
             <div class="block-18 text-center">
               <div class="text">
-                <strong class="number" data-number="341">0</strong>
+                <strong class="number" data-number="<c:out value='${count1 }' />">0</strong>
               </div>
               <div class="text">
               	<span>입양 완료된 동물 수</span>
@@ -91,7 +93,7 @@
           <div class="col-md-6 col-lg-4 d-flex justify-content-center counter-wrap ftco-animate">
             <div class="block-18 text-center">
               <div class="text">
-                <strong class="number" data-number="219">0</strong>
+                <strong class="number" data-number="<c:out value='${count2 }' />">0</strong>
               </div>
               <div class="text">
               	<span>보호 중인 동물 수</span>
@@ -223,119 +225,30 @@
         </div>
         <div class="row d-flex">
           <div class="carousel-testimony owl-carousel ftco-owl">
+	<c:forEach items="${animal_list}" var="protectList">
             <div class="item">
               <div class="d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                  <a href="#" class="block-20 rounded" style="background-image: url('images/any-dog1.jpg');">
-                  </a>
+				<div class="blog-entry align-self-stretch" pk="<c:out value= "${ protectList.board_num }" />"
+					 style="cursor:pointer;">
+  					<c:forEach items="${animal_file}" var="protectImage">
+	  					<c:if test="${ protectList.board_num == protectImage.board_num }">
+							<a href="/adopt/animalDetails?board_num=${ protectList.board_num }"><img class="img-fluid rounded" src="/adopt/protectAnimalDisplay?fileName=${ protectImage.uploadPath }/${ protectImage.uuid }_${ protectImage.fileName }" style="width: 500px; height:250px;"/></a>
+						</c:if> 
+					</c:forEach>					 
                   <div class="text p-4">
                     <div class="meta mb-2">
-                      <div><a href="#">2023.01.13</a></div>
-                      <div><a href="#">안락사 15일 전</a></div>
-                      <div><a href="#" class="meta-chat"><span class="fa fa-comment"></span> 3</a></div>
+                      <div><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${ protectList.enter_day }" /></div>
+                      <div>안락사날짜 : <c:out value= "${ protectList.euthanasia_day }" /></div>
                     </div>
-                    <h3 class="heading"><a href="#">우리 사랑스러운 모카를 소개합니다!
-                      모카는 생후 4개월로 추정되는 수컷아가이구요.
-                      현재 중성화는 안되어있지만 모든 접종은 마친 상태에요.
-                      건강도 너무 너무 좋고, 흰색과 갈색이 믹스된 아주 매력적인 아이랍니다!</a></h3>
+                    <a href="/adopt/animalDetails?board_num=${ protectList.board_num }">
+                    	<h3 class="heading"><c:out value= "${ protectList.identity }" /></h3>
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="item">
-              <div class="d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                  <a href="#" class="block-20 rounded" style="background-image: url('images/any-dog2.jpg');">
-                  </a>
-                  <div class="text p-4">
-                    <div class="meta mb-2">
-                      <div><a href="#">2023.01.18</a></div>
-                      <div><a href="#">안락사 18일 전</a></div>
-                      <div><a href="#" class="meta-chat"><span class="fa fa-comment"></span> 7</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">소심하지만 착한 아기공쥬 "아람이"를 소개합니다!😍
-                      우리 아람이는 사진보다 실물이 천만배는 더 귀염뽀짝하고 사랑스러운 아가에요!
-                      사람을 너무 좋아하는 순둥이 아람이에게 사랑을 듬뿍 주시며 자신감을 가득 채워주실 평생가족을 찾습니다!
-                    </a></h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                  <a href="#" class="block-20 rounded" style="background-image: url('images/any-dog3.jpg');">
-                  </a>
-                  <div class="text p-4">
-                    <div class="meta mb-2">
-                      <div><a href="#">2023.01.31</a></div>
-                      <div><a href="#">안락사 20일 전</a></div>
-                      <div><a href="#" class="meta-chat"><span class="fa fa-comment"></span> 5</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">
-                      ✔ 하우스(켄넬), 앉아, 목줄, 훈련 매우 완벽합니다.<br>
-                      ✔ 기다려, 찬천히(먹는법), 엎드려, 훈련중이며 매우 적극적이고 습득력이 빠릅니다.<br>
-                      ✔ 봉구는 애교가 많아요. 장난끼가 넘치며 사람과 노는것을 좋아합니다.<br>
-                      ✔ 처음 대면하는 사람을 조금 경계를 하나 조심스레 접근하면 금방 친해집니다.</a></h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                  <a href="#" class="block-20 rounded" style="background-image: url('images/any-cat1.jpg');">
-                  </a>
-                  <div class="text p-4">
-                    <div class="meta mb-2">
-                      <div><a href="#">2023.01.31</a></div>
-                      <div><a href="#">안락사 20일 전</a></div>
-                      <div><a href="#" class="meta-chat"><span class="fa fa-comment"></span> 5</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">
-                      한 눈에 봐도 배가 불러있던 아띠는 보호소 입구 길냥이들 밥을 허겁지겁 먹고 있던 아이에요..😢 경계심이 심했지만, 간식으로 유인하니 할머님에게 다가와주었다고 해요.
-                      아띠는 여전히 사람이 낯설어 손은 타지않지만, 따뜻한 가족의 사랑을 받으면 변하지않을까요? 아띠의 임보/입양 가족이 되어주세요.</a></h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                  <a href="#" class="block-20 rounded" style="background-image: url('images//any-cat2.jpg');">
-                  </a>
-                  <div class="text p-4">
-                    <div class="meta mb-2">
-                      <div><a href="#">2023.01.31</a></div>
-                      <div><a href="#">안락사 20일 전</a></div>
-                      <div><a href="#" class="meta-chat"><span class="fa fa-comment"></span> 5</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">
-                      중성화와 예방접종 완료한 수컷 코숏 치즈 태비 고양이입니다! 동물병원에서 나이는 한 살정도일거라고 말씀하셨어요! 몸무게는 3.3kg입니다. 치아, 귀, 피부 모두 깨끗한 고양이입니다. 그리고 무엇보다 동글동글 귀엽고 사랑스럽게 생겼답니다! 이름은 치몽이지만 가족이 되어주셔서 더 예쁘고 좋은 이름으로 불러주세요! </a></h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                  <a href="#" class="block-20 rounded" style="background-image: url('images/any-cat3.jpg');">
-                  </a>
-                  <div class="text p-4">
-                    <div class="meta mb-2">
-                      <div><a href="#">2023.01.31</a></div>
-                      <div><a href="#">안락사 20일 전</a></div>
-                      <div><a href="#" class="meta-chat"><span class="fa fa-comment"></span> 5</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">
-                      아파트 주차장 구석에서 경비원님의 제보로 어미도 없이 구조된 아깽이입니다.
-                      성격은 순하고 기본검진 완료 진드기 없고 건강해요
-                      입양전 충분한상담후 자택사진받고 입양계약서 작성하고 데려다드려요 
-                      아깽이의 평생가족이 되어주세요 ❤</a></h3>
-                  </div>
-                </div>
-              </div>
-            </div>
+     </c:forEach>
           </div>
         </div>
       </div>
@@ -353,54 +266,28 @@
         <div class="row ftco-animate">
           <div class="col-md-12">
             <div class="carousel-testimony owl-carousel ftco-owl">
+    	<c:forEach items="${ar_list}" var="adoptionReview">     
+    	<a href="/community/getAR?bno=${ adoptionReview.bno }" style="color:rgba(0, 0, 0, 0.8);">       
               <div class="item">
                 <div class="testimony-wrap py-4">
                 	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
                   <div class="text">
-                    <p class="mb-4">❤️사랑스러운 우리집 막내 “포비“ ❤️</p>
-                    <p>진짜 애교쟁이에다가 말은 정말 안듣는 말썽꾸러기 포비예요 ㅎ 밖에서는 완전 겁쟁이에 품에 안기기 바쁘지만 집에서는 어찌나 땡강쟁이인지 이뻐 죽겠어요 ㅎ 벌써 포비를 데려온도 2달이 되었는데 그동안 많이 큰 것 같네요 너무 아쉽기도 하고 대견하기도 하고 ㅠ 막상 산책가면 신나서 날라다니는데 하네스 착용하면 대자로 엎드려서 시전도 해준답니다 ㅎㅎ 어딜가나 이쁨받는 저희집 막내 소개 및 자랑글이였습니다 항상 행복하게 해주께❤️ㅎㅎ</p>
+                    <p class="mb-4"><i class="fa fa-heart" aria-hidden="true"></i><c:out value="${adoptionReview.title }" /><i class="fa fa-heart" aria-hidden="true"></i></p>
+                    <p><c:out value="${adoptionReview.content }" /></p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/dog2.jpg)"></div>
+                    	<!-- <div class="user-img" style="background-image: url(images/dog2.jpg)"></div> -->
                     	<div class="pl-3">
-		                    <p class="name">eun09</p>
-		                    <span class="position">2023.01.28</span>
+		                    <p class="name"><c:out value="${adoptionReview.id}" /></p>
+		                    <span class="position"><fmt:formatDate pattern="yyyy.MM.dd" value="${adoptionReview.regdate}" /></span>
 		                  </div>
 	                  </div>
                   </div>
                 </div>
               </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
-                  <div class="text">
-                    <p class="mb-4">새로운 친구</p>
-                    <p class="mb-4">어제 포인핸드를 보고 눈에뜨인 아이 그래서 보호소에 전화해서 확인하고 오늘 아침에 비오는 고속도로를 달려 만났네요. 눈도 크고 이쁜 아이 이름은 어제 저녁에 뽀미로 하자고 지었네요. 앞으로 항상 함께 할 울 뽀미 목욕시켜놓으니 더 이쁘네요. 예쁘고 건강하게 잘키울께요.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/dog1.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">seinis</p>
-		                    <span class="position">2023.02.17</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
-                  <div class="text">
-                    <p class="mb-4">보호소 출신 냥생 5개월차 콘부</p>
-                    <p class="mb-4">11월 말에 3개월된 콘부를 데려왔어요 보호소에서 사람 젤 잘 따른다고해서 데려왔고 처음봤을때는 괜찮았는데 입양일날 허피스때문에 눈이 많이 부어있는 상태였습니다. 지금은 결막이 협착된상태인데 병원에서 중성화때 정리하자 하셔서 그냥 놔두고있어요~ 그럼에도 잘먹고 잘뛰고 잘깨는 꼭 붙어자는 냥생 6개월차 콘부입니다 사람을 너무 좋아해서 혼자 사는 저로선 계속 붙어있을수 없어서 오빠 입양 한번 하려고요 요즘 외로워하는것 같더라고요</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/cat.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">joy912</p>
-		                    <span class="position">2023.01.04</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
+              </a>
+		</c:forEach>
+
+
             </div>
           </div>
         </div>

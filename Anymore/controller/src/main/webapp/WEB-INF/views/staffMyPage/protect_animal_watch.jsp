@@ -33,7 +33,7 @@
 		      	<!-- <span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/> -->
 		      	<span style="color:#CDBBA7">보호동물 리스트</span><br/>
 		      	<span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-		      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 		      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      	<span><a href="/staffMyPage/product_manage">상품관리</a></span><br/>
 		      		<span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
 		      		<span><a href="/staffMyPage/faq_write">자주 묻는 질문 작성 폼</a></span>
@@ -43,7 +43,12 @@
       	<div class="col-md-10">
       		<h3 style="margin-bottom: 30px"><b>보호동물 리스트</b></h3>
       	    <span>
-               <img src="../images/image_1.jpg" alt="" class="img-fluid">
+               <c:forEach items="${image}" var="protectImage">
+  					<c:if test="${ animal.board_num == protectImage.board_num }">
+	                     <img style="width: 100%; height: 500px;"
+	                      src="/adopt/protectAnimalDisplay?fileName=${ protectImage.uploadPath }/${ protectImage.uuid }_${ protectImage.fileName }"/>
+	                  </c:if> 
+				</c:forEach>	
             </span>
             
             <table class="table table-bordered text-center mt-4">

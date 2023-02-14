@@ -35,7 +35,7 @@
 			      	<span style="color:#CDBBA7">보호동물 등록</span><br/>
 			      	<span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
 			      	<span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      		<span><a href="/staffMyPage/product_manage">상품관리</a></span><br/>
 		      		<span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
 		      		<span><a href="/staffMyPage/faq_write">자주 묻는 질문 작성 폼</a></span>
@@ -49,27 +49,27 @@
 		      	<form role="form" action="/staffMyPage/protect_animal_write" method="post">
 			         <div class="form-group">
 			            <label>이름</label> 
-			            <input type="text" class="form-control" placeholder="이름을 입력해주세요." name='animal_name'>
+			            <input type="text" id="animal_name" class="form-control" placeholder="이름을 입력해주세요." name='animal_name'>
 			         </div>
 			         
 			         <div class="form-group">
 			            <label>품종</label> 
-			            <input class="form-control" placeholder="품종을 입력해주세요." name='variety'>
+			            <input class="form-control" id="variety" placeholder="품종을 입력해주세요." name='variety'>
 			         </div>
 			         
 			         <div class="form-group">
 			            <label>나이</label> 
-			            <input class="form-control" placeholder="나이를 입력해주세요." name='age'>
+			            <input class="form-control" id="age" placeholder="나이를 입력해주세요." name='age'>
 			         </div>
 			         
 			         <div class="form-group">
 			            <label>성별</label> 
-			            <input class="form-control" placeholder="성별을 입력해주세요." name='sex'>
+			            <input class="form-control" id="sex" placeholder="성별을 입력해주세요." name='sex'>
 			         </div>
 			         
 			         <div class="form-group">
 			            <label for="field">중성화 유무</label><br>
-			            <select class="form-control" name="tnr" >
+			            <select class="form-control" id="tnr" name="tnr" >
 							 <option value="" selected>중성화 여부를 선택해주세요.</option>
 							 <option value="유">유</option>
 							 <option value="무">무</option>
@@ -79,7 +79,7 @@
 			         
 			         <div class="form-group">
 			            <label for="content">내용</label>
-			            <textarea class="form-control" name="identity" rows="14"
+			            <textarea class="form-control" id="identity" name="identity" rows="14"
 			               placeholder="특이사항/예방접종 여부 등 작성"></textarea>
 			         </div>
 			
@@ -91,7 +91,7 @@
 								<!-- /.panel-heading -->
 								<div class="panel-body">
 									<div class="form-group uploadDiv">
-										<input type="file" name='uploadFile' multiple>
+										<input type="file" id="file" name='uploadFile' multiple>
 									</div>
 									
 									<div class='uploadResult'>
@@ -116,8 +116,24 @@
 				</div>
 		    </div>
 		</div>	
-     </div><hr>
+     <hr>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true" style="font-family: 'NanumSquareNeo';">
+	<div class="modal-dialog modal-dialog-centered text-center">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="alertModal">알림</h5>
+			</div>
+			<div class="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 	$(function(){
@@ -128,6 +144,55 @@
 		$("button[type='submit']").on("click",function(e){
 			e.preventDefault();
 			console.log("submit clicked");
+			
+			if($("#animal_name").val() == ""){
+				$(".modal-body").html("이름을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#animal_name").focus();
+			    return false;
+			}
+
+			if($("#variety").val() == ""){
+				$(".modal-body").html("품종을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#variety").focus();
+			    return false;
+			}
+			
+			if($("#age").val() == ""){
+				$(".modal-body").html("나이를 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#age").focus();
+			    return false;
+			}
+
+			if($("#sex").val() == ""){
+				$(".modal-body").html("성별을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#sex").focus();
+			    return false;
+			}
+			
+			if($("#tnr").val() == ""){
+				$(".modal-body").html("중성화여부를 선택해주세요.");
+				$("#alertModal").modal("show");
+			    $("#tnr").focus();
+			    return false;
+			}
+
+			if($("#identity").val() == ""){
+				$(".modal-body").html("내용을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#identity").focus();
+			    return false;
+			}
+			
+			if($("#file").val() == ""){
+				$(".modal-body").html("파일을 첨부해주세요.");
+				$("#alertModal").modal("show");
+			    $("#file").focus();
+			    return false;
+			}
 			
 			var str = "";
 			$(".uploadResult ul li").each(function(i, obj){

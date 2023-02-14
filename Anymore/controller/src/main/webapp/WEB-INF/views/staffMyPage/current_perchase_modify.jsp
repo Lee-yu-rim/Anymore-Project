@@ -39,7 +39,7 @@
 			      	<!-- <span style="color:#CDBBA7">보호동물 리스트</span><br/> -->
 			      	<!-- <span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/> -->
 			      	<span style="color:#CDBBA7">구매관리</span><br/>
-			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 			      	<span><a href="/staffMyPage/product_manage">상품관리</a></span><br/>
 		      		<span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
 		      		<span><a href="/staffMyPage/faq_write">자주 묻는 질문 작성 폼</a></span>

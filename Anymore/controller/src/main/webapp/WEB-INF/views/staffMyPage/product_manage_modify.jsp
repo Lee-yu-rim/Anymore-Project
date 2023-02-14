@@ -35,7 +35,7 @@
 			     <span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
 			     <!-- <span style="color:#CDBBA7">보호동물 리스트</span><br/> -->
 			     <span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-			     <span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 			     <span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      	 <!-- <span><a href="/staffMyPage/product_manage">상품관리</a></span> -->
 		      	 <span style="color:#CDBBA7">상품관리</span><br/>
 		      	 <span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
@@ -62,11 +62,11 @@
 				</div>
 				<div class = "form-group">
 					<label>가격</label>
-					<textarea class="form-control" rows="3" name='price'><c:out value = "${product.price }" /> </textarea>
+					<textarea class="form-control" rows="3" name='price'><c:out value = "${product.price }" /></textarea>
 				</div>
 				<div class = "form-group">
 					<label>재고수량</label>
-					<input class="form-control" name='amount' value='<c:out value = "${product.amount }"/>'>
+					<input class="form-control" name='p_amount' value='<c:out value = "${product.p_amount }"/>'>
 				</div>
 				
 				<div class="form-group">

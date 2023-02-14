@@ -38,7 +38,7 @@
 			     <!-- <span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/> -->
 			     <span style="color:#CDBBA7">보호동물 리스트</span><br/>
 			     <span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-			     <span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 			     <span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      	 <span><a href="/staffMyPage/product_manage">상품관리</a></span><br />
 		      	 <span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
 		         <span><a href="/staffMyPage/faq_write">자주 묻는 질문 작성 폼</a></span>
@@ -79,7 +79,6 @@
 		       <th>나이</th>
 		       <th>성별</th>
 		       <th>중성화 유무</th>
-		       <th>특징</th>
 		       <th>안락사 기간</th>
 		    </thead>
 		    
@@ -95,7 +94,6 @@
 					<td><c:out value="${animal.age }"></c:out></td>
 					<td><c:out value="${animal.sex }"></c:out></td>
 					<td><c:out value="${animal.tnr }"></c:out></td>
-					<td><c:out value="${animal.identity }"></c:out></td>
 					<td>
 						<c:choose>
 							<c:when test="${animal.euthanasia_day eq ymd}">보호 종료일</c:when>
@@ -104,6 +102,11 @@
 					</td>
 				</tr>
 			</c:forEach>
+			<c:if test="${empty animal_list}">
+				<tr>
+					<td colspan="12"><p style="margin-top: 16px; font-size: 15px; text-align:center;">검색 결과가 존재하지 않습니다.</p></td>
+				</tr>
+			</c:if>
 		 </table>
 	</div>
 		<form id='actionForm' action="/staffMyPage/protect_animal" method='get'>

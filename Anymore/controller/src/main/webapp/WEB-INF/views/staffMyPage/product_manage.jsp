@@ -35,7 +35,7 @@
 			     <span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
 			     <!-- <span style="color:#CDBBA7">보호동물 리스트</span><br/> -->
 			     <span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-			     <span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 			     <span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      	 <!-- <span><a href="/staffMyPage/product_manage">상품관리</a></span> -->
 		      	 <span style="color:#CDBBA7">상품관리</span><br/>
 		      	 <span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
@@ -82,10 +82,15 @@
 					<td><c:out value="${product.product_num }"></c:out></td>
 					<td><a class='move' href='<c:out value="${product.product_num }" />'><c:out value="${product.product_name }"></c:out></a></td>
 					<td><c:out value="${product.price }"></c:out></td>
-					<td><c:out value="${product.amount }"></c:out></td>
+					<td><c:out value="${product.p_amount }"></c:out></td>
 					<td><a class='move' href='<c:out value="${product.product_num }" />'><button type="button" class="btn btn-primary px-2 py-1">수정</button></a></td>
 				</tr>
 			</c:forEach>
+			<c:if test="${empty product_list}">
+               <tr>
+                  <td colspan="6"><p style="margin-top: 16px; font-size: 15px; text-align:center;">검색 결과가 존재하지 않습니다.</p></td>
+               </tr>
+            </c:if>   
 		   </table>
 		   </div>
 		   <form id='actionForm' action="/staffMyPage/product_manage" method='get'>

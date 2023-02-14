@@ -37,7 +37,7 @@
 				<!-- <span style="color:#CDBBA7">보호동물 등록</span><br/> -->
 				<span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
 				<span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-				<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 				<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		     	<!-- <span><a href="/staffMyPage/product_manage">상품관리</a></span> -->
 		      	<span style="color:#CDBBA7">상품관리</span><br/>
 		     	<span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
@@ -54,11 +54,11 @@
                 </tr>
                 <tr>
                     <th>가격</th>
-                    <td><c:out value = "${product.price }" /></td>
+                    <td><fmt:formatNumber value= "${product.price }" pattern="###,###"/></td>
                 </tr>
                 <tr>
                     <th>수량</th>
-                    <td><c:out value = "${product.amount }"/></td>
+                    <td><c:out value = "${product.p_amount }"/> 개</td>
                 </tr>
                 <tr>
                 	<th colspan="2">상품 설명</th>
@@ -66,7 +66,12 @@
             </table>
             
              <form>
-             	<p><textarea cols="110" rows="10" readonly><c:out value = "${product.product_content }"/></textarea></p>
+             	<p cols="110" rows="10" style="text-align:center;" readonly><c:out value = "${product.product_content }"/></p>
+             	<c:forEach items="${image}" var="product_img">
+					<c:if test="${ product.product_num == product_img.product_num }">
+						<img src="/display?fileName=${ product_img.uploadPath }/${ product_img.uuid }_${ product_img.fileName }" style="width:100%; padding:20px;" />
+					</c:if> 
+			  </c:forEach>
            	 </form>
            	 
            	<button type="button" class="btn btn-primary ml-2" style="float: right;" data-oper='list'>확인</button>

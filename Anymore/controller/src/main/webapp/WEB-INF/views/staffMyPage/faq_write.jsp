@@ -36,7 +36,7 @@ textarea {
 			      	<!-- <span style="color:#CDBBA7">보호동물 등록</span><br/> -->
 			      	<span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
 			      	<span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      		<span><a href="/staffMyPage/product_manage">상품관리</a></span><br />
 		      		<!-- <span style="color:#CDBBA7">상품관리</span> -->
 		      		<span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
@@ -50,17 +50,17 @@ textarea {
 
 					<div class="form-group">
 			            <label>제목</label> 
-			            <input type="text" class="form-control" placeholder="제목을 입력해주세요." name='title'>
+			            <input type="text" id="title" class="form-control" placeholder="제목을 입력해주세요." name='title'>
 			         </div>
 			         
 			         <div class="form-group">
 			            <label>작성자</label> 
-			            <input type="text" class="form-control" placeholder="제목을 입력해주세요." name='id'>
+			            <input type="text" class="form-control" placeholder="제목을 입력해주세요." name='id' value="<c:out value='${member.id}'/>">
 			         </div>
 			         
 			         <div class="form-group">
 			            <label for="content">내용</label>
-			            <textarea class="form-control" name="content" rows="14"
+			            <textarea class="form-control" id="content" name="content" rows="14"
 			               placeholder="내용을 입력하세요."></textarea>
 			         </div>
 					
@@ -91,9 +91,26 @@ textarea {
 					<button type="reset" class="btn btn-primary" style="float: right; margin-right: 10px;">취소</button></a>
 			</form>	
 		
-    	</div>
-	</div>   
+	    	</div>
+		</div> 
+	</div>  
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true" style="font-family: 'NanumSquareNeo';">
+	<div class="modal-dialog modal-dialog-centered text-center">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="alertModal">알림</h5>
+			</div>
+			<div class="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 	$(function(){
@@ -104,6 +121,20 @@ textarea {
 		$("button[type='submit']").on("click",function(e){
 			e.preventDefault();
 			console.log("submit clicked");
+			
+			if($("#title").val() == ""){
+				$(".modal-body").html("제목을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#title").focus();
+			    return false;
+			}
+
+			if($("#content").val() == ""){
+				$(".modal-body").html("내용을 입력해주세요.");
+				$("#alertModal").modal("show");
+			    $("#content").focus();
+			    return false;
+			}
 			
 			var str = "";
 			$(".uploadResult ul li").each(function(i, obj){

@@ -32,7 +32,7 @@
 		      		<span><a href="/staffMyPage/protect_animal_write">보호동물 등록</a></span><br/>
 		      		<span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
 		      		<span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-		      		<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 		      		<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      		<span><a href="/staffMyPage/product_manage">상품관리</a></span><br/>
 		      		<span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
 		      		<span><a href="/staffMyPage/faq_write">자주 묻는 질문 작성 폼</a></span>
@@ -53,8 +53,6 @@
 					       <th>가입일</th>
 					       <th>전화번호</th>
 					       <th>비밀번호</th>
-					       <th>신고 수</th>
-					       <th>회원정지</th>
 					       <th>회원 탈퇴</th>
 					    </tr>
 					    
@@ -66,9 +64,8 @@
 					    	<td><fmt:formatDate pattern="yyyy-MM-dd" value="${member.regdate }" /></td>
 					    	<td><c:out value="${member.phone }"></c:out></td>
 					    	<td><c:out value="${member.password }"></c:out></td>
-					    	<td><c:out value="${member.alert_cnt }"></c:out></td>
-					        <td><button type="button" class="btn btn-primary px-2 py-1">정지</button></td>
-					        <td><button type="button" class="btn btn-primary px-2 py-1">탈퇴</button></td>
+							<td><a href="/staffMyPage/account_delete?id=<c:out value='${ member.id }' />">
+							<button type="button" id='deleteMember' class="btn btn-primary px-2 py-1">탈퇴</button></a></td>
 					    </tr>
 					    </c:forEach>
 					 </table>
@@ -111,6 +108,11 @@
 	$(function(){
 		
 		var actionForm = $("#actionForm");
+		
+		// 회원탈퇴
+		$("#deleteMember").on("click", function(){
+			alert("회원 탈퇴 시키겠습니까?");
+		});
 		
 		//페이지 이동
 		$(".paginate_button a").on("click",function(e){

@@ -12,6 +12,10 @@
         a {
         	color: black;
         }
+        .myimg{
+        	width:800px;
+        	height:500px;
+        }
   </style>
 
 <section class="ftco-section" style="font-family: 'NanumSquareNeo';">
@@ -29,7 +33,7 @@
 			      	<span style="color:#CDBBA7">보호동물 등록 수정</span><br/>
 			      	<span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
 			      	<span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 			      	<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      		<span><a href="/staffMyPage/product_manage">상품관리</a></span><br/>
 		      		<span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
 		      		<span><a href="/staffMyPage/faq_write">자주 묻는 질문 작성 폼</a></span>
@@ -74,8 +78,8 @@
 			         <div class="form-group">
 			            <label for="field">중성화 유무</label><br>
 			            <select class="form-control" name="tnr" >
-							 <option value="" selected>중성화 여부를 선택해주세요.</option>
-							 <option value="유">유</option>
+							 <option value="">중성화 여부를 선택해주세요.</option>
+							 <option value="유" selected>유</option>
 							 <option value="무">무</option>
 							 <option value="중성화 불가능">중성화 불가능</option>
 						</select>
@@ -121,6 +125,7 @@
 		</div>
 	</div>
 </section>
+
 <script type="text/javascript">
 	   $(function(){
 			var formObj = $("form");
@@ -192,7 +197,7 @@ $(document).ready(function(){
                 str += "<span>" + attach.fileName + "</span>";
                 str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='image'"
                 str += "class='btn btn-warning btn-circle'><t class='fa fa-times'></i></button><br>";
-                str += "<img src='/display?fileName=" + fileCallPath + "'>";
+                str += "<img class='myimg' src='/display?fileName=" + fileCallPath + "'>";
                 str += "</div>";
                 str += "</li>";
               }else {  
@@ -280,7 +285,7 @@ $(document).ready(function(){
                	  str +" ><div>";
                   str += "<span> "+ obj.fileName+"</span>";
                   str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
-                  str += "<img src='/display?fileName="+fileCallPath+"'>";
+                  str += "<img class='myimg' src='/display?fileName="+fileCallPath+"'>";
                   str += "</div>";
                   str +"</li>";
                 }else{

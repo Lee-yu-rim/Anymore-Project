@@ -38,7 +38,7 @@ font-size:16px; font-weight:600; width: 40px; height : 30px;color:black; float: 
 <!-- layer popup content -->
 <div class="layerPopup" id="layer_popup" style="visibility: visible;">
     <div class="layerBox">
-        <h4 class="title">Anymore 공지사항</h4>
+        <h4 class="title" style="margin-top:10px;">Anymore 공지사항</h4>
         <div class="cont">
             <p>
             	<img src="../images/popup.jpg" width=350 height=350 usemap="#popup" alt="event page">

@@ -30,7 +30,7 @@
 		      		<span><a href="/staffMyPage/protect_animal_write">보호동물 등록</a></span><br/>
 		      		<span><a href="/staffMyPage/protect_animal">보호동물 리스트</a></span><br/>
 		      		<span><a href="/staffMyPage/current_perchase">구매관리</a></span><br/>
-		      		<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/>
+<!-- 		      		<span><a href="/staffMyPage/current_animal">보호중인 동물 확인</a></span><br/> -->
 		      		<span><a href="/staffMyPage/product_manage">상품관리</a></span><br/>
 		      		<span><a href="/staffMyPage/notice_write">공지사항 작성 폼</a></span><br />
 		      		<span><a href="/staffMyPage/faq_write">자주 묻는 질문 작성 폼</a></span>
@@ -96,6 +96,11 @@
 								</td>
 							</tr>
 						  </c:forEach>
+						   	<c:if test="${empty visit_list}">
+				               <tr>
+				                  <td colspan="12"><p style="margin-top: 16px; font-size: 15px; text-align:center;">검색 결과가 존재하지 않습니다.</p></td>
+				               </tr>
+				            </c:if>   
 						</table>
 				</div>
 				<form id='actionForm' action="/staffMyPage/visit_reservation_form" method='get'>
