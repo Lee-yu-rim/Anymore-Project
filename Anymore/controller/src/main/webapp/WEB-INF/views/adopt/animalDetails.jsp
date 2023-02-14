@@ -4,6 +4,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
 
+<style>
+	.zzimimg{
+		width:1120px;
+	}
+</style>
+
 <script>
 	document.getElementById("home").setAttribute("class", "nav-item");
 	document.getElementById("adopt").setAttribute("class", "nav-item dropdown active");
@@ -21,8 +27,8 @@
 					<!-- <span class="mr-2" style="color: gray;">입양절차</span> -->
 					<span class="mr-2"><a href="/adopt/procedure">입양절차<i class="ion-ios-arrow-forward"></i></a></span>
 					<span class="mr-2">/</span> 
-					<!-- <span class="mr-2"><a href="/adopt/protectAnimal">입양하기<i class="ion-ios-arrow-forward"></i></a></span> -->
-					<span class="mr-2" style="color: gray;">입양하기</span>
+					<span class="mr-2"><a href="/adopt/protectAnimal" style="color: gray;">입양하기<i class="ion-ios-arrow-forward"></i></a></span>
+					<!-- <span class="mr-2" style="color: gray;">입양하기</span> -->
 				</p>
 			</div>
 		</div>
@@ -44,8 +50,15 @@
 		<div class="row d-flex">
 			<div class="col-md-12 d-flex ftco-animate">
 				<div class="blog-entry align-self-stretch">
-					<img style="weight: 1080px; height: 720px" src="../images/any-dog2.jpg" class="img-fluid rounded" /> 
-					<div id="zzimDiv" class="text p-4" >
+<!-- 					<img style="weight: 1080px; height: 720px" src="../images/any-dog2.jpg" class="img-fluid rounded" />  -->
+					<div id="zzimDiv" class="text p-4 zzimimg">
+  					<c:forEach items="${image}" var="protectImage">
+	  					<c:if test="${ details.board_num == protectImage.board_num }">
+		                     <img style="weight: 1080px; height: 720px;" class="img-fluid rounded"
+		                      src="/adopt/protectAnimalDisplay?fileName=${ protectImage.uploadPath }/${ protectImage.uuid }_${ protectImage.fileName }"/>
+		                </c:if> 
+					</c:forEach>		
+					<br><br>	
 							<div class="meta mb-4" style="color: black">
 								<h5>공고번호 : <c:out value= "${ details.board_num }" /></h5>
 								<h5>이름 : <c:out value= "${ details.animal_name }" /></h5>
@@ -54,7 +67,7 @@
 								<h5>품종 : <c:out value= "${ details.variety }" /> </h5>
 								<h5>중성화 유무 : <c:out value= "${ details.tnr }" /> </h5>
 								<h5>안락사 날짜  : <c:out value= "${ details.euthanasia_day }" /> </h5>
-								<h5>특징 : <br> <c:out value= "${ details.identity }" /></h5> 
+								<h5>소개 : <br> <c:out value= "${ details.identity }" /></h5> 
 							</div>
 							<c:choose>
 								<c:when test="${zzimCount > 0}">  
@@ -71,7 +84,7 @@
 			
 		<div class="col-md-12 d-flex ftco-animate">
 			<div class="col text-center">
-					<button id="listBtn"type="button" class="btn btn-primary">목록</button>
+					<button data-oper="list" class="btn btn-primary">목록</button>
 			</div>
 		</div>			
 			
@@ -87,8 +100,7 @@
 			<div class="modal-header">
 				<h5 class="modal-title" id="alertModal">알림</h5>
 			</div>
-			<div class="modal-body">찜 완료<i class="fa fa-heart fa-sm" aria-hidden="true"></i><br>
-			찜 목록은 마이페이지에서 확인 가능합니다.</div>
+			<div class="modal-body"></div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
@@ -99,6 +111,28 @@
 <form id="actionForm" action="/adopt/checklist" method="get">
 	<input type='hidden' name='board_num' value='<c:out value="${details.board_num}"/>' />
 </form>
+
+
+<form id='operForm' action="/adopt/protectAnimal" method="get">
+      <input type='hidden' id='bno' name='bno' value='<c:out value="${details.board_num }"/>'>
+      <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
+      <input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+      <input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
+      <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
+</form>
+   
+   
+   
+<script>
+$(document).ready(function(){
+   var operForm = $("#operForm");
+   
+   $("button[data-oper='list']").on("click", function(e){
+      operForm.find("#bno").remove();
+      operForm.submit();
+   });
+});
+</script>
 
 
 <script>
@@ -126,14 +160,25 @@ function zziminsert(){
                 data : JSON.stringify(form),
                 success : function(data){
                 	console.log(data);
+                	$(".modal-body").html("찜완료<i class='fa fa-heart fa-sm' aria-hidden='true'></i><br>찜 목록은 마이페이지에서 확인 가능합니다.");	
 					$("#alertModal").modal("show");
+					
+					$("#zzimInsert").button("toggle"); 
+					$("#zzimInsert").html("<i class='fa fa-heart-o fa-lg' aria-hidden='true'></i>찜취소"); 
+					$("#zzimInsert").attr('onclick', 'zzimdelete()');
+					$("#zzimInsert").attr('id', 'zzimDelete');
                 },
                 error : function(data){
-                	console.log(error);
+                	console.log(data);
                 }
 			});
-			$("#zzimInsert").button("toggle"); 
-			$("#zzimInsert").html("<i class='fa fa-heart-o fa-lg' aria-hidden='true'></i>찜취소"); 
+			
+			/*
+			let delBtn = `<button id="zzimDelete" onclick="zzimdelete()" type="button" class="btn btn-danger" pk="<c:out value= "${ details.board_num }" />"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i>찜취소</button>`;
+			$('.zzimBtn').empty();
+			$('.zzimBtn').append(delBtn);*/
+			
+			
 		}
 };
 
@@ -164,12 +209,17 @@ function zzimdelete(){
                 	console.log(data);
                 	$(".modal-body").html("찜이 취소되었습니다.");	
 					$("#alertModal").modal("show");
+					
+					$("#zzimDelete").attr('class', 'btn btn-outline-danger' );
+					$("#zzimDelete").html("<i class='fa fa-heart-o fa-lg' aria-hidden='true'></i>찜하기"); 
+					$("#zzimDelete").attr('onclick', 'zziminsert()' );
+					$("#zzimDelete").attr('id', 'zzimInsert' );
                 },
                 error : function(data){
-                	console.log(error);
+                	console.log(data);
                 }
 			});
-			$("#zzimDelete").attr('class', 'btn btn-outline-danger' ).html("<i class='fa fa-heart-o fa-lg' aria-hidden='true'></i>찜하기"); 
+
 		}
 }
 </script>

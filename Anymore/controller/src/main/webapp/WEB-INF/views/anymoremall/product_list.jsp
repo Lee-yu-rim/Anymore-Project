@@ -54,10 +54,16 @@
     		<c:forEach items="${productlist }" var="product">
 	    		<div class="col-md-3 ftco-animate">
 		          <div class="block-7">
-		          	<div class="img" style="background-image: url(../images/product-1.jpg);"></div>
+		          	<div class="img">
+		          		<c:forEach items="${image}" var="product_img">
+		  					<c:if test="${ product.product_num == product_img.product_num }">
+								<img class="img-fluid rounded" src="/display?fileName=${ product_img.uploadPath }/${ product_img.uuid }_${ product_img.fileName }"/>
+							</c:if> 
+						</c:forEach>
+		          	</div>
 		          	<div class="text-center p-4">
 		            	<span class="excerpt d-block"><c:out value="${product.product_name }" /></span>
-		            	<span class="price"><span class="number"><c:out value="${product.price }" /></span></span>
+		            	<span class="price"><span class="number"><fmt:formatNumber value="${product.price }" pattern="###,###"/></span></span>
 			            <ul class="pricing-text mb-5">
 			              <li><span class="fa fa-check mr-2"></span><c:out value="${product.discribe }" /></li>
 			            </ul>

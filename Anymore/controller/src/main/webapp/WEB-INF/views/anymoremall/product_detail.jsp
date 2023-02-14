@@ -23,7 +23,14 @@
 		
 			<!-- 상품 이미지 -->
 			<div class="col-md-5 d-flex align-items-stretch">
-				<div class="info-wrap w-100 p-5 img" style="background-image: url(../images/p_detail1.png);"></div>
+				<div class="info-wrap w-100 p-5 img"">
+					<c:forEach items="${image}" var="product_img">
+	  					<c:if test="${ product.product_num == product_img.product_num }">
+							<img src="/display?fileName=${ product_img.uploadPath }/${ product_img.uuid }_${ product_img.fileName }" 
+							style="weight:450px; height:490px; position:relative; right:45px; bottom:48px;"/>
+						</c:if> 
+					</c:forEach>
+				</div>
 			</div>
 			
 			<!-- 상품 설명 -->
@@ -36,9 +43,9 @@
 								<div class="form-group">
 									<input type="hidden" class="product_num" id="product_num" value='<c:out value="${product.product_num }" />'>
 									<input type="hidden" class="product_name" id="product_name" value='<c:out value="${product.product_name }" />'>
-									<input type="hidden" class="price" id="price" value='<c:out value="${product.price }" />'>
+									<input type="hidden" class="price" id="price" value='<c:out value="${product.price}"/>'>
 									<label class="label" for="name">price</label>
-									<p><c:out value="${product.price }" />원</p>
+									<p><fmt:formatNumber value="${product.price}" pattern="###,###"/>원</p>
 								</div>
 							</div>
 							<div class="col-md-12">
@@ -53,14 +60,22 @@
 								<div class="form-group">
 									<label class="label" for="#">quantity</label><br />
 									<div class="quantity">
-										<input type="number" class="bd_2eiJL N=a:pcs.quantity quantity_num" id="quantity_num" value="1">
+										<input type="number" class="bd_2eiJL N=a:pcs.quantity quantity_num" name="quantity_num" id="quantity_num" value="1">
 									</div>
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<input type="submit" value="구매하기" class="btn btn-primary purchase_btn" id="purchase_btn">
+
+									<input type="hidden" id="product_num" name="product_num" value='${product.product_num }'  />
+									<input type="hidden" id="price" name="price" value='${product.price }'  />
+									<input type="hidden" id="quantity_num" name="quantity_num" value='${quantity_num }'  />
+									<input type="hidden" id="product_name" name="product_name" value='${product.product_name }'  />
+
+									<a href="/anymoremall/product_list"><input type="button" value="목록" class="btn btn-primary"></a>
+									<input type="submit" value="구매하기" class="btn btn-primary purchase_btn" id="purchase_btn" onclick="javascript: contactForm.action='/anymoremall/import3'">
 									<input type="button" value="장바구니" class="btn btn-primary cart_btn" id="cart_btn">
+									
 									<div class="submitting"></div>
 								</div>
 							</div>

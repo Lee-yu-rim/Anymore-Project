@@ -39,6 +39,12 @@
 
 			<br />
 			<div class="row mb-2">
+				<div class="col-sm-7">
+					<input type="hidden" class="form-control" name="id" id="id"
+						readonly="readonly" value="<c:out value= "${ member.id }" />"/>
+				</div>
+			</div>
+			<div class="row mb-2">
 				<label for="boardNum" class="col-sm-4 col-form-label">공고번호</label>
 				<div class="col-sm-7">
 					<input type="text" class="form-control" name="boardNum"
@@ -181,6 +187,9 @@
 
 <script type="text/javascript">
 $(function() {
+	
+	console.log("<c:out value= "${ member.id }" />");
+	console.log("${ member.id }");
 	
 	// 취소 버튼을 눌렀을 때
 	$("#cancelBtn").on("click", function() {

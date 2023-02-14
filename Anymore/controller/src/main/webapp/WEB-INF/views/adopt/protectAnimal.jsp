@@ -4,6 +4,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
 
+<script>
+	document.getElementById("home").setAttribute("class", "nav-item");
+	document.getElementById("adopt").setAttribute("class", "nav-item dropdown active");
+</script>
+
 <style>
 #animalList {
 	cursor: pointer;
@@ -23,6 +28,9 @@ select, input {
 }
 </style>
 
+<script>
+</script>
+
 
 <section class="hero-wrap hero-wrap-2"
 	style="background-image: url('../images/cat-bg.jpg');"
@@ -36,8 +44,8 @@ select, input {
 					<!-- <span class="mr-2" style="color: gray;">입양절차</span> -->
 					<span class="mr-2"><a href="/adopt/procedure">입양절차<i class="ion-ios-arrow-forward"></i></a></span>
 					<span class="mr-2">/</span> 
-					<!-- <span class="mr-2"><a href="/adopt/protectAnimal">입양하기<i class="ion-ios-arrow-forward"></i></a></span> -->
-					<span class="mr-2" style="color: gray;">입양하기</span>
+					<span class="mr-2"><a href="/adopt/protectAnimal" style="color: gray;">입양하기<i class="ion-ios-arrow-forward"></i></a></span>
+					<!-- <span class="mr-2" style="color: gray;">입양하기</span> -->
 				</p>
 			</div>
 		</div>
@@ -52,40 +60,43 @@ select, input {
 <section class="ftco-section" style="font-family: 'NanumSquareNeo';">
 	<div class="overlay"></div>
 	<div class="container">
+	         <c:if test="${empty list}">
+               <tr>
+               <hr>
+                  <td colspan="6"><p style="margin-top: 16px; font-size: 15px; text-align:center;">검색 결과가 존재하지 않습니다.</p></td>
+               <hr>
+               <br><br>
+               </tr>
+            </c:if>
 
 
+<!-- <img src="c:\upload\2023\02\08\2b7911b1-6e0b-4318-b75f-20531cf26e2b_any-cat2.jpg" /> -->		
 		<!-- 보호동물목록 -->
+		
 		<div class="row d-flex">
 			<c:forEach items="${list}" var="protectList">
 			<div class="col-md-4 d-flex ftco-animate" id="animalList">
 				<div class="blog-entry align-self-stretch" pk="<c:out value= "${ protectList.board_num }" />"
 					 style="cursor:pointer;">
-					<img src="../images/any-dog2.jpg" class="img-fluid rounded" />
+					 <!-- <img src="../images/any-dog2.jpg" class="img-fluid rounded" /> -->
+
+  					<c:forEach items="${image}" var="protectImage">
+	  					<c:if test="${ protectList.board_num == protectImage.board_num }">
+							<img class="img-fluid rounded" src="/adopt/protectAnimalDisplay?fileName=${ protectImage.uploadPath }/${ protectImage.uuid }_${ protectImage.fileName }" style="width:500px; height:250px;"/>
+						</c:if> 
+					</c:forEach>
+
 					<div class="text p-4 col text-center" >
 						<div class="meta mb-2">
 							<div class="myfont14">
 								<span id="board_num">공고번호 : <c:out value= "${ protectList.board_num }" /></span><br/>
 								<span>이름 : <c:out value= "${ protectList.animal_name }" /></span><br/>
-								<span>나이 : <c:out value= "${ protectList.age }" />살</span><br/>
-								<span>성별 : <c:out value= "${ protectList.sex }" /></span><br/>
+								<%-- <span>나이 : <c:out value= "${ protectList.age }" />살</span><br/> --%>
+								<%-- <span>성별 : <c:out value= "${ protectList.sex }" /></span><br/> --%> 
 								<span>품종 : <c:out value= "${ protectList.variety }" /></span><br/>
-								<span>중성화 유무 : <c:out value= "${ protectList.tnr }" /></span><br/>
+ 								<%-- <span>중성화 유무 : <c:out value= "${ protectList.tnr }" /></span><br/> --%>
 								<span>안락사 날짜 : <c:out value= "${ protectList.euthanasia_day }" /></span>
 							</div>
-<%-- 							<div id="board_num" class="myfont14">공고번호  : <c:out value= "${ protectList.board_num }" /></div>
-							<br />
-							<div class="myfont14">이름 : <c:out value= "${ protectList.animal_name }" /></div>
-							<br />
-							<div class="myfont14">나이 : <c:out value= "${ protectList.age }" />살</div>
-							<br />
-							<div class="myfont14">성별 : <c:out value= "${ protectList.sex }" /></div>
-							<br />
-							<div class="myfont14">품종 : <c:out value= "${ protectList.variety }" /></div>
-							<br />
-							<div class="myfont14">중성화 유무 : <c:out value= "${ protectList.tnr }" /></div>
-							<br />
-							<div class="myfont14">안락사까지 남은 기간 : <c:out value= "${ protectList.euthanasia_day }" />일</div>
-							<br /> --%>
 						</div>
 					</div>
 				</div>
@@ -197,5 +208,34 @@ $(document).ready(function(){
  	
 }); 
 </script>
+
+<!-- <script>
+$(document).ready(function(){
+	(function(){
+		var bno = '<c:out value="${protectList.board_num}"/>'; 
+
+ 		$.getJSON("/adopt/protectAnimalGetAttachList",{bno:bno}, function(arr){
+			
+			console.log(arr);
+			var str = "";
+			$(arr).each(function(i, attach){
+				if(attach.fileType == false){
+		        var fileCallPath =  encodeURIComponent( attach.uploadPath+ "/"+attach.uuid +"_"+attach.fileName);
+		           
+				str += "<img class='img-fluid rounded' src='/adopt/protectAnimalDisplay?fileName="+fileCallPath+"'>";
+		      }
+				
+		      $(".uploadResult").html(str);
+		      
+			});
+		}); 		
+		
+	})();
+	
+	
+});
+</script> -->
+
+
 
 <%@include file="../includes/footer.jsp"%>

@@ -3,8 +3,8 @@
 <%@include file="../includes/header.jsp"%>
 
 <script>
-	document.getElementById("home").setAttribute("class", "nav-item");
-	document.getElementById("mall").setAttribute("class", "nav-item dropdown active");
+   document.getElementById("home").setAttribute("class", "nav-item");
+   document.getElementById("mall").setAttribute("class", "nav-item dropdown active");
 </script>
 
 <style>
@@ -75,7 +75,7 @@ td {
 }
 
 .cart__list__detail {
-	text-align: left;
+   text-align: left;
 }
 
 /* .cart__list__detail :nth-child(3) {
@@ -105,11 +105,11 @@ td {
   text-align:center;
 }
 
-	/* .cart__list__option p {
-	  margin-bottom: 25px;
-	  position: relative;
-	  font-size:15px;
-	} */
+   /* .cart__list__option p {
+     margin-bottom: 25px;
+     position: relative;
+     font-size:15px;
+   } */
 
 .cart__list__option p::after {
   content: "";
@@ -184,28 +184,28 @@ td {
 </style>
 
 <section class="hero-wrap hero-wrap-2"
-	style="background-image: url('../images/cat-bg.jpg');"
-	data-stellar-background-ratio="0.5">
-	<div class="overlay"></div>
-	<div class="container" style="font-family: 'NanumSquareNeo';">
-		<div class="row no-gutters slider-text align-items-end">
-			<div class="col-md-9 ftco-animate pb-5">
-				<h1 class="mb-0 bread" style="font-family: 'NanumSquareNeo';">장바구니</h1>
-				<span class="breadcrumbs mb-2" style="padding:10px;">
-					<!-- <span class="mr-2" style="color: gray;">상품목록</span> -->
-					<span class="mr-2"><a href="/anymoremall/product_list">상품목록<i class="ion-ios-arrow-forward"></i></a></span>
-					<span class="mr-2">/</span> 
-					<!-- <span class="mr-2"><a href="/anymoremall/cart">장바구니<i class="ion-ios-arrow-forward"></i></a></span> -->
-					<span class="mr-2" style="color: gray;">장바구니</span>
-				</span>
-			</div>
-		</div>
-	</div>
+   style="background-image: url('../images/cat-bg.jpg');"
+   data-stellar-background-ratio="0.5">
+   <div class="overlay"></div>
+   <div class="container" style="font-family: 'NanumSquareNeo';">
+      <div class="row no-gutters slider-text align-items-end">
+         <div class="col-md-9 ftco-animate pb-5">
+            <h1 class="mb-0 bread" style="font-family: 'NanumSquareNeo';">장바구니</h1>
+            <span class="breadcrumbs mb-2" style="padding:10px;">
+               <!-- <span class="mr-2" style="color: gray;">상품목록</span> -->
+               <span class="mr-2"><a href="/anymoremall/product_list">상품목록<i class="ion-ios-arrow-forward"></i></a></span>
+               <span class="mr-2">/</span> 
+               <!-- <span class="mr-2"><a href="/anymoremall/cart">장바구니<i class="ion-ios-arrow-forward"></i></a></span> -->
+               <span class="mr-2" style="color: gray;">장바구니</span>
+            </span>
+         </div>
+      </div>
+   </div>
 </section>
  
 <div class="title">
-	<h1>장바구니</h1>
-	회원님의 상품이 담긴 장바구니입니다.
+   <h1>장바구니</h1>
+   회원님의 상품이 담긴 장바구니입니다.
 </div>
 
     <section class="cart ftco-section">
@@ -217,125 +217,88 @@ td {
             </ul>
         </div>
         <table class="cart__list">
-			
-			<!-- DB 연동 -->
-			<thead>
-				<tr>
-					<td colspan="3">상품정보</td>
-					<td>옵션</td>
-					<td>상품금액</td>
-					<td>배송비</td>
-				</tr>
-			</thead>
-        		<form>
-        			<c:forEach items="${cart_list}" var="cartList">
-	        			<tr class="cart_list_detail">
-	        				<td width="20%"><img src="../images/product-4.jpg" alt="magic keyboard"></td>
-	        				<td colspan="2">
-	                            <p style="text-align: left;"><c:out value="${ cartList.product_name }" /></p>
-	                        </td>
-	                        <td>
-	                            <p><c:out value="${ cartList.quantity }" /></p>
-	                            <p><button type="button" class="btn btn-primary px-2 py-2" onclick='location.href="/anymoremall/cart_delete?c_num=${cartList.c_num}"'>상품삭제</button><p>
-	                        </td>
-	                        <td>
-	                        	<p><fmt:formatNumber value="${ cartList.quantity * cartList.price }" pattern="###,###"/></p>
-	                            <p><button type="button" class="btn btn-primary px-2 py-2">주문하기</button></p>
-	                        </td>
-	                        <td><p>무료</p></td>
-	        			</tr>
-        			</c:forEach>
-        			<c:if test="${empty cart_list}">
-        				<tr>
-        					<td colspan="6"><p style="margin-top: 16px; font-size: 20px;">장바구니가 비어있습니다.</p></td>
-        				</tr>
-        			</c:if>
-        		</form>
-        	<!-- 디자인 -->
-            <!--  <form>
-                <thead>
+         
+         <!-- DB 연동 -->
+         <thead>
+            <tr>
+               <td colspan="3">상품이름</td>
+               <td>옵션</td>
+               <td>상품금액</td>
+               <td>배송비</td>
+            </tr>
+         </thead>
+         	<c:set var="total" value="0" />
+                 <c:forEach items="${cart_list}" var="cartList">
+                    <tr class="cart_list_detail">
+                       <td colspan="3">
+                               <p style="text-align: center;"><c:out value="${ cartList.product_name }" /></p>
+                           </td>
+                           <td>
+                               <p><c:out value="${ cartList.quantity }" /></p>
+                               <p><button type="button" class="btn btn-primary px-2 py-2" onclick='location.href="/anymoremall/cart_delete?c_num=${cartList.c_num}"'>상품삭제</button><p>
+                               <c:set var="total" value="${ total + cartList.quantity * cartList.price }" />
+                           </td>
+	                    <td>
+	                    	<form method="POST" action="/anymoremall/import">
+			                    <p name="price" ><c:out value="${ cartList.quantity * cartList.price }"/></p>
+			                    <p><button type="submit" class="btn btn-primary px-2 py-2">주문하기</button></p>
+			                    <c:set var="num" value="${cartList.product_num}" />
+				        		<c:set var="name" value="${cartList.product_name}" />
+				        		<c:set var="quantity_v" value="${cartList.quantity}" />
+				        		<c:set var="price_v" value="${cartList.price}" />
+				        				
+					        	<input type="hidden" id="product_num" name="product_num" value="${ num }" />
+					            <input type="hidden" id="product_name" name="product_name" value="${name} " />
+					            <input type="hidden" id="quantity" name="quantity" value="${quantity_v}" />
+					            <input type="hidden" id="price" name="price" value="${price_v}" />
+	                        </form>
+	                     </td>
+                           <td><p>무료</p></td>
+                    </tr>
+                 </c:forEach>
+                 <c:if test="${empty cart_list}">
                     <tr>
-                        <td colspan="3">상품정보</td>
-                        <td>옵션</td>
-                        <td>상품금액</td>
-                        <td>배송비</td>
+                       <td colspan="6"><p style="margin-top: 16px; font-size: 20px;">장바구니가 비어있습니다.</p></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr class="cart__list__detail">
-                        <td width="20%"><img src="../images/product-4.jpg" alt="magic keyboard"></td>
-                        <td colspan="2">
-                            <p style="text-align: left;">유기동물 후원 산책 리드줄</p>
-                            <p style="text-align: left;">9,000 원</p>
-                        </td>
-                        <td>
-                            <p>1개</p>
-                            <p><button type="button" class="btn btn-primary px-2 py-2">상품빼기</button><p>
-                        </td>
-                        <td>
-                        	<p>9,000 원</p>
-                            <p><button type="button" class="btn btn-primary px-2 py-2">주문하기</button></p>
-                        </td>
-                        <td><p>무료</p></td>
-                    </tr>	
-                    <tr class="cart__list__detail">
-                        <td>
-                            <img src="../images/product-2.jpg" alt="magic mouse">
-                        </td>
-                        <td colspan="2">
-                            <p style="text-align: left;">유기동물 후원 인형</p>
-                            <p style="text-align: left;">30,000원</p>
-                        </td>
-                        <td>
-                            <p>1개</p>
-                            <p><button type="button" class="btn btn-primary px-2 py-2">상품빼기</button></p>
-                        </td>
-                        <td>
-                        	<p>30,000원</p>
-                            <p><button type="button" class="btn btn-primary px-2 py-2">주문하기</button></p>
-                        </td>
-                        <td><p>무료</p></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="12" class="">
-                        	<div class="col-md-12 d-flex justify-content-end">
-                        		<button type="button" class="btn btn-primary ml-3">전체상품 삭제</button>
-                        	</div>
-                        </td>
-                    </tr>
-                </tfoot>
-            </form> -->
+                 </c:if>
+              <c:choose>
+			 	<c:when test="${member.id != null && cart_list.size() != 0   }">
+			 			<thead>
+						 	<tr>
+						 		<td colspan="5"></td>
+						 		<td>총 가격</td>
+						 	</tr>
+					 	</thead>
+					 	<tr">
+					 		<td colspan="5" style="border:none;"></td>
+					 		<td style="border:none;"><p style="font-size: 15px;">${ total }원</p></td>	
+					 	</tr>
+			 	</c:when>      
+		      </c:choose>
         </table>
+        
         <div class="col-md-12 align-items-center d-flex justify-content-center"
-        	style="margin-top: 50px">
-            <!-- <button class="cart__bigorderbtn left">쇼핑 계속하기</button> -->
+           style="margin-top: 50px">
             <button id="listBtn" type="button" class="btn btn-primary mr-2">쇼핑 계속하기</button>
-            <!-- <button class="cart__bigorderbtn right">주문하기</button> -->
-            <button id="allOrderBtn" type="button" class="btn btn-primary">전체 주문하기</button>
+           <a href="/anymoremall/import2"><button id="allOrderBtn" type="button" class="btn btn-primary">전체 주문하기</button> </a>
             <!-- 로그인 상태일 때 활성화 -->
             <c:choose>
-            	<%-- <c:when test="${member.id != null}">
-            	<button type="button" class="btn btn-primary ml-2" 
-            		onclick='location.href="/anymoremall/cart_delete_all"'>전체 삭제하기</button>
-	            </c:when> --%>
-	            <c:when test="${member.id != null && cart_list.size() != 0	}">
-	            	<button type="button" class="btn btn-primary ml-2" 
-	            		onclick='location.href="/anymoremall/cart_delete_all"'>전체 삭제하기</button>
-	            </c:when>
+               <c:when test="${member.id != null && cart_list.size() != 0   }">
+                  <button type="button" class="btn btn-primary ml-2" 
+                     onclick='location.href="/anymoremall/cart_delete_all"'>전체 삭제하기</button>
+               </c:when>
             </c:choose>
         </div>
     </section>
     
 <script type="text/javascript">
-	// 쇼핑 계속하기 버튼
-	$('#listBtn').on('click', function(){
-		location.href = "/anymoremall/product_list";
-	});
-	
-	// 주문 페이지로 이동
-	
+   // 쇼핑 계속하기 버튼
+   $('#listBtn').on('click', function(){
+      location.href = "/anymoremall/product_list";
+   });
+   
+   // 주문 페이지로 이동
+   
 </script>
 
 <%@include file="../includes/footer.jsp"%>

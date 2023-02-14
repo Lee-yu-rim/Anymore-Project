@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+
+	String product_name = request.getParameter("product_name");
+	String quantity_num = request.getParameter("quantity_num");
+	String price = request.getParameter("price");
+	String product_num = request.getParameter("product_num");
+
+%>
 <%@include file="../includes/header.jsp"%>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -65,44 +73,31 @@
 												<th>배송비</th>
 											</tr>
 										</thead>
-										<c:set var= "kind" value="0"/>
-							        	<c:set var = "total" value = "0" />
-							        	<c:set var = "cnt" value = "0" />
-							        	<c:set var = "total_cnt" value = "0" />
-							        	<c:forEach items="${cart_list}" var="cartList">
-								        	<tr class="cart_list_detail">
-								
-								        		<td>
-								                          <!-- <c:out value="${ cartList.product_name }" /> -->
-								                	${ cartList.product_name }
-								                </td>
-									           	<td>
-									            	${ cartList.quantity }
-									            </td>
-								                <td>
-								                    ${ cartList.price * cartList.quantity }
-								                </td>
-								                <td>무료</td>
-								                        
-								                <c:set var= "total" value="${total + (cartList.price * cartList.quantity)}"/>
-								                <c:set var= "cnt" value="${cnt + 1}"/>
-								                <c:set var= "total_cnt" value="${total_cnt + cartList.quantity}"/>
-								                        
-								                       
+												
+												<c:set var="p" value="<%= price %>" />
+							        			<c:set var="q" value="<%= quantity_num %>" />
 
-								        	</tr>
-								        	<div class="form-group">
-								        		<input type="hidden" id="product_num" name="product_num" value="${cartList.product_num}" />
-												<input type="hidden" id="product_name" name="product_name" value="${ cartList.product_name }" />
-												<input type="hidden" id="quantity" name="quantity" value="${ cartList.quantity }" />
-												<input type="hidden" id="price" name="price" value="${ cartList.price }" />
-											</div>
-							        	</c:forEach>
-					        			<c:if test="${empty cart_list}">
-					        				<tr>
-					        					<td colspan="6"><p style="margin-top: 16px; font-size: 20px;">장바구니가 비어있습니다.</p></td>
-					        				</tr>
-					        			</c:if>
+							        			<c:set var= "total" value="${ q * p } "/>
+												
+							        			<td><%= product_name %></td>
+								                <td><%= quantity_num %></td>
+								                <td>${ total }</td>
+								                <td>무료</td>
+							        			
+							        			
+							        			
+
+								                <c:set var= "cnt" value="1"/>
+								                <c:set var= "total_cnt" value="<%= quantity_num %>"/>
+								                
+							        			<div class="form-group">
+													<input type="hidden" id="product_name" name="product_name" value='<%=product_name %>'  />
+													<input type="hidden" id="price" name="price" value='<%=price %>'  />
+													<input type="hidden" id="quantity" name="quantity" value='<%=quantity_num %>' />
+													<input type="hidden" id="product_num" name="product_num" value='<%=product_num %>' />
+												</div>
+
+							        		
 							        </table>
 									<br><br><br>
 									<h3 class="mb-4">정보 입력</h3>
@@ -141,13 +136,12 @@
 											</div>
 										</div>
 										<input type="hidden" id="address" name="address" value="">
-									    <input type="hidden" id="total" name="total" value="${total}" />
+										<input type="hidden" id="total" name="total" value="${total}" />
 										<input type="hidden" id="cnt" name="cnt" value="${cnt}" />
 										<input type="hidden" id="total_cnt" name="total_cnt" value="${total_cnt}" />
 										<input type="hidden" class="form-control" name='delivery_status' value="배송준비중"/>
 										<input type="hidden" class="form-control" name='id' value="<c:out value='${member.id}'/>">
-										<input type="hidden" class="form-control" name="perchase_way" value="2" />
-										
+										<input type="hidden" class="form-control" name="perchase_way" value="3" />
 										<div class="col-md-12">
 											 <div class="form-group">
 									            <label class="label" for="deli_ask">배송요청사항</label><br>
@@ -256,6 +250,7 @@
 		}
 		
 	}
+	
 	
 	//우편번호 검색
 	function open_Postcode(){  
