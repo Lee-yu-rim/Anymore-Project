@@ -56,6 +56,15 @@
 					 <option value="후기">후기</option>
 				</select>
 	         </div> 
+	         
+	        <div class="form-group">
+	            <label>거래 상태</label><br>
+	            <select class="form-control" id="deal" name="deal" value='<c:out value="${usedItems.deal}" />'>
+					 <option value="" selected>거래 상태를 선택해주세요.</option>
+					 <option value="거래중">거래중</option>
+					 <option value="거래완료">거래완료</option>
+				</select>
+         	</div>
 			
 			<div class="form-group">
 				<label>제목</label> 

@@ -45,48 +45,35 @@
 		</div>
 
 		<form role="form" action="/customerService/modify" method="post" style="color:black">
-<%--   			<div class="row">
-				<div class="col-md-6">글번호&nbsp; <c:out value="${board.bno}"></c:out></div>
-				<div class="col-md-6">작성자&nbsp; <c:out value="${board.id}"></c:out></div>
-			</div><hr />
-			
- 			<div class="row">
-				<div class="col-md-6">작성일자&nbsp; <fmt:formatDate pattern="yyyy/MM/dd" value="${board.regdate}"></fmt:formatDate></div>
-				<div class="col-md-6">수정일자&nbsp; <fmt:formatDate pattern="yyyy/MM/dd" value="${board.updatedate}"></fmt:formatDate></div>
-			</div><hr /> --%>
 			<input type="hidden" name="pageNum" value='<c:out value="${ cri.pageNum }" />'>
 			<input type="hidden" name="amount" value='<c:out value="${ cri.amount }" />'>
 			<input type="hidden" name="type" value='<c:out value="${ cri.type }" />'>
 			<input type="hidden" name="keyword" value='<c:out value="${ cri.keyword }" />'>
 			
  			<div class="form-group">
-				<!-- <label>글번호</label> -->
 				<input type="hidden" class="form-control" name="bno" readonly="readonly" value='<c:out value="${board.bno}"></c:out>'>
 			</div>
 			
 			<div class="form-group">
-				<!-- <label>작성일자</label> -->
 				<input type="hidden" class="form-control" name="regdate" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.regdate}"></fmt:formatDate>'>
 			</div>
 			
 			<div class="form-group">
-				<!-- <label>수정일자</label> -->
 				<input type="hidden" class="form-control" name="updatedate" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.updatedate}"></fmt:formatDate>'>
 			</div>
 			
 			<div class="form-group">
-				<!-- <label>작성자</label> -->
 				<input type="hidden" class="form-control" name="id" readonly="readonly" value='<c:out value="${board.id}" />'>
 			</div> 
 			
 			<div class="form-group">
 				<label>제목</label> 
-				<input class="form-control" name="title" spellcheck="false" value='<c:out value="${board.title}" />'>
+				<input class="form-control" id="title" name="title" spellcheck="false" value='<c:out value="${board.title}" />'>
 			</div>
 			
 			<div class="form-group">
 				<label>내용</label>
-				<textarea class="form-control" name="content" rows="14" spellcheck="false"><c:out value="${board.content}" /></textarea>
+				<textarea class="form-control" id="content" name="content" rows="14" spellcheck="false"><c:out value="${board.content}" /></textarea>
 			</div>
 			
        	
@@ -108,47 +95,106 @@
 					</div>
 				</div>
 			</div>	
-
-			<div class="form-group">
-				<label>비밀글</label> <input name="passwordCheck" type="checkbox" />
-			</div> 
         	
-					<button type="submit" data-oper="modify" class="btn btn-primary">수정</button>
-					<button type="submit" data-oper="remove" class="btn btn-primary">삭제</button>
-					<button type="submit" data-oper="list" class="btn btn-primary">목록</button>
+					<button type="submit" id="modify" data-oper="modify" class="btn btn-primary">수정</button>
+					<button type="submit" id="remove" data-oper="remove" class="btn btn-primary">삭제</button>
+					<button type="submit" id="list" data-oper="list" class="btn btn-primary">목록</button>
 		</form>
 	</div>
 </section>
 
 
+<!-- Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true" style="font-family: 'NanumSquareNeo';">
+	<div class="modal-dialog modal-dialog-centered text-center">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="alertModal">알림</h5>
+			</div>
+			<div class="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <script type="text/javascript">
 $(document).ready(function(){
-	let formObj = $("form"); // 폼 태그를 객체 형태로 받아 변수로 저장한다.
+	var formObj = $("form"); 
 	
-	$('button').on("click", function(e){ // 버튼을 눌렀을 때 이벤트 발생
-		e.preventDefault(); // preventDefault() -> form 안에 submit 역할을 하는 버튼을 눌렀어도 페이지 이동을 실행하지 않게 하고싶을 때. submit은 실행됨.
+	$('#remove').on("click", function(e){
 		
-		let operation = $(this).data("oper"); // this -> button이, data의 속성이 oper라는 이름을 가진 것을 변수에 담는다.
-		console.log(operation);
+		e.preventDefault();
 		
-		if(operation === 'remove'){
-			formObj.attr("action", "/customerService/remove");
-		}else if(operation === 'list'){
-			formObj.attr("action", "/customerService/qna").attr("method","get");
-			
-			var pageNumTag = $("input[name='pageNum']").clone();
-			var amountTag = $("input[name='amount']").clone();
-			var typeTag = $("input[name='type']").clone();
-			var keywordTag = $("input[name='keyword']").clone();
-			
-			formObj.empty();
-			formObj.append(pageNumTag);
-			formObj.append(amountTag);
-			formObj.append(typeTag);
-			formObj.append(keywordTag);
-		}
+		formObj.attr("action", "/customerService/remove");
+		
+		$(".modal-body").html("삭제가 완료되었습니다.");
+		$("#alertModal").modal("show");
+		
 		formObj.submit();
+		
 	});
+	
+	$('#list').on("click", function(e){
+		e.preventDefault();
+		
+		formObj.attr("action", "/customerService/qna").attr("method","get");
+		
+		var pageNumTag = $("input[name='pageNum']").clone();
+		var amountTag = $("input[name='amount']").clone();
+		var keywordTag = $("input[name='keyword']").clone();
+		var typeTag = $("input[name='type']").clone();
+		
+		formObj.empty();
+		formObj.append(pageNumTag);	
+		formObj.append(amountTag);
+		formObj.append(keywordTag);
+		formObj.append(typeTag);
+		
+		formObj.submit();
+		
+	});
+	
+	$('#modify').on("click", function(e){
+	
+		console.log("submit clicked");
+		e.preventDefault();
+		if($("#title").val() == ""){
+			$(".modal-body").html("제목을 입력해주세요.");
+			$("#alertModal").modal("show");
+		    $("#title").focus();
+		    return false;
+		}
+
+		if($("#content").val() == ""){
+			$(".modal-body").html("내용을 입력해주세요.");
+			$("#alertModal").modal("show");
+		    $("#content").focus();
+		    return false;
+		}
+	
+		
+		
+		var str="";
+		
+		$(".uploadResult ul li").each(function(i, obj){
+			
+			var jobj = $(obj);
+			
+			console.dir(jobj);
+			
+			str += "<input type='hidden' name='attachList["+i+"].fileName' value='" + jobj.data("filename")+"'>";
+			str += "<input type='hidden' name='attachList["+i+"].uuid' value='" + jobj.data("uuid")+"'>";
+			str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='" + jobj.data("path")+"'>";
+			str += "<input type='hidden' name='attachList["+i+"].fileType' value='" + jobj.data("type")+"'>";
+		});
+		formObj.append(str).submit();
+		
+	});
+
 });
 </script>
 
@@ -158,7 +204,7 @@ $(document).ready(function(){
 	$(function(){
 		(function(){	
 			
-			var bno = '<c:out value="${board.bno}"/>'; 
+			var bno = '<c:out value="${board.bno}"/>';
 			
 			$.getJSON("/customerService/qnaGetAttachList", {bno: bno}, function(arr){
 				
@@ -176,7 +222,7 @@ $(document).ready(function(){
 			            str += "<span> "+ attach.fileName+"</span>";
 			            str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' "
 			            str += "class='btn btn-primary btn-circle'><i class='fa fa-times'></i></button><br>";
-			            str += "<img src='/qnaDisplay?fileName="+fileCallPath+"'>";
+			            str += "<img src='/display?fileName="+fileCallPath+"'>";
 			            str += "</div>";
 			            str +"</li>";
 			          }else{
@@ -186,7 +232,7 @@ $(document).ready(function(){
 			            str += "<span> "+ attach.fileName+"</span><br/>";
 			            str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' "
 			            str += " class='btn btn-primary btn-circle'><i class='fa fa-times'></i></button><br>";
-			            str += "<img id='myimg' src='../images/folder.png'>";
+			            str += "<img id='#myimg' src='../images/folder.png'>";
 			            str += "</div>";
 			            str +"</li>";
 			          }
@@ -276,7 +322,7 @@ $(document).ready(function(){
 		          str += " ><div>";
 		          str += "<span> "+ obj.fileName+"</span>";
 		          str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-primary btn-circle'><i class='fa fa-times'></i></button><br>";
-		          str += "<img src='/qnaDisplay?fileName="+fileCallPath+"'>";
+		          str += "<img src='/display?fileName="+fileCallPath+"'>";
 		          str += "</div>";
 		          str +"</li>";
 		        }else{
@@ -287,7 +333,7 @@ $(document).ready(function(){
 	        	  str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' ><div>";
 		          str += "<span> "+ obj.fileName+"</span>";
 		          str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn btn-primary btn-circle'><i class='fa fa-times'></i></button><br>";
-		          str += "<img src='../image/folder.png'></a>";
+		          str += "<img id='#myimg' src='../images/folder.png'>";
 		          str += "</div>";
 		          str +"</li>";
 		        }

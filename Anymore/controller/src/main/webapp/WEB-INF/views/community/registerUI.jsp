@@ -31,6 +31,15 @@
          </div>
          
          <div class="form-group">
+            <label for="deal">거래 상태</label><br>
+            <select class="form-control" id="deal" name="deal" >
+				 <option value="" selected>거래 상태를 선택해주세요.</option>
+				 <option value="거래중">거래중</option>
+				 <option value="거래완료">거래완료</option>
+			</select>
+         </div>
+         
+         <div class="form-group">
             <label for="title">제목</label> 
             <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요.">
          </div>
@@ -84,6 +93,8 @@
 </div>
 
 
+
+
 <script type="text/javascript">
 	$(function(){
 		//var result = '<c:out value = "${result}" />';
@@ -98,6 +109,7 @@
 				$(".modal-body").html("카테고리를 선택해주세요.");
 				$("#alertModal").modal("show");
 			    $("#filed").focus();
+			    
 			    return false;
 			}
 			

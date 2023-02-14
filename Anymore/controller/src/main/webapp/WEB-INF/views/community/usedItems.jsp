@@ -17,6 +17,16 @@
 		font-size:15px;
 		height:40px;
 	}
+	
+	p{
+		text-color = red;
+	}
+	
+	.dealBtn{
+	
+		float: right;
+		border: none;
+	}
 </style>
 
 <section class="hero-wrap hero-wrap-2"
@@ -34,8 +44,8 @@
 					<span class="mr-2"><a href="/community/freeBoard">자유게시판<i class="ion-ios-arrow-forward"></i></a></span>
 					<!-- <span class="mr-2" style="color: gray;">자유게시판</span> -->
 					<span class="mr-2">/</span> 
-					<!-- <span class="mr-2"><a href="/community/usedItems">중고거래 게시판	<i class="ion-ios-arrow-forward"></i></a></span> -->
-					<span class="mr-2" style="color: gray;">중고거래 게시판</span>
+					<span class="mr-2"><a href="/community/usedItems" style="color: gray;">중고거래 게시판<i class="ion-ios-arrow-forward"></i></a></span>
+<!-- 					<span class="mr-2" ">중고거래 게시판</span> -->
 				</p>
 			</div>
 		</div>
@@ -61,6 +71,11 @@
 					<th>조회수</th>
 				</tr>
 			</thead>
+			<c:if test="${empty list}">
+               <tr>
+                  <td colspan="6"><p style="margin-top: 16px; font-size: 15px; text-align:center;">검색 결과가 존재하지 않습니다.</p></td>
+               </tr>
+            </c:if>   
 			
 			<c:forEach items="${list}" var="usedItems">
 				<tr>
@@ -75,6 +90,10 @@
 					<td>
 						<a class='move' href='<c:out value="${usedItems.bno }"/>'>
 						<c:out value="${usedItems.title }" /><b> [<c:out value="${usedItems.reply_cnt}"/>]</b></a>
+						<c:choose>
+					    	<c:when test="${usedItems.deal eq '거래중'}"><button class="dealBtn">거래중</button></c:when>
+					    	<c:when test="${usedItems.deal eq '거래완료'}"><button class="dealBtn">거래완료</button></c:when>
+						</c:choose>
 					</td>
 					<td style="text-align:center;"><c:out value="${usedItems.id}" /></td>
 					<td style="text-align:center;"><fmt:formatDate pattern="yyyy.MM.dd" value="${usedItems.regdate}" /></td>
@@ -92,10 +111,11 @@
 					<select name='type'>
 						<option value=""<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>선택</option>
 						<option value="F"<c:out value="${pageMaker.cri.type eq 'F'?'selected':''}"/>>카테고리</option>
+						<option value="D"<c:out value="${pageMaker.cri.type eq 'D'?'selected':''}"/>>거래상태</option>
 						<option value="T"<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
 						<option value="C"<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
 						<option value="I"<c:out value="${pageMaker.cri.type eq 'I'?'selected':''}"/>>작성자</option>
-						<option value="FTCI"<c:out value="${pageMaker.cri.type eq 'FTCI'?'selected':''}"/>>모든 항목</option>
+						<option value="FDTCI"<c:out value="${pageMaker.cri.type eq 'FDTCI'?'selected':''}"/>>모든 항목</option>
 					</select>
 					<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
 					<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>

@@ -27,8 +27,8 @@
 			<div class="col-md-9 ftco-animate pb-5">
 				<h1 class="mb-0 bread" style="font-family: 'NanumSquareNeo';">공지사항</h1>
 				<p class="breadcrumbs mb-2" style="padding:10px;">
-					<span class="mr-2" style="color: gray;">공지사항</span>
-					<!-- <span class="mr-2"><a href="/customerService/notice">공지사항<i class="ion-ios-arrow-forward"></i></a></span> -->
+					<!-- <span class="mr-2" style="color: gray;">공지사항</span> -->
+					<span class="mr-2"><a href="/customerService/notice" style="color: gray;">공지사항<i class="ion-ios-arrow-forward"></i></a></span>
 					<span class="mr-2">/</span> 
 					<span class="mr-2"><a href="/customerService/faq">자주묻는 질문<i class="ion-ios-arrow-forward"></i></a></span>
 					<!-- <span class="mr-2" style="color: gray;">자주묻는 질문</span> -->
@@ -59,13 +59,17 @@
 					<th>작성일</th>
 					<th>조회수</th>
 				</thead>
-
+	         <c:if test="${empty list}">
+               <tr>
+                  <td colspan="6"><p style="margin-top: 16px; font-size: 15px; text-align:center;">검색 결과가 존재하지 않습니다.</p></td>
+               </tr>
+            </c:if>	
 					<c:forEach items="${list}" var="board">
 						<tr>
 							<td><c:out value="${board.bno}" /></td>
 							<td><a class='move' href='<c:out value="${board.bno}"/>'>
-							<c:out value="${board.title}"/></a></td>
-							<td><c:out value="${board.id}" /></td>
+							<c:out value="${board.title}"/></a></td>			
+							<td>애니모어센터</td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.regdate}" /></td>
 							<!-- <td><fmt:formatDate pattern="yyyy-MM-dd"

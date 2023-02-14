@@ -50,11 +50,18 @@ ul {
 				<h2>상세보기</h2>
 			</div>
 		</div>
+		
+		<form role="form" action="/customerService/notice" method="post" style="color:black">
+			<input type="hidden" id="bno" name="bno" value='<c:out value="${ faqget.bno }" />'>
+			<input type="hidden" name="pageNum" value='<c:out value="${ cri.pageNum }" />'>
+			<input type="hidden" name="amount" value='<c:out value="${ cri.amount }" />'>
+			<input type="hidden" name="type" value='<c:out value="${ cri.type }" />'>
+			<input type="hidden" name="keyword" value='<c:out value="${ cri.keyword }" />'>		
 		<div class="row">
 			<div class="col-md-12"><b>제목</b>&nbsp; <c:out value="${faqget.title}"></c:out></div>
 		</div><hr>
 		<div class="row">
-			<div class="col-md-7"><b>작성자</b>&nbsp; <c:out value="${faqget.id}"></c:out></div>
+			<div class="col-md-7"><b>작성자</b>&nbsp; 애니모어센터</div>
 			<div class="col-md-3"><b>작성일자</b>&nbsp; <fmt:formatDate pattern="yyyy/MM/dd" value="${faqget.regdate}"></fmt:formatDate></div>
 			<div class="col-md-2"><b>조회수</b>&nbsp; <c:out value="${faqget.count}"></c:out></div>
 		</div><hr>
@@ -70,8 +77,6 @@ ul {
 					<ul>
 					</ul>
 				</div>
-				<br>
-
 
 				<p><c:out value="${faqget.content}"></c:out></p>
 			</div>
@@ -97,29 +102,64 @@ ul {
 		
 		
 		<div class="text-center">
-			<button data-oper="list" class="btn btn-primary">목록</button>
+			<c:choose>
+				<c:when test="${member.id eq 'admin'}">
+					<button type="submit" id="list" data-oper="list" class="btn btn-primary">목록</button>
+					<button type="submit" id="remove" data-oper="remove" class="btn btn-primary">삭제</button>
+				</c:when>
+				<c:otherwise>
+					<button type="submit" id="list" data-oper="list" class="btn btn-primary">목록</button>
+				</c:otherwise>
+			</c:choose>
 		</div>
+		</form>
 		
-		<form id="operForm" action="/customerService/faq" method="get">
+<%-- 		<form id="operForm" action="/customerService/faq" method="get">
 			<input type="hidden" id="bno" name="bno" value='<c:out value="${ faqget.bno }" />'>
 			<input type="hidden" name="pageNum" value='<c:out value="${ cri.pageNum }" />'>
 			<input type="hidden" name="amount" value='<c:out value="${ cri.amount }" />'>
 			<input type="hidden" name="type" value='<c:out value="${ cri.type }" />'>
 			<input type="hidden" name="keyword" value='<c:out value="${ cri.keyword }" />'>
-		</form>
+		</form> --%>
 		
 	</div>
 </section>
 
 <script>
 $(document).ready(function(){
-	let operForm = $("#operForm");
-	$("button[data-oper='list']").on("click", function(e){
-		operForm.find("#bno").remove();
-		operForm.attr("action", "/customerService/faq")
-		operForm.submit();
+	
+	var formObj = $("form"); 
+	
+	$('#list').on("click", function(e){
+		e.preventDefault();
+		
+		formObj.attr("action", "/customerService/faq").attr("method","get");
+		
+		var pageNumTag = $("input[name='pageNum']").clone();
+		var amountTag = $("input[name='amount']").clone();
+		var keywordTag = $("input[name='keyword']").clone();
+		var typeTag = $("input[name='type']").clone();
+		
+		formObj.empty();
+		formObj.append(pageNumTag);	
+		formObj.append(amountTag);
+		formObj.append(keywordTag);
+		formObj.append(typeTag);
+		
+		formObj.submit();
+		
 	});
+	
+	$('#remove').on("click", function(e){
+		alert("삭제하시겠습니까?");
+		e.preventDefault();
+		formObj.attr("action", "/customerService/faqRemove");
+		formObj.submit();
+		
+	});
+	
 });
+
 </script>
 
 

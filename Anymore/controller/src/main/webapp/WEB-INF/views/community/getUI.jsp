@@ -43,7 +43,12 @@
 			</div>
 	  </div>
       <div class="row">
-         <div class="col-md-12"><b>제목</b>&nbsp; <c:out value="${usedItems.title}"></c:out></div>
+         <div class="col-md-10"><b>제목</b>&nbsp; <c:out value="${usedItems.title}"></c:out></div>
+  	    <c:choose>
+		    <c:when test="${usedItems.deal eq ''}"><div class="col-md-2"></div></c:when>
+		    <c:when test="${usedItems.deal eq '거래중'}"><div class="col-md-2"><b>거래 상태</b>&nbsp; <c:out value="${usedItems.deal}"></c:out></div></c:when>
+		    <c:when test="${usedItems.deal eq '거래완료'}"><div class="col-md-2"><b>거래 상태</b>&nbsp; <c:out value="${usedItems.deal}"></c:out></div></c:when>
+		</c:choose>
       </div><hr>
       <div class="row">
       	 <div class="col-md-3">

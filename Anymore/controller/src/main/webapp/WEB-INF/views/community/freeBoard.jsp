@@ -31,10 +31,10 @@
 					<!-- <span class="mr-2" style="color: gray;">입양후기</span> -->
 					<span class="mr-2"><a href="/community/adoptionReview">입양후기<i class="ion-ios-arrow-forward"></i></a></span>
 					<span class="mr-2">/</span> 
-					<!-- <span class="mr-2"><a href="/adopt/freeBoard">자유게시판<i class="ion-ios-arrow-forward"></i></a></span> -->
-					<span class="mr-2" style="color: gray;">자유게시판</span>
+<!-- 					<span class="mr-2"><a href="/adopt/freeBoard">자유게시판<i class="ion-ios-arrow-forward"></i></a></span> -->
+					<span class="mr-2"><a href="/community/freeBoard" style="color: gray;">자유게시판<i class="ion-ios-arrow-forward"></i></a></span>
 					<span class="mr-2">/</span> 
-					<span class="mr-2"><a href="/community/usedItems">중고거래 게시판	<i class="ion-ios-arrow-forward"></i></a></span>
+					<span class="mr-2"><a href="/community/usedItems">중고거래 게시판<i class="ion-ios-arrow-forward"></i></a></span>
 				</p>
 			</div>
 		</div>
@@ -62,6 +62,12 @@
 					<th>조회수</th>
 				</tr>
 			</thead>
+			
+			<c:if test="${empty list}">
+               <tr>
+                  <td colspan="6"><p style="margin-top: 16px; font-size: 15px; text-align:center;">검색 결과가 존재하지 않습니다.</p></td>
+               </tr>
+            </c:if>   
 			
 			<c:forEach items="${list}" var="freeBoard">
 				<tr>

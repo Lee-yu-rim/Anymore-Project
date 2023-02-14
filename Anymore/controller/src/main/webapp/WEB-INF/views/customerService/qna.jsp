@@ -33,8 +33,8 @@
 					<span class="mr-2"><a href="/customerService/faq">자주묻는 질문<i class="ion-ios-arrow-forward"></i></a></span>
 					<!-- <span class="mr-2" style="color: gray;">자주묻는 질문</span> -->
 					<span class="mr-2">/</span> 
-					<!-- <span class="mr-2"><a href="/customerService/qna">문의하기<i class="ion-ios-arrow-forward"></i></a></span> -->
-					<span class="mr-2" style="color: gray;">문의하기</span>
+					<span class="mr-2"><a href="/customerService/qna" style="color: gray;">문의하기<i class="ion-ios-arrow-forward"></i></a></span>
+					<!-- <span class="mr-2" style="color: gray;">문의하기</span> -->
 				</p>
 			</div>
 		</div>
@@ -60,6 +60,11 @@
 					<th>작성일</th>
 					<th>조회수</th>
 				</thead>
+	         <c:if test="${empty list}">
+               <tr>
+                  <td colspan="6"><p style="margin-top: 16px; font-size: 15px; text-align:center;">검색 결과가 존재하지 않습니다.</p></td>
+               </tr>
+            </c:if>				
 					<c:forEach items="${list}" var="board">
 						<tr>
 							<td><c:out value="${board.bno}" /></td>

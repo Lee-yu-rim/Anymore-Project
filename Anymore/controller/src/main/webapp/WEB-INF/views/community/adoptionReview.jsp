@@ -39,7 +39,7 @@
 			<div class="col-md-9 ftco-animate pb-5">
 				<h1 class="mb-0 bread" style="font-family: 'NanumSquareNeo';">입양후기</h1>
 				<p class="breadcrumbs mb-2" style="padding:10px;">
-					<span class="mr-2" style="color: gray;">입양후기</span>
+					<span class="mr-2"><a href="/community/adoptionReview" style="color: gray;">입양후기<i class="ion-ios-arrow-forward"></i></a></span>
 					<span class="mr-2">/</span> 
 					<span class="mr-2"><a href="/community/freeBoard">자유게시판<i class="ion-ios-arrow-forward"></i></a></span>
 					<span class="mr-2">/</span> 
@@ -67,9 +67,11 @@
 
 					<c:forEach items="${image}" var="image">
 	  					<c:if test="${adoptionReview.bno == image.bno }">
-							<img class="img-fluid" src="/display?fileName=${ image.uploadPath }/${ image.uuid }_${ image.fileName }"/>
+							<img class="img-fluid" src="/display?fileName=${ image.uploadPath }/${ image.uuid }_${ image.fileName }" style="width:500px; height:300px;"/>
 						</c:if> 
 					</c:forEach>
+					
+				  
 
 		          <div class="text p-4">
 		          	<div class="meta mb-2">
@@ -82,8 +84,11 @@
 	        </div>
 	        </a>
 	      </div>
-    	</c:forEach>    	
+    	</c:forEach>    
     </div>
+    <c:if test="${empty list}">
+    	<p style="margin-top: 16px; font-size: 15px; text-align:center;" class="align-items-center">검색 결과가 존재하지 않습니다.</p>
+    </c:if> 
     
 		<!-- <button id='regBtn' type="button" class="btn btn-xs pull-right">작성하기</button> -->
 		<button id='regBtn' type="button" class="btn btn-primary" style="font-family: 'NanumSquareNeo'; float:right;">작성하기<span class="ion-ios-arrow-forward"></span></button>
