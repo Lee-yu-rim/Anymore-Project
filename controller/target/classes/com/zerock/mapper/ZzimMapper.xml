@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.ZzimMapper">
+
+<!-- 찜하기 -->
+<insert id="zzimGood">
+	insert into zzim
+	values (#{memberId},#{board_num})
+</insert>
+
+<!-- 찜취소 -->
+<delete id="deleteZzim">
+	delete from zzim where id = #{memberId} and board_num = #{board_num}
+</delete>
+
+<!-- 찜 목록 불러오기 -->
+<select id="zzimList" resultType="com.zerock.domain.ZzimVO">
+   <![CDATA[            
+        select z.id, a.board_num, a.animal_name
+		from zzim z, animal_info a 
+		where a.board_num = z.board_num and z.id = #{memberId}
+    ]]>
+</select>
+
+<!-- 찜 여부 확인용 -->
+<select id="zzimCheck" resultType="int">
+	select count(*) from zzim where id = #{memberId} and board_num = #{board_num}
+</select>
+
+</mapper>

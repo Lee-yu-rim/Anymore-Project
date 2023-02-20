@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.IamportMapper">
+	<!-- 글 등록하기 -->
+	
+	
+	<insert id="insert" parameterType="com.zerock.domain.IamportVO">
+		
+		insert into product_perchase(perchase_num, name, perchased_product, all_price, ordered_date, delivery_status, product_num, payment, id)
+		values(seq_perchase.nextval, #{buyer_name}, #{product_name}, #{total}, sysdate, #{delivery_status}, #{product_num}, #{payment}, #{id})
+	</insert>
+	
+	<insert id="insert2" parameterType="com.zerock.domain.IamportVO">
+	    <selectKey keyProperty="perchase_num" order="BEFORE" resultType="int">
+			select seq_perchase.currval from dual
+		</selectKey>
+    	insert into delivery_info (perchase_num, name, address, phone, requests)
+    	values (
+    		#{perchase_num}, #{buyer_name}, #{buyer_addr}, #{buyer_tel}, #{deli_ask}
+    	)
+	</insert>
+	
+	<insert id="insert3" parameterType="com.zerock.domain.IamportVO">
+	    <selectKey keyProperty="perchase_num" order="BEFORE" resultType="int">
+			select seq_perchase.currval from dual
+		</selectKey>
+		insert into perchase_info(perchase_num, perchased_pname, amount, product_price)
+		values(
+			#{perchase_num}, #{product_name}, #{total_cnt}, #{total}
+		)
+	</insert>
+	
+	
+</mapper>

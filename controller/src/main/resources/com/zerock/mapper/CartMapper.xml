@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.CartMapper">
+
+<select id="getList" resultType="com.zerock.domain.CartVO">
+	<![CDATA[
+		SELECT c.c_num, c.quantity, c.c_regdate, c.id, ap.product_name, ap.price, c.product_num
+		FROM cart c, anymore_product ap
+		WHERE c.product_num = ap.product_num and c.id = #{id}
+	]]>
+</select>
+
+<delete id="delete">
+	<![CDATA[
+		DELETE FROM cart WHERE c_num = #{c_num}
+	]]>
+</delete>
+
+<delete id="deleteAll">
+	<![CDATA[
+		DELETE FROM cart WHERE id = #{id}
+	]]>
+</delete>
+</mapper>

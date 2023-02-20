@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.QNAReplyMapper">
+
+<!-- 댓글 작성 -->
+<insert id="insertReply">
+	insert into qna_reply (bno, id, rno, reply)
+	values (#{bno}, #{id}, seq_qna_reply.nextval, #{reply})
+</insert>
+
+<!-- 게시물의 댓글 목록 -->
+<select id="listReply" resultType="com.zerock.domain.ReplyVO">
+	<![CDATA[
+	select * from qna_reply where rno = #{rno}
+	]]>
+</select>
+
+<!-- 댓글 삭제 -->
+<delete id="deleteReply">
+	delete qna_reply
+		where rno = #{rno}
+		<!-- and id = #{id} -->
+</delete>
+
+<!-- 댓글 수정 -->
+<update id="updateReply">
+	update qna_reply
+	set reply = #{reply}, updatedate = sysdate 
+	where rno = #{rno}
+</update>
+
+<!-- 댓글 페이징 처리 -->
+<select id="pagingReply" resultType="com.zerock.domain.ReplyVO">
+	select bno, rno, reply, id, replydate, updatedate
+	from qna_reply
+	where bno = #{bno}
+	order by rno asc
+</select>
+
+</mapper>

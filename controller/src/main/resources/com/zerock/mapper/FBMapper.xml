@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.FBMapper">
+
+<!-- 	<select id="getList" resultType="com.zerock.domain.FBVO"> -->
+<!-- 		<![CDATA[ -->
+<!--  		select * from free_board where bno > 0  -->
+<!-- 		]]>  -->
+<!-- 	</select> -->
+	
+	<insert id="insert">
+		insert into free_board (bno, title, content, reply_cnt, visit_cnt, field, id)
+		values (seq_board.nextval, #{title}, #{content}, #{reply_cnt}, #{visit_cnt}, #{field}, #{id})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			select seq_board.nextval from dual
+		</selectKey>
+		
+		insert into free_board (bno, title, content, reply_cnt, visit_cnt, field, id)
+		values (#{bno}, #{title}, #{content}, #{reply_cnt}, #{visit_cnt}, #{field}, #{id})
+	</insert>
+	
+	<select id="getListWithPaging" resultType="com.zerock.domain.FBVO">
+		<![CDATA[
+ 		select * from 
+ 			( 
+ 				select /*+INDEX_DESC(free_board PK_FREE_BOARD) */ 
+ 				rownum rn, bno, title, content, regdate, updatedate, reply_cnt, visit_cnt, field, id
+ 				from free_board where  
+		]]>	
+			<trim prefix="(" suffix=") and " prefixOverrides="or">
+				<foreach item='type' collection="typeArr">
+					<trim prefix="or">
+						<choose>
+							<when test="type == 'F'.toString()">
+								field like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'T'.toString()">
+								title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'C'.toString()">
+								content like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'I'.toString()">
+								id like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		<![CDATA[	
+ 				rownum <= #{pageNum} * #{amount} 
+ 			) 
+ 		where rn > (#{pageNum} -1) * #{amount} -->
+ 		]]> 
+	</select>
+	
+	<select id="read" resultType="com.zerock.domain.FBVO">
+		select * from free_board where bno = #{bno}
+	</select>
+		
+	<select id="getTotalCount" resultType="int">
+		<![CDATA[
+ 			select count(*) from free_board where  
+ 		]]>	 
+			<trim prefix="(" suffix=") and " prefixOverrides="or">
+				<foreach item='type' collection="typeArr">
+					<trim prefix="or">
+						<choose>
+							<when test="type == 'F'.toString()">
+								field like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'T'.toString()">
+								title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'C'.toString()">
+								content like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'I'.toString()">
+								id like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		<![CDATA[	
+ 			bno > 0 
+ 		]]> 
+	</select>
+	
+	<delete id="delete">
+		delete from free_board where bno = #{bno}
+	</delete>
+	
+	<update id="update">
+		update free_board
+		set title = #{title},
+		content = #{content},
+		updatedate = sysdate,
+		field = #{field}
+		where bno = #{bno}
+	</update>
+	
+	<update id="updateVisitCnt">
+		update free_board set visit_cnt = visit_cnt + 1 where bno = #{bno}
+	</update>
+	
+	<update id="updateReplyCnt">
+		update free_board set reply_cnt = reply_cnt + #{amount} where bno = #{bno}
+	</update>
+	
+
+	
+</mapper>

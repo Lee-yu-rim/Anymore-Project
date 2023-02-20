@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.ARMapper">
+
+	<!-- 유진 추가 / 메인에 값 불러오기 용도 -->
+	<select id="getARList" resultType="com.zerock.domain.ARVO">
+		<![CDATA[
+		SELECT * FROM adoption_review WHERE ROWNUM <= 8
+		order by bno desc
+		]]>
+	</select>	
+	
+	<insert id="insert">
+		insert into adoption_review (bno, title, content, reply_cnt, visit_cnt, id)
+		values (seq_ARboard.nextval, #{title}, #{content}, #{reply_cnt}, #{visit_cnt}, #{id})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			select seq_ARboard.nextval from dual
+		</selectKey>
+		
+		insert into adoption_review (bno, title, content, reply_cnt, visit_cnt, id)
+		values (#{bno}, #{title}, #{content}, #{reply_cnt}, #{visit_cnt}, #{id})
+	</insert>
+	
+	<select id="getListWithPaging" resultType="com.zerock.domain.ARVO">
+		<![CDATA[
+ 		select * from 
+ 			( 
+ 				select /*+INDEX_DESC(adoption_review PK_ADOPTION_REVIEW) */ 
+ 				rownum rn, bno, title, content, regdate, updatedate, reply_cnt, visit_cnt, id
+ 				from adoption_review where  
+		]]>	
+			<trim prefix="(" suffix=") and " prefixOverrides="or">
+				<foreach item='type' collection="typeArr">
+					<trim prefix="or">
+						<choose>
+							<when test="type == 'T'.toString()">
+								title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'C'.toString()">
+								content like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'I'.toString()">
+								id like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		<![CDATA[	
+ 				rownum <= #{pageNum} * #{amount} 
+ 			) 
+ 		where rn > (#{pageNum} -1) * #{amount} -->
+ 		]]> 
+	</select>
+	
+	<select id="read" resultType="com.zerock.domain.ARVO">
+		select * from adoption_review where bno = #{bno}
+	</select>
+		
+	<select id="getTotalCount" resultType="int">
+		<![CDATA[
+ 			select count(*) from adoption_review where  
+ 		]]>	 
+			<trim prefix="(" suffix=") and " prefixOverrides="or">
+				<foreach item='type' collection="typeArr">
+					<trim prefix="or">
+						<choose>
+							<when test="type == 'T'.toString()">
+								title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'C'.toString()">
+								content like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'I'.toString()">
+								id like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		<![CDATA[	
+ 			bno > 0 
+ 		]]> 
+	</select>
+	
+	<delete id="delete">
+		delete from adoption_review where bno = #{bno}
+	</delete>
+	
+	<update id="update">
+		update adoption_review
+		set title = #{title},
+		content = #{content},
+		updatedate = sysdate
+		where bno = #{bno}
+	</update>
+	
+	<update id="updateVisitCnt">
+		update adoption_review set visit_cnt = visit_cnt + 1 where bno = #{bno}
+	</update>
+	
+	<update id="updateReplyCnt">
+		update adoption_review set reply_cnt = reply_cnt + #{amount} where bno = #{bno}
+	</update>
+	
+
+	
+</mapper>

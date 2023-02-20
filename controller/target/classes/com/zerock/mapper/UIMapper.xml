@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerock.mapper.UIMapper">
+	
+	<insert id="insert">
+		insert into used_items (bno, title, content, reply_cnt, visit_cnt, field, id, deal)
+		values (seq_UIboard.nextval, #{title}, #{content}, #{reply_cnt}, #{visit_cnt}, #{field}, #{id}, #{deal})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			select seq_UIboard.nextval from dual
+		</selectKey>
+		
+		insert into used_items (bno, title, content, reply_cnt, visit_cnt, field, id, deal)
+		values (#{bno}, #{title}, #{content}, #{reply_cnt}, #{visit_cnt}, #{field}, #{id}, #{deal})
+	</insert>
+	
+	<select id="getListWithPaging" resultType="com.zerock.domain.UIVO">
+		<![CDATA[
+ 		select * from 
+ 			( 
+ 				select /*+INDEX_DESC(used_items PK_USED_ITEMS) */ 
+ 				rownum rn, bno, title, content, regdate, updatedate, reply_cnt, visit_cnt, field, id, deal
+ 				from used_items where  
+		]]>	
+			<trim prefix="(" suffix=") and " prefixOverrides="or">
+				<foreach item='type' collection="typeArr">
+					<trim prefix="or">
+						<choose>
+							<when test="type == 'F'.toString()">
+								field like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'T'.toString()">
+								title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'C'.toString()">
+								content like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'I'.toString()">
+								id like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'D'.toString()">
+								deal like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		<![CDATA[	
+ 				rownum <= #{pageNum} * #{amount} 
+ 			) 
+ 		where rn > (#{pageNum} -1) * #{amount} -->
+ 		]]> 
+	</select>
+	
+	<select id="read" resultType="com.zerock.domain.UIVO">
+		select * from used_items where bno = #{bno}
+	</select>
+		
+	<select id="getTotalCount" resultType="int">
+		<![CDATA[
+ 			select count(*) from used_items where  
+ 		]]>	 
+			<trim prefix="(" suffix=") and " prefixOverrides="or">
+				<foreach item='type' collection="typeArr">
+					<trim prefix="or">
+						<choose>
+							<when test="type == 'F'.toString()">
+								field like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'T'.toString()">
+								title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'C'.toString()">
+								content like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'I'.toString()">
+								id like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'D'.toString()">
+								deal like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		<![CDATA[	
+ 			bno > 0 
+ 		]]> 
+	</select>
+	
+	<delete id="delete">
+		delete from used_items where bno = #{bno}
+	</delete>
+	
+	<update id="update">
+		update used_items
+		set title = #{title},
+		content = #{content},
+		updatedate = sysdate,
+		field = #{field},
+		deal = #{deal}
+		where bno = #{bno}
+	</update>
+	
+	<update id="updateVisitCnt">
+		update used_items set visit_cnt = visit_cnt + 1 where bno = #{bno}
+	</update>
+	
+	<update id="updateReplyCnt">
+		update used_items set reply_cnt = reply_cnt + #{amount} where bno = #{bno}
+	</update>
+	
+
+	
+</mapper>
